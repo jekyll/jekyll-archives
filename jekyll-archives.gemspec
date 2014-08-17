@@ -4,9 +4,8 @@ Gem::Specification.new do |s|
   s.description = "Automatically generate post archives by dates, tags, and categories."
   s.version     = "0.1.0"
   s.authors     = ["Alfred Xing"]
-  s.email       = "support@github.com"
 
-  s.homepage    = "https://github.com/alfredxing/jekyll-archives"
+  s.homepage    = "https://github.com/jekyll/jekyll-archives"
   s.licenses    = ["MIT"]
   s.files       = ["lib/jekyll-archives.rb", "lib/jekyll-archives/archive.rb"]
 
