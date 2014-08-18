@@ -17,10 +17,10 @@ module Jekyll
     # Initialize a new Archive page
     #
     # site  - The Site object.
-    # posts - The array of posts that belong in this archive.
-    # type  - The type of archive. Can be one of "year", "category", or "tag"
     # name  - The name of the archive (e.g. "2014" or "my-category" or "my-tag").
-    def initialize(site, posts, type, name)
+    # type  - The type of archive. Can be one of "year", "category", or "tag"
+    # posts - The array of posts that belong in this archive.
+    def initialize(site, name, type, posts)
       @site  = site
       @posts = posts
       @type  = type

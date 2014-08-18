@@ -44,14 +44,14 @@ module Jekyll
 
     # Read archive data from posts
     def read
-      tags.each do |tag|
-        @archives << Archive.new(@site, tag[1], "tag", tag[0])
+      tags.each do |name, posts|
+        @archives << Archive.new(@site, name, "tag", posts)
       end
-      categories.each do |category|
-        @archives << Archive.new(@site, category[1], "category", category[0])
+      categories.each do |name, posts|
+        @archives << Archive.new(@site, name, "category", posts)
       end
-      years.each do |year|
-        @archives << Archive.new(@site, year[1], "year", year[0])
+      years.each do |name, posts|
+        @archives << Archive.new(@site, name, "year", posts)
       end
     end
 
