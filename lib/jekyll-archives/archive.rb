@@ -93,8 +93,17 @@ module Jekyll
     #
     # Returns the destination file path String.
     def destination(dest)
+      @dest ||= dest
       path = Jekyll.sanitized_path(dest, URL.unescape_path(url))
       path = File.join(path, "index.html") if url =~ /\/$/
+      path
+    end
+
+    # Obtain the write path relative to the destination directory
+    #
+    # Returns the destination relative path String.
+    def relative_path
+      path = Pathname.new(destination(@dest)).relative_path_from Pathname.new(@dest)
       path
     end
 

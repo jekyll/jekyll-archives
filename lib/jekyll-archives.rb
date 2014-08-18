@@ -31,12 +31,19 @@ module Jekyll
 
       @site.config['jekyll-archives'] = @config
 
-      read_archives
-      @site.pages += @archives
+      read
+      render
+      write
+
+      @site.keep_files ||= []
+      @archives.each do |archive|
+        @site.keep_files << archive.relative_path
+      end
+      @site.config["archives"] = @archives
     end
 
     # Read archive data from posts
-    def read_archives
+    def read
       tags.each do |tag|
         @archives << Archive.new(@site, tag[1], "tag", tag[0])
       end
@@ -45,6 +52,21 @@ module Jekyll
       end
       years.each do |year|
         @archives << Archive.new(@site, year[1], "year", year[0])
+      end
+    end
+
+    # Renders the archives into the layouts
+    def render
+      payload = @site.site_payload
+      @archives.each do |archive|
+        archive.render(@site.layouts, payload)
+      end
+    end
+
+    # Write archives to their destination
+    def write
+      @archives.each do |archive|
+        archive.write(@site.dest)
       end
     end
 
