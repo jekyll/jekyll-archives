@@ -62,7 +62,7 @@ module Jekyll
     #   attr  - One of the values for the requested attribute.
     #   posts - The Array of Posts with the given attr value.
     #
-    # Taken from jekyll/jekyll
+    # Taken from jekyll/jekyll (Copyright (c) 2014 Tom Preston-Werner under the MIT).
     def post_attr_hash(post_attr)
       # Build a hash map based on the specified post attribute ( post attr =>
       # array of posts ) then sort each array in reverse order.

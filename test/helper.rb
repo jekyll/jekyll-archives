@@ -1,4 +1,4 @@
-# Taken from jekyll/jekyll-mentions
+# Taken from jekyll/jekyll-mentions (Copyright (c) 2014 GitHub, Inc. Licensened under the MIT).
 
 require 'rubygems'
 require 'minitest/autorun'
