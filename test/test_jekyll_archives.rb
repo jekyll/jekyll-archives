@@ -60,17 +60,26 @@ class TestJekyllArchives < Minitest::Test
           }
         }
       })
-      @site.read
-      @archives = Jekyll::Archives.new(@site.config)
+      @site.process
     end
 
     should "use the right permalink" do
-      @site.process
       assert archive_exists? @site, "/2014/"
       assert archive_exists? @site, "/2013/"
       assert archive_exists? @site, "/tag-test.html"
       assert archive_exists? @site, "/tag-new.html"
       assert archive_exists? @site, "/category-plugins.html"
+    end
+  end
+
+  context "the archives" do
+    setup do
+      @site = fixture_site
+      @site.process
+    end
+
+    should "populate the {{ site.archives }} tag in Liquid" do
+      assert_equal 6, read_file("/length.html").to_i
     end
   end
 end

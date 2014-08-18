@@ -30,10 +30,15 @@ class Minitest::Test
   end
 
   def archive_exists?(site, path)
-    site.pages.any? { |archive| archive.path == path }
+    site.config["archives"].any? { |archive| archive.path == path }
   end
 
   def read_file(path)
-    File.read(File.join(DEST_DIR, path)).strip
+    read_path = File.join(DEST_DIR, path)
+    if File.exist? read_path
+      File.read(read_path).strip
+    else
+      return false
+    end
   end
 end
