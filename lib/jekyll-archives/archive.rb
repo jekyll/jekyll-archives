@@ -2,7 +2,7 @@ module Jekyll
   class Archive
     include Convertible
 
-    attr_accessor :posts, :type, :name
+    attr_accessor :posts, :type, :name, :slug
     attr_accessor :data, :content, :output
     attr_accessor :path, :ext
     attr_accessor :site
@@ -27,6 +27,9 @@ module Jekyll
       @type  = type
       @name  = name
 
+      # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
+      @slug = name.downcase.gsub(/[^\w]/, " ").strip.gsub(/\s+/, '-') if name.is_a? String
+
       # Use ".html" for file extension and url for path
       @ext  = ".html"
       @path = url
@@ -50,7 +53,7 @@ module Jekyll
       if @name.is_a? Hash
         @name.merge({ :type => @type })
       else
-        { :name => @name, :type => @type }
+        { :name => @slug, :type => @type }
       end
     end
 

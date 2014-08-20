@@ -1,6 +1,6 @@
 ---
 title: Tagged post
-tags: [test, tagged]
+tags: ["Test Tag", tagged]
 ---
 
 This is a tagged post

@@ -28,7 +28,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages by tag" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/tag/test/"
+      assert archive_exists? @site, "/tag/test-tag/"
       assert archive_exists? @site, "/tag/tagged/"
       assert archive_exists? @site, "/tag/new/"
     end
@@ -40,7 +40,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages with a layout" do
       @site.process
-      assert_equal "Test", read_file("/tag/test/index.html")
+      assert_equal "Test", read_file("/tag/test-tag/index.html")
     end
   end
 
@@ -57,7 +57,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "use custom layout" do
       @site.process
-      assert_equal "Test too", read_file("/tag/test/index.html")
+      assert_equal "Test too", read_file("/tag/test-tag/index.html")
     end
   end
 
@@ -78,7 +78,7 @@ class TestJekyllArchives < Minitest::Test
     should "use the right permalink" do
       assert archive_exists? @site, "/year/2014/"
       assert archive_exists? @site, "/year/2013/"
-      assert archive_exists? @site, "/tag-test.html"
+      assert archive_exists? @site, "/tag-test-tag.html"
       assert archive_exists? @site, "/tag-new.html"
       assert archive_exists? @site, "/category-plugins.html"
     end
