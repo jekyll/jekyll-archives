@@ -10,8 +10,20 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages by year" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/archive/2014/"
-      assert archive_exists? @site, "/archive/2013/"
+      assert archive_exists? @site, "/2014/"
+      assert archive_exists? @site, "/2013/"
+    end
+
+    should "generate archive pages by month" do
+      @archives.generate(@site)
+      assert archive_exists? @site, "/2014/08/"
+      assert archive_exists? @site, "/2014/03/"
+    end
+
+    should "generate archive pages by day" do
+      @archives.generate(@site)
+      assert archive_exists? @site, "/2014/08/17/"
+      assert archive_exists? @site, "/2013/08/16/"
     end
 
     should "generate archive pages by tag" do
@@ -54,7 +66,7 @@ class TestJekyllArchives < Minitest::Test
       @site = fixture_site({
         "jekyll-archives" => {
           "permalinks" => {
-            "year" => "/:name/",
+            "year" => "/year/:year/",
             "tag" => "/tag-:name.html",
             "category" => "/category-:name.html"
           }
@@ -64,8 +76,8 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "use the right permalink" do
-      assert archive_exists? @site, "/2014/"
-      assert archive_exists? @site, "/2013/"
+      assert archive_exists? @site, "/year/2014/"
+      assert archive_exists? @site, "/year/2013/"
       assert archive_exists? @site, "/tag-test.html"
       assert archive_exists? @site, "/tag-new.html"
       assert archive_exists? @site, "/category-plugins.html"
@@ -79,7 +91,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
-      assert_equal 6, read_file("/length.html").to_i
+      assert_equal 12, read_file("/length.html").to_i
     end
   end
 end

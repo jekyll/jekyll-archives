@@ -17,8 +17,9 @@ module Jekyll
     # Initialize a new Archive page
     #
     # site  - The Site object.
-    # name  - The name of the archive (e.g. "2014" or "my-category" or "my-tag").
-    # type  - The type of archive. Can be one of "year", "category", or "tag"
+    # name  - The name of the tag/category or a Hash of the year/month/day in case of date.
+    #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
+    # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
     # posts - The array of posts that belong in this archive.
     def initialize(site, name, type, posts)
       @site  = site
@@ -46,7 +47,11 @@ module Jekyll
     # Returns a hash of URL placeholder names (as symbols) mapping to the
     # desired placeholder replacements. For details see "url.rb".
     def url_placeholders
-      { :name => @name, :type => @type.to_s }
+      if @name.is_a? Hash
+        @name.merge({ :type => @type })
+      else
+        { :name => @name, :type => @type }
+      end
     end
 
     # The generated relative url of this page. e.g. /about.html.

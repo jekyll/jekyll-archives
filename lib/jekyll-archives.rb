@@ -10,7 +10,9 @@ module Jekyll
     DEFAULTS = {
       'layout' => 'archive',
       'permalinks' => {
-        'year' => '/archive/:name/',
+        'year' => '/:year/',
+        'month' => '/:year/:month/',
+        'day' => '/:year/:month/:day/',
         'tag' => '/tag/:name/',
         'category' => '/category/:name/'
       }
@@ -50,8 +52,14 @@ module Jekyll
       categories.each do |name, posts|
         @archives << Archive.new(@site, name, "category", posts)
       end
-      years.each do |name, posts|
-        @archives << Archive.new(@site, name, "year", posts)
+      years.each do |year, posts|
+        @archives << Archive.new(@site, { :year => year }, "year", posts)
+        months(posts).each do |month, posts|
+          @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts)
+          days(posts).each do |day, posts|
+            @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts)
+          end
+        end
       end
     end
 
@@ -105,7 +113,21 @@ module Jekyll
     # Custom `post_attr_hash` method for years
     def years
       hash = Hash.new { |h, key| h[key] = [] }
-      @posts.each { |p| hash[p.date.year.to_s] << p }
+      @posts.each { |p| hash[p.date.strftime("%Y")] << p }
+      hash.values.each { |posts| posts.sort!.reverse! }
+      hash
+    end
+
+    def months(year_posts)
+      hash = Hash.new { |h, key| h[key] = [] }
+      year_posts.each { |p| hash[p.date.strftime("%m")] << p }
+      hash.values.each { |posts| posts.sort!.reverse! }
+      hash
+    end
+
+    def days(month_posts)
+      hash = Hash.new { |h, key| h[key] = [] }
+      month_posts.each { |p| hash[p.date.strftime("%d")] << p }
       hash.values.each { |posts| posts.sort!.reverse! }
       hash
     end
