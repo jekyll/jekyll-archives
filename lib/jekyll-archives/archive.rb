@@ -28,7 +28,11 @@ module Jekyll
       @name  = name
 
       # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-      @slug = name.downcase.gsub(/[^\w]/, " ").strip.gsub(/\s+/, '-') if name.is_a? String
+      if name.is_a? String
+        @slug = name.split(" ").map { |w|
+          w.downcase.gsub(/[^\w]/, '')
+        }.join("-")
+      end
 
       # Use ".html" for file extension and url for path
       @ext  = ".html"
