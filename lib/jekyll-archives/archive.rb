@@ -2,7 +2,7 @@ module Jekyll
   class Archive
     include Convertible
 
-    attr_accessor :posts, :type, :name, :slug
+    attr_accessor :posts, :type, :title, :slug
     attr_accessor :data, :content, :output
     attr_accessor :path, :ext
     attr_accessor :site
@@ -11,25 +11,25 @@ module Jekyll
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
       type
-      name
+      title
     ]
 
     # Initialize a new Archive page
     #
     # site  - The Site object.
-    # name  - The name of the tag/category or a Hash of the year/month/day in case of date.
+    # title - The name of the tag/category or a Hash of the year/month/day in case of date.
     #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
     # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
     # posts - The array of posts that belong in this archive.
-    def initialize(site, name, type, posts)
+    def initialize(site, title, type, posts)
       @site  = site
       @posts = posts
       @type  = type
-      @name  = name
+      @title  = title
 
       # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-      if name.is_a? String
-        @slug = name.split(" ").map { |w|
+      if title.is_a? String
+        @slug = title.split(" ").map { |w|
           w.downcase.gsub(/[^\w]/, '')
         }.join("-")
       end
@@ -51,11 +51,11 @@ module Jekyll
       site.config['jekyll-archives']['permalinks'][type]
     end
 
-    # Returns a hash of URL placeholder names (as symbols) mapping to the
+    # Returns a hash of URL placeholder titles (as symbols) mapping to the
     # desired placeholder replacements. For details see "url.rb".
     def url_placeholders
-      if @name.is_a? Hash
-        @name.merge({ :type => @type })
+      if @title.is_a? Hash
+        @title.merge({ :type => @type })
       else
         { :name => @slug, :type => @type }
       end
@@ -76,7 +76,7 @@ module Jekyll
 
     # Add any necessary layouts to this post
     #
-    # layouts      - The Hash of {"name" => "layout"}.
+    # layouts      - The Hash of {"title" => "layout"}.
     # site_payload - The site payload Hash.
     #
     # Returns nothing.
@@ -121,7 +121,7 @@ module Jekyll
 
     # Returns the object as a debug String.
     def inspect
-      "#<Jekyll:Archive @type=#{@type.to_s} @name=#{@name}>"
+      "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title}>"
     end
 
     # Returns the Boolean of whether this Page is HTML or not.
