@@ -1,0 +1,8 @@
+language: ruby
+install:
+- bundle install --jobs=3
+rvm:
+- 2.1
+- 2.0
+- 1.9.3
+script: script/cibuild
