@@ -11,7 +11,6 @@ module Jekyll
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
       type
-      name
     ]
 
     # Initialize a new Archive page
@@ -95,6 +94,13 @@ module Jekyll
       further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map { |attribute|
         [attribute, send(attribute)]
       }]
+
+      further_data["name"] = if @name.is_a? Hash
+        args = @name.values.map { |s| s.to_i }
+        Date.new(*args)
+      else
+        @name
+      end
 
       Utils.deep_merge_hashes(data, further_data)
     end
