@@ -10,32 +10,33 @@ module Jekyll
     # Attributes for Liquid templates
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
+      title
       type
     ]
 
     # Initialize a new Archive page
     #
     # site  - The Site object.
-    # name  - The name of the tag/category or a Hash of the year/month/day in case of date.
+    # title - The name of the tag/category or a Hash of the year/month/day in case of date.
     #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
     # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
     # posts - The array of posts that belong in this archive.
-    def initialize(site, name, type, posts)
+    def initialize(site, title, type, posts)
       @site  = site
       @posts = posts
       @type  = type
-      @name  = name
+      @title = title
 
       # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-      if name.is_a? String
-        @slug = name.split(" ").map { |w|
+      if title.is_a? String
+        @slug = title.split(" ").map { |w|
           w.downcase.gsub(/[^\w]/, '')
         }.join("-")
       end
 
       # Use ".html" for file extension and url for path
       @ext  = ".html"
-      @path = url
+      @name = @path = url
 
       @data = {
         "layout" => site.config['jekyll-archives']['layout']
@@ -53,8 +54,8 @@ module Jekyll
     # Returns a hash of URL placeholder names (as symbols) mapping to the
     # desired placeholder replacements. For details see "url.rb".
     def url_placeholders
-      if @name.is_a? Hash
-        @name.merge({ :type => @type })
+      if @title.is_a? Hash
+        @title.merge({ :type => @type })
       else
         { :name => @slug, :type => @type }
       end
@@ -95,14 +96,20 @@ module Jekyll
         [attribute, send(attribute)]
       }]
 
-      further_data["name"] = if @name.is_a? Hash
-        args = @name.values.map { |s| s.to_i }
+      Utils.deep_merge_hashes(data, further_data)
+    end
+
+    # Produce a title object suitable for Liquid based on type of archive.
+    #
+    # Returns the title as a Date (for date-based archives) or a
+    # String (for tag and category archives)
+    def title
+      if @title.is_a? Hash
+        args = @title.values.map { |s| s.to_i }
         Date.new(*args)
       else
-        @name
+        @title
       end
-
-      Utils.deep_merge_hashes(data, further_data)
     end
 
     # Obtain destination path.
@@ -127,7 +134,7 @@ module Jekyll
 
     # Returns the object as a debug String.
     def inspect
-      "#<Jekyll:Archive @type=#{@type.to_s} @name=#{@name}>"
+      "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title}>"
     end
 
     # Returns the Boolean of whether this Page is HTML or not.
