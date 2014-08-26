@@ -3,7 +3,11 @@ require 'helper'
 class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
-      @site = fixture_site
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => true
+        }
+      })
       @site.read
       @archives = Jekyll::Archives.new(@site.config)
     end
@@ -48,7 +52,8 @@ class TestJekyllArchives < Minitest::Test
     setup do
       @site = fixture_site({
         "jekyll-archives" => {
-          "layout" => "archive-too"
+          "layout" => "archive-too",
+          "enabled" => true
         }
       })
       @site.read
@@ -65,6 +70,7 @@ class TestJekyllArchives < Minitest::Test
     setup do
       @site = fixture_site({
         "jekyll-archives" => {
+          "enabled" => true,
           "permalinks" => {
             "year" => "/year/:year/",
             "tag" => "/tag-:name.html",
@@ -86,12 +92,51 @@ class TestJekyllArchives < Minitest::Test
 
   context "the archives" do
     setup do
-      @site = fixture_site
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => true
+        }
+      })
       @site.process
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
       assert_equal 12, read_file("/length.html").to_i
+    end
+  end
+
+  context "the jekyll-archives plugin with default config" do
+    setup do
+      @site = fixture_site
+      @site.process
+    end
+
+    should "not generate any archives" do
+      assert_equal 0, read_file("/length.html").to_i
+    end
+  end
+
+  context "the jekyll-archives plugin with enabled array" do
+    setup do
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => ["tags"]
+        }
+      })
+      @site.process
+    end
+
+    should "generate the enabled archives" do
+      assert archive_exists? @site, "/tag/test-tag/"
+      assert archive_exists? @site, "/tag/tagged/"
+      assert archive_exists? @site, "/tag/new/"
+    end
+
+    should "not generate the disabled archives" do
+      assert !archive_exists?(@site, "/2014/")
+      assert !archive_exists?(@site, "/2014/08/")
+      assert !archive_exists?(@site, "/2013/08/16/")
+      assert !archive_exists?(@site, "/category/plugins/")
     end
   end
 end
