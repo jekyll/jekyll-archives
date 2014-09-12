@@ -9,6 +9,7 @@ module Jekyll
 
     DEFAULTS = {
       'layout' => 'archive',
+      'enabled' => [],
       'permalinks' => {
         'year' => '/:year/',
         'month' => '/:year/:month/',
@@ -46,20 +47,43 @@ module Jekyll
 
     # Read archive data from posts
     def read
-      tags.each do |title, posts|
-        @archives << Archive.new(@site, title, "tag", posts)
+      read_tags
+      read_categories
+      read_dates
+    end
+
+    def read_tags
+      if enabled? "tags"
+        tags.each do |name, posts|
+          @archives << Archive.new(@site, name, "tag", posts)
+        end
       end
-      categories.each do |title, posts|
-        @archives << Archive.new(@site, title, "category", posts)
+    end
+
+    def read_categories
+      if enabled? "categories"
+        categories.each do |name, posts|
+          @archives << Archive.new(@site, name, "category", posts)
+        end
       end
+    end
+
+    def read_dates
       years.each do |year, posts|
-        @archives << Archive.new(@site, { :year => year }, "year", posts)
+        @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
         months(posts).each do |month, posts|
-          @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts)
+          @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
           days(posts).each do |day, posts|
-            @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts)
+            @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
           end
         end
+      end
+    end
+
+    # Checks if archive type is enabled in config
+    def enabled?(archive)
+      @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
+        @config["enabled"].include? archive
       end
     end
 

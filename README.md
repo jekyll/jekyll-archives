@@ -3,6 +3,7 @@
 Automatically generate post archives by dates, tags, and categories.
 
 [![Gem Version](https://badge.fury.io/rb/jekyll-archives.png)](http://badge.fury.io/rb/jekyll-archives)
+[![Build Status](https://travis-ci.org/jekyll/jekyll-archives.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-archives)
 
 ## Usage
 
@@ -19,9 +20,24 @@ gems:
 
 ```yml
 jekyll-archives:
-  layout: archive                  # The layout to use for archive pages.
-  permalinks:
-    year:     '/archive/:name'     # The permalink to use for year-based archives.
-    tag:      '/tag/:name'         # The permalink to use for tag archives.
-    category: '/category/:name'    # The permalink to use for category archives.
+  layout: archive                  # The default layout to use for archive pages.
+  enabled:                         # Specifies which archives are enabled.
+    - year
+    - month
+    - tags
+  layouts:                         # (Optional) Specifies type-specific layouts.
+    year:     year-archive
+    month:    month-archive
+  permalinks:                      # (Optional) The permalinks to use for each archive.
+    year:     '/:year/'
+    month:    '/:year/:month/'
+    day:      '/:year/:month/:day'
+    tag:      '/tag/:name/'
+    category: '/category/:name/'
 ```
+
+### The `enabled` setting
+Archives are enabled based on the following configuration rules:
+- All archives are disabled by default.
+- All archives can be enabled by setting `enabled: true` or `enabled: all`.
+- Individual archives can be enabled by setting `enabled` to an array (see above example).
