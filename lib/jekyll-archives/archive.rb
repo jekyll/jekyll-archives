@@ -32,9 +32,7 @@ module Jekyll
 
       # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
       if title.is_a? String
-        @slug = title.split(" ").map { |w|
-          w.downcase.gsub(/[^\w]/, '')
-        }.join("-")
+        @slug = Utils.slugify(title)
       end
 
       # Use ".html" for file extension and url for path
