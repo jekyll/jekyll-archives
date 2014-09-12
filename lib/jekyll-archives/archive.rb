@@ -10,9 +10,11 @@ module Jekyll
     # Attributes for Liquid templates
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
+      type
       title
       name
-      type
+      path
+      url
     ]
 
     # Initialize a new Archive page
@@ -36,9 +38,9 @@ module Jekyll
       end
 
       # Use ".html" for file extension and url for path
-      @ext  = File.extname(destination('/'))
-      @path = url
-      @name = File.basename(destination('/'), @ext)
+      @ext  = File.extname(relative_path)
+      @path = relative_path
+      @name = File.basename(relative_path, @ext)
 
       @data = {
         "layout" => site.config['jekyll-archives']['layout']
@@ -120,7 +122,6 @@ module Jekyll
     #
     # Returns the destination file path String.
     def destination(dest)
-      @dest ||= dest
       path = Jekyll.sanitized_path(dest, URL.unescape_path(url))
       path = File.join(path, "index.html") if url =~ /\/$/
       path
@@ -130,7 +131,8 @@ module Jekyll
     #
     # Returns the destination relative path String.
     def relative_path
-      path = Pathname.new(destination(@dest)).relative_path_from Pathname.new(@dest)
+      path = URL.unescape_path(url).gsub(/^\//, '')
+      path = File.join(path, "index.html") if url =~ /\/$/
       path
     end
 

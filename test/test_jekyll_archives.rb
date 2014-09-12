@@ -14,37 +14,37 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages by year" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/2014/"
-      assert archive_exists? @site, "/2013/"
+      assert archive_exists? @site, "2014/index.html"
+      assert archive_exists? @site, "2013/index.html"
     end
 
     should "generate archive pages by month" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/2014/08/"
-      assert archive_exists? @site, "/2014/03/"
+      assert archive_exists? @site, "2014/08/index.html"
+      assert archive_exists? @site, "2014/03/index.html"
     end
 
     should "generate archive pages by day" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/2014/08/17/"
-      assert archive_exists? @site, "/2013/08/16/"
+      assert archive_exists? @site, "2014/08/17/index.html"
+      assert archive_exists? @site, "2013/08/16/index.html"
     end
 
     should "generate archive pages by tag" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/tag/test-tag/"
-      assert archive_exists? @site, "/tag/tagged/"
-      assert archive_exists? @site, "/tag/new/"
+      assert archive_exists? @site, "tag/test-tag/index.html"
+      assert archive_exists? @site, "tag/tagged/index.html"
+      assert archive_exists? @site, "tag/new/index.html"
     end
 
     should "generate archive pages by category" do
       @archives.generate(@site)
-      assert archive_exists? @site, "/category/plugins/"
+      assert archive_exists? @site, "category/plugins/index.html"
     end
 
     should "generate archive pages with a layout" do
       @site.process
-      assert_equal "Test", read_file("/tag/test-tag/index.html")
+      assert_equal "Test", read_file("tag/test-tag/index.html")
     end
   end
 
@@ -62,7 +62,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "use custom layout" do
       @site.process
-      assert_equal "Test too", read_file("/tag/test-tag/index.html")
+      assert_equal "Test too", read_file("tag/test-tag/index.html")
     end
   end
 
@@ -82,11 +82,11 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "use the right permalink" do
-      assert archive_exists? @site, "/year/2014/"
-      assert archive_exists? @site, "/year/2013/"
-      assert archive_exists? @site, "/tag-test-tag.html"
-      assert archive_exists? @site, "/tag-new.html"
-      assert archive_exists? @site, "/category-plugins.html"
+      assert archive_exists? @site, "year/2014/index.html"
+      assert archive_exists? @site, "year/2013/index.html"
+      assert archive_exists? @site, "tag-test-tag.html"
+      assert archive_exists? @site, "tag-new.html"
+      assert archive_exists? @site, "category-plugins.html"
     end
   end
 
@@ -101,7 +101,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
-      assert_equal 12, read_file("/length.html").to_i
+      assert_equal 12, read_file("length.html").to_i
     end
   end
 
@@ -112,7 +112,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "not generate any archives" do
-      assert_equal 0, read_file("/length.html").to_i
+      assert_equal 0, read_file("length.html").to_i
     end
   end
 
@@ -127,16 +127,16 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "generate the enabled archives" do
-      assert archive_exists? @site, "/tag/test-tag/"
-      assert archive_exists? @site, "/tag/tagged/"
-      assert archive_exists? @site, "/tag/new/"
+      assert archive_exists? @site, "tag/test-tag/index.html"
+      assert archive_exists? @site, "tag/tagged/index.html"
+      assert archive_exists? @site, "tag/new/index.html"
     end
 
     should "not generate the disabled archives" do
-      assert !archive_exists?(@site, "/2014/")
-      assert !archive_exists?(@site, "/2014/08/")
-      assert !archive_exists?(@site, "/2013/08/16/")
-      assert !archive_exists?(@site, "/category/plugins/")
+      assert !archive_exists?(@site, "2014/index.html")
+      assert !archive_exists?(@site, "2014/08/index.html")
+      assert !archive_exists?(@site, "2013/08/16/index.html")
+      assert !archive_exists?(@site, "category/plugins/index.html")
     end
   end
 end
