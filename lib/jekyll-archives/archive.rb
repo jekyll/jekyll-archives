@@ -11,6 +11,7 @@ module Jekyll
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
       title
+      name
       type
     ]
 
@@ -35,8 +36,9 @@ module Jekyll
       end
 
       # Use ".html" for file extension and url for path
-      @ext  = ".html"
-      @name = @path = url
+      @ext  = File.extname(destination('/'))
+      @path = url
+      @name = File.basename(destination('/'), @ext)
 
       @data = {
         "layout" => site.config['jekyll-archives']['layout']
