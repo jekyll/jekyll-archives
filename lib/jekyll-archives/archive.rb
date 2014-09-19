@@ -27,11 +27,9 @@ module Jekyll
       @type  = type
       @name  = name
 
-      # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
+      # Generate slug if tag or category
       if name.is_a? String
-        @slug = name.split(" ").map { |w|
-          w.downcase.gsub(/[^\w]/, '')
-        }.join("-")
+        @slug = Utils.slugify(name)
       end
 
       # Use ".html" for file extension and url for path
