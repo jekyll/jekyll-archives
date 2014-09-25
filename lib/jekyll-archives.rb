@@ -54,16 +54,16 @@ module Jekyll
 
     def read_tags
       if enabled? "tags"
-        tags.each do |name, posts|
-          @archives << Archive.new(@site, name, "tag", posts)
+        tags.each do |title, posts|
+          @archives << Archive.new(@site, title, "tag", posts)
         end
       end
     end
 
     def read_categories
       if enabled? "categories"
-        categories.each do |name, posts|
-          @archives << Archive.new(@site, name, "category", posts)
+        categories.each do |title, posts|
+          @archives << Archive.new(@site, title, "category", posts)
         end
       end
     end

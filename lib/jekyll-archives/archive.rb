@@ -11,32 +11,34 @@ module Jekyll
     ATTRIBUTES_FOR_LIQUID = %w[
       posts
       type
+      title
       name
+      path
+      url
     ]
 
     # Initialize a new Archive page
     #
     # site  - The Site object.
-    # name  - The name of the tag/category or a Hash of the year/month/day in case of date.
+    # title - The name of the tag/category or a Hash of the year/month/day in case of date.
     #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
     # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
     # posts - The array of posts that belong in this archive.
-    def initialize(site, name, type, posts)
+    def initialize(site, title, type, posts)
       @site  = site
       @posts = posts
       @type  = type
-      @name  = name
+      @title = title
 
       # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-      if name.is_a? String
-        @slug = name.split(" ").map { |w|
-          w.downcase.gsub(/[^\w]/, '')
-        }.join("-")
+      if title.is_a? String
+        @slug = Utils.slugify(title)
       end
 
       # Use ".html" for file extension and url for path
-      @ext  = ".html"
-      @path = url
+      @ext  = File.extname(relative_path)
+      @path = relative_path
+      @name = File.basename(relative_path, @ext)
 
       @data = {
         "layout" => site.config['jekyll-archives']['layout']
@@ -54,8 +56,8 @@ module Jekyll
     # Returns a hash of URL placeholder names (as symbols) mapping to the
     # desired placeholder replacements. For details see "url.rb".
     def url_placeholders
-      if @name.is_a? Hash
-        @name.merge({ :type => @type })
+      if @title.is_a? Hash
+        @title.merge({ :type => @type })
       else
         { :name => @slug, :type => @type }
       end
@@ -99,13 +101,25 @@ module Jekyll
       Utils.deep_merge_hashes(data, further_data)
     end
 
+    # Produce a title object suitable for Liquid based on type of archive.
+    #
+    # Returns the title as a Date (for date-based archives) or a
+    # String (for tag and category archives)
+    def title
+      if @title.is_a? Hash
+        args = @title.values.map { |s| s.to_i }
+        Date.new(*args)
+      else
+        @title
+      end
+    end
+
     # Obtain destination path.
     #
     # dest - The String path to the destination dir.
     #
     # Returns the destination file path String.
     def destination(dest)
-      @dest ||= dest
       path = Jekyll.sanitized_path(dest, URL.unescape_path(url))
       path = File.join(path, "index.html") if url =~ /\/$/
       path
@@ -115,13 +129,14 @@ module Jekyll
     #
     # Returns the destination relative path String.
     def relative_path
-      path = Pathname.new(destination(@dest)).relative_path_from Pathname.new(@dest)
+      path = URL.unescape_path(url).gsub(/^\//, '')
+      path = File.join(path, "index.html") if url =~ /\/$/
       path
     end
 
     # Returns the object as a debug String.
     def inspect
-      "#<Jekyll:Archive @type=#{@type.to_s} @name=#{@name}>"
+      "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title}>"
     end
 
     # Returns the Boolean of whether this Page is HTML or not.
