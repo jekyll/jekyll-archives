@@ -56,13 +56,32 @@ class TestJekyllArchives < Minitest::Test
           "enabled" => true
         }
       })
-      @site.read
-      @archives = Jekyll::Archives.new(@site.config)
+      @site.process
     end
 
     should "use custom layout" do
       @site.process
       assert_equal "Test too", read_file("tag/test-tag/index.html")
+    end
+  end
+
+  context "the jekyll-archives plugin with type-specific layout" do
+    setup do
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => true,
+          "layouts" => {
+            "year" => "archive-too"
+          }
+        }
+      })
+      @site.process
+    end
+
+    should "use custom layout for specific type only" do
+      assert_equal "Test too", read_file("/2014/index.html")
+      assert_equal "Test too", read_file("/2013/index.html")
+      assert_equal "Test", read_file("/tag/test-tag/index.html")
     end
   end
 
