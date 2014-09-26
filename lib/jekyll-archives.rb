@@ -4,7 +4,7 @@ module Jekyll
   module Archives
     # Internal requires
     autoload :Archive, 'jekyll-archives/archive'
-    autoload :VERSION, 'jekyll-archives/archive'
+    autoload :VERSION, 'jekyll-archives/version'
 
     class Archives < Jekyll::Generator
       safe true
