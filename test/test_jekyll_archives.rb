@@ -9,7 +9,7 @@ class TestJekyllArchives < Minitest::Test
         }
       })
       @site.read
-      @archives = Jekyll::Archives.new(@site.config)
+      @archives = Jekyll::Archives::Archives.new(@site.config)
     end
 
     should "generate archive pages by year" do

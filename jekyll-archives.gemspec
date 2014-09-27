@@ -1,8 +1,12 @@
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require 'jekyll-archives/version'
+
 Gem::Specification.new do |s|
   s.name        = "jekyll-archives"
   s.summary     = "Post archives for Jekyll."
   s.description = "Automatically generate post archives by dates, tags, and categories."
-  s.version     = "0.1.0"
+  s.version     = Jekyll::Archives::VERSION
   s.authors     = ["Alfred Xing"]
 
   s.homepage    = "https://github.com/jekyll/jekyll-archives"
