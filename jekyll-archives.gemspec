@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.licenses    = ["MIT"]
   s.files       = ["lib/jekyll-archives.rb", "lib/jekyll-archives/archive.rb"]
 
-  s.add_dependency "jekyll", '~> 2.0'
+  s.add_dependency "jekyll", '~> 2.4'
 
   s.add_development_dependency  'rake'
   s.add_development_dependency  'rdoc'
