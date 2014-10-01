@@ -44,7 +44,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages with a layout" do
       @site.process
-      assert_equal "Test", read_file("tag/test-tag/index.html")
+      assert_equal "2", read_file("tag/test-tag/index.html")
     end
   end
 
@@ -81,7 +81,7 @@ class TestJekyllArchives < Minitest::Test
     should "use custom layout for specific type only" do
       assert_equal "Test too", read_file("/2014/index.html")
       assert_equal "Test too", read_file("/2013/index.html")
-      assert_equal "Test", read_file("/tag/test-tag/index.html")
+      assert_equal "2", read_file("/tag/test-tag/index.html")
     end
   end
 
