@@ -120,7 +120,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
-      assert_equal 12, read_file("length.html").to_i
+      assert_equal 14, read_file("length.html").to_i
     end
   end
 
