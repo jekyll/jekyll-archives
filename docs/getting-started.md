@@ -1,11 +1,4 @@
-# Jekyll Archives
-
-Automatically generate post archives by dates, tags, and categories.
-
-[![Gem Version](https://badge.fury.io/rb/jekyll-archives.png)](http://badge.fury.io/rb/jekyll-archives)
-[![Build Status](https://travis-ci.org/jekyll/jekyll-archives.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-archives)
-
-## Getting started
+# Getting started
 
 ### Installation
 
