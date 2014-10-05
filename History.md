@@ -1,3 +1,8 @@
+## HEAD
+
+### Bug Fixes
+  * Change Jekyll dependency to ~> 2.4 (#23)
+
 ## 1.0.0 / 2014-09-26
 
 ### Major Enhancements
