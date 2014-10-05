@@ -32,10 +32,12 @@ jekyll-archives:
 |---|---|---|---|
 | `enabled` | String or Array | `'all'` or an array of any combination of `year`, `month`, `day`, `categories`, `tags` |
 ##### Description
-This option sets which types of archives will be created.
+This option sets which types of archives will be created. Must be set to an array of enabled archive types, or the string 'all' (to enable all archives).
 ##### Sample values
 ```yml
 enabled: all
+enabled:
+  - categories
 enabled:
   - year
   - month
@@ -52,8 +54,8 @@ enabled:
 Sets the default layout to use if no type-specific layout (see [Type-specific layouts](#type-specific-layouts) below) for an archive is specified.
 ##### Sample values
 ```yml
-layout: archive
-layout: custom-archive-layout
+layout: archive                  # _layouts/archive.html
+layout: custom-archive-layout    # _layouts/custom-archive-layout.html
 ```
 
 ---
@@ -94,5 +96,5 @@ These variables are:
 permalinks:
   year: '/archives/year/:year/'
   month: '/archives/month/:year-:month/'
-  tag: '/archives/tag/`
+  tag: '/archives/tag/:name/`
 ```
