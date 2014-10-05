@@ -1,5 +1,8 @@
 ## HEAD
 
+### Minor Enhancements
+  * Add documentation to repository (#25)
+
 ### Bug Fixes
   * Change Jekyll dependency to ~> 2.4 (#23)
 
