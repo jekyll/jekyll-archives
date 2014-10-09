@@ -13,6 +13,7 @@ module Jekyll
         posts
         type
         title
+        date
         name
         path
         url
@@ -116,14 +117,21 @@ module Jekyll
 
       # Produce a title object suitable for Liquid based on type of archive.
       #
-      # Returns the title as a Date (for date-based archives) or a
-      # String (for tag and category archives)
+      # Returns a String (for tag and category archives) and nil for
+      # date-based archives.
       def title
+        if @title.is_a? String
+          @title
+        end
+      end
+
+      # Produce a date object if a date-based archive
+      #
+      # Returns a Date.
+      def date
         if @title.is_a? Hash
           args = @title.values.map { |s| s.to_i }
           Date.new(*args)
-        else
-          @title
         end
       end
 
