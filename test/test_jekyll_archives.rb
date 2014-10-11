@@ -158,4 +158,43 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "category/plugins/index.html")
     end
   end
+
+  context "the jekyll-archives plugin" do
+    setup do
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => true
+        }
+      })
+      @site.process
+      @archives = @site.config["archives"]
+      @tag_archive = @archives.detect {|a| a.type == "tag"}
+      @category_archive = @archives.detect {|a| a.type == "category"}
+      @year_archive = @archives.detect {|a| a.type == "year"}
+      @month_archive = @archives.detect {|a| a.type == "month"}
+      @day_archive = @archives.detect {|a| a.type == "day"}
+    end
+
+    should "populate the title field in case of category or tag" do
+      assert @tag_archive.title.is_a? String
+      assert @category_archive.title.is_a? String
+    end
+
+    should "use nil for the title field in case of dates" do
+      assert @year_archive.title.nil?
+      assert @month_archive.title.nil?
+      assert @day_archive.title.nil?
+    end
+
+    should "use nil for the date field in case of category or tag" do
+      assert @tag_archive.date.nil?
+      assert @category_archive.date.nil?
+    end
+
+    should "populate the date field with a Date in case of dates" do
+      assert @year_archive.date.is_a? Date
+      assert @month_archive.date.is_a? Date
+      assert @day_archive.date.is_a? Date
+    end
+  end
 end
