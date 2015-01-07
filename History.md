@@ -1,6 +1,12 @@
 ## HEAD
 
 ### Minor Enhancements
+
+### Bug Fixes
+
+## 2.0.0 / 2015-01-06
+
+### Minor Enhancements
   * Add documentation to repository (#25)
 
 ### Bug Fixes
