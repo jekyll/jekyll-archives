@@ -31,7 +31,7 @@ This attribute contains a simple string indicating the type of the layout being 
 
 #### Year layout
 ```html
-<h1>Archive of posts from {{ page.title | date: "%Y" }}</h1>
+<h1>Archive of posts from {{ page.date | date: "%Y" }}</h1>
 
 <ul class="posts">
 {% for post in page.posts %}
@@ -45,7 +45,7 @@ This attribute contains a simple string indicating the type of the layout being 
 
 #### Month layout
 ```html
-<h1>Archive of posts from {{ page.title | date: "%B %Y" }}</h1>
+<h1>Archive of posts from {{ page.date | date: "%B %Y" }}</h1>
 
 <ul class="posts">
 {% for post in page.posts %}
@@ -59,7 +59,7 @@ This attribute contains a simple string indicating the type of the layout being 
 
 #### Day layout
 ```html
-<h1>Archive of posts from {{ page.title | date: "%B %-d, %Y" }}</h1>
+<h1>Archive of posts from {{ page.date | date: "%B %-d, %Y" }}</h1>
 
 <ul class="posts">
 {% for post in page.posts %}
