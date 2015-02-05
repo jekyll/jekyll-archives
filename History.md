@@ -1,6 +1,7 @@
 ## HEAD
 
 ### Minor Enhancements
+  * Update Jekyll dependency to allow Jekyll 3
 
 ### Bug Fixes
 
