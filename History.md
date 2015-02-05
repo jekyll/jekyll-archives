@@ -1,13 +1,14 @@
 ## HEAD
 
 ### Minor Enhancements
-  * Update Jekyll dependency to allow Jekyll 3
+  * Update Jekyll dependency to allow Jekyll 3 (#33)
 
 ### Bug Fixes
 
 ## 2.0.0 / 2015-01-06
 
 ### Minor Enhancements
+  * Move Date object from `page.title` to `page.date` (#26)
   * Add documentation to repository (#25)
 
 ### Bug Fixes
