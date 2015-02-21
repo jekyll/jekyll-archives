@@ -2,6 +2,7 @@
 
 ### Minor Enhancements
   * Update Jekyll dependency to allow Jekyll 3 (#33)
+  * Update docs to reflect changes in v2.0.0 (#31)
 
 ### Bug Fixes
 
