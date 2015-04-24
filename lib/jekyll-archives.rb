@@ -30,6 +30,8 @@ module Jekyll
       end
 
       def generate(site)
+        puts "       - Generating Archives..."
+        
         @site = site
         @posts = site.posts
         @archives = []
