@@ -6,6 +6,12 @@ module Jekyll
     autoload :Archive, 'jekyll-archives/archive'
     autoload :VERSION, 'jekyll-archives/version'
 
+    Jekyll::Hooks.register :site, :after_reset do |site|
+      # We need to disable incremental regen for Archives to generate with the
+      # correct content
+      site.regenerator.instance_variable_set(:@disabled, true)
+    end
+
     class Archives < Jekyll::Generator
       safe true
 
