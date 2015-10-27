@@ -131,7 +131,13 @@ module Jekyll
         # Build a hash map based on the specified post attribute ( post attr =>
         # array of posts ) then sort each array in reverse order.
         hash = Hash.new { |h, key| h[key] = [] }
-        @posts.each { |p| p.send(post_attr.to_sym).each { |t| hash[t] << p } }
+
+        # In Jekyll 3, Collection#each should be called on the #docs array directly.
+        if defined? @posts.docs
+          @posts.docs.each { |p| p.data[post_attr].each { |t| hash[t] << p } }
+        else
+          @posts.each { |p| p.send(post_attr.to_sym).each { |t| hash[t] << p } }
+        end
         hash.values.each { |posts| posts.sort!.reverse! }
         hash
       end
@@ -147,7 +153,13 @@ module Jekyll
       # Custom `post_attr_hash` method for years
       def years
         hash = Hash.new { |h, key| h[key] = [] }
-        @posts.each { |p| hash[p.date.strftime("%Y")] << p }
+
+        # In Jekyll 3, Collection#each should be called on the #docs array directly.
+        if defined? @posts.docs
+          @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
+        else
+          @posts.each { |p| hash[p.date.strftime("%Y")] << p }
+        end
         hash.values.each { |posts| posts.sort!.reverse! }
         hash
       end
