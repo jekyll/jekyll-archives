@@ -112,42 +112,12 @@ module Jekyll
         end
       end
 
-      # Construct a Hash of Posts indexed by the specified Post attribute.
-      #
-      # post_attr - The String name of the Post attribute.
-      #
-      # Examples
-      #
-      #   post_attr_hash('categories')
-      #   # => { 'tech' => [<Post A>, <Post B>],
-      #   #      'ruby' => [<Post B>] }
-      #
-      # Returns the Hash: { attr => posts } where
-      #   attr  - One of the values for the requested attribute.
-      #   posts - The Array of Posts with the given attr value.
-      #
-      # Taken from jekyll/jekyll (Copyright (c) 2014 Tom Preston-Werner under the MIT).
-      def post_attr_hash(post_attr)
-        # Build a hash map based on the specified post attribute ( post attr =>
-        # array of posts ) then sort each array in reverse order.
-        hash = Hash.new { |h, key| h[key] = [] }
-
-        # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if defined? @posts.docs
-          @posts.docs.each { |p| p.data[post_attr].each { |t| hash[t] << p } }
-        else
-          @posts.each { |p| p.send(post_attr.to_sym).each { |t| hash[t] << p } }
-        end
-        hash.values.each { |posts| posts.sort!.reverse! }
-        hash
-      end
-
       def tags
-        post_attr_hash('tags')
+        @site.post_attr_hash('tags')
       end
 
       def categories
-        post_attr_hash('categories')
+        @site.post_attr_hash('categories')
       end
 
       # Custom `post_attr_hash` method for years
