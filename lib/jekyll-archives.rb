@@ -125,7 +125,7 @@ module Jekyll
         hash = Hash.new { |h, key| h[key] = [] }
 
         # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if defined? @posts.docs
+        if Jekyll::VERSION >= '3.0.0' 
           @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
         else
           @posts.each { |p| hash[p.date.strftime("%Y")] << p }
