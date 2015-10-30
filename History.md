@@ -5,6 +5,7 @@
   * Update docs to reflect changes in v2.0.0 (#31)
   * Add compatibility with Jekyll 3 (#48)
   * Update to reflect release of Jekyll 3 (#52)
+  * Support revised documents/collections in Jekyll 3 (#53)
 
 ## Development Fixes
   * Test against Jekyll 2, 3, and GitHub Pages (#48)
