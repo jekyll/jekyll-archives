@@ -1,4 +1,4 @@
-## HEAD
+## 2.1.0 
 
 ### Minor Enhancements
   * Update Jekyll dependency to allow Jekyll 3 (#33)
