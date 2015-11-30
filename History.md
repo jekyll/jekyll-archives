@@ -1,3 +1,8 @@
+## HEAD
+
+### Minor Enhancements
+  * Don't limit slugs/title to strings
+
 ## 2.1.0 
 
 ### Minor Enhancements
