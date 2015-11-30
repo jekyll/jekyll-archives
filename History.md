@@ -1,7 +1,7 @@
 ## HEAD
 
 ### Minor Enhancements
-  * Don't limit slugs/title to strings
+  * Don't limit slugs/title to strings (#41)
 
 ## 2.1.0 
 
