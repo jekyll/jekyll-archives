@@ -34,8 +34,8 @@ module Jekyll
         @config = site.config['jekyll-archives']
 
         # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-        if title.is_a? String
-          @slug = Utils.slugify(title)
+        if title.to_s.length
+          @slug = Utils.slugify(title.to_s)
         end
 
         # Use ".html" for file extension and url for path
