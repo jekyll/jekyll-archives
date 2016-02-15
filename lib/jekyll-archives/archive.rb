@@ -47,6 +47,11 @@ module Jekyll
           "layout" => layout
         }
         @content = ""
+        
+       # set up dependencies
+        posts.each do |post|
+          site.regenerator.add_dependency(self.path, post.path)
+        end
       end
 
       # The template of the permalink.
