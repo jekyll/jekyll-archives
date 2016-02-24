@@ -100,7 +100,8 @@ module Jekyll
       # Write archives to their destination
       def write
         @archives.each do |archive|
-          archive.write(@site.dest)
+          archive.write(@site.dest) if archive.regenerate?
+          archive.add_dependencies
         end
       end
 
