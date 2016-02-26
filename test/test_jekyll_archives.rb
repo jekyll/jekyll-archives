@@ -65,6 +65,24 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
+  context "the jekyll-archives plugin with layout using {{ site.archives }}" do
+    setup do
+      @site = fixture_site({
+        "jekyll-archives" => {
+          "enabled" => true,
+          "layout" => "archive-site-archives"
+        }
+      })
+      @site.process
+    end
+
+    should "populate the {{ site.archives }} tag in archives layout" do
+      assert_equal 12, read_file("/2014/index.html").to_i
+      assert_equal 12, read_file("/2013/index.html").to_i
+      assert_equal 12, read_file("/tag/test-tag/index.html").to_i
+    end
+  end
+
   context "the jekyll-archives plugin with type-specific layout" do
     setup do
       @site = fixture_site({
