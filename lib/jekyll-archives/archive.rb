@@ -41,7 +41,7 @@ module Jekyll
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
-        @path = site.in_dest_dir(relative_path)
+        @path = relative_path
         @name = File.basename(relative_path, @ext)
 
         @data = {
