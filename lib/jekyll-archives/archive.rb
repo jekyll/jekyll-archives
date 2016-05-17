@@ -111,10 +111,12 @@ module Jekyll
 
       # Add dependencies for incremental mode
       def add_dependencies
-        archive_path = site.in_dest_dir(relative_path)
-        site.regenerator.add(archive_path)
-        @posts.each do |post|
-          site.regenerator.add_dependency(archive_path, post.path)
+        if defined? site.regenerator
+          archive_path = site.in_dest_dir(relative_path)
+          site.regenerator.add(archive_path)
+          @posts.each do |post|
+            site.regenerator.add_dependency(archive_path, post.path)
+          end
         end
       end
       
@@ -170,7 +172,11 @@ module Jekyll
       end
 
       def regenerate?
-        site.regenerator.regenerate?(self)
+        if defined? site.regenerator
+          site.regenerator.regenerate?(self)
+        else
+          true
+        end
       end
 
       # Returns the object as a debug String.
