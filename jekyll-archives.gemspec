@@ -1,6 +1,6 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jekyll-archives/version'
+require "jekyll-archives/version"
 
 Gem::Specification.new do |s|
   s.name        = "jekyll-archives"
@@ -13,10 +13,11 @@ Gem::Specification.new do |s|
   s.licenses    = ["MIT"]
   s.files       = ["lib/jekyll-archives.rb", "lib/jekyll-archives/archive.rb"]
 
-  s.add_dependency "jekyll", '>= 2.4'
+  s.add_dependency "jekyll", ">= 2.4"
 
-  s.add_development_dependency  'rake'
-  s.add_development_dependency  'rdoc'
-  s.add_development_dependency  'shoulda'
-  s.add_development_dependency  'minitest'
+  s.add_development_dependency  "rake"
+  s.add_development_dependency  "rdoc"
+  s.add_development_dependency  "shoulda"
+  s.add_development_dependency  "minitest"
+  s.add_development_dependency  "rubocop"
 end

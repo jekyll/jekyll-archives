@@ -9,7 +9,7 @@ module Jekyll
       attr_accessor :site
 
       # Attributes for Liquid templates
-      ATTRIBUTES_FOR_LIQUID = %w[
+      ATTRIBUTES_FOR_LIQUID = %w(
         posts
         type
         title
@@ -17,7 +17,7 @@ module Jekyll
         name
         path
         url
-      ]
+      ).freeze
 
       # Initialize a new Archive page
       #
@@ -31,7 +31,7 @@ module Jekyll
         @posts  = posts
         @type   = type
         @title  = title
-        @config = site.config['jekyll-archives']
+        @config = site.config["jekyll-archives"]
 
         # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
         if title.to_s.length
@@ -53,17 +53,17 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config['permalinks'][type]
+        @config["permalinks"][type]
       end
 
       # The layout to use for rendering
       #
       # Returns the layout as a String
       def layout
-        if @config['layouts'] && @config['layouts'][type]
-          @config['layouts'][type]
+        if @config["layouts"] && @config["layouts"][type]
+          @config["layouts"][type]
         else
-          @config['layout']
+          @config["layout"]
         end
       end
 
@@ -82,12 +82,12 @@ module Jekyll
       # Returns the String url.
       def url
         @url ||= URL.new({
-          :template => template,
+          :template     => template,
           :placeholders => url_placeholders,
-          :permalink => nil
+          :permalink    => nil
         }).to_s
       rescue ArgumentError
-        raise ArgumentError.new "Template \"#{template}\" provided is invalid."
+        raise ArgumentError, "Template \"#{template}\" provided is invalid."
       end
 
       # Add any necessary layouts to this post
@@ -108,9 +108,9 @@ module Jekyll
       #
       # Returns the Hash representation of this Convertible.
       def to_liquid(attrs = nil)
-        further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map { |attribute|
+        further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map do |attribute|
           [attribute, send(attribute)]
-        }]
+        end]
 
         Utils.deep_merge_hashes(data, further_data)
       end
@@ -130,7 +130,7 @@ module Jekyll
       # Returns a Date.
       def date
         if @title.is_a? Hash
-          args = @title.values.map { |s| s.to_i }
+          args = @title.values.map(&:to_i)
           Date.new(*args)
         end
       end
@@ -150,14 +150,14 @@ module Jekyll
       #
       # Returns the destination relative path String.
       def relative_path
-        path = URL.unescape_path(url).gsub(/^\//, '')
+        path = URL.unescape_path(url).gsub(/^\//, "")
         path = File.join(path, "index.html") if url =~ /\/$/
         path
       end
 
       # Returns the object as a debug String.
       def inspect
-        "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title} @data=#{@data.inspect}>"
+        "#<Jekyll:Archive @type=#{@type} @title=#{@title} @data=#{@data.inspect}>"
       end
 
       # Returns the Boolean of whether this Page is HTML or not.
