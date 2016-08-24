@@ -3,6 +3,9 @@
 ### Minor Enhancements
   * Don't limit slugs/title to strings (#41)
 
+### Development Fixes
+  * Update Travis config and Gemfile for Ruby < 2.2.2 support (#68)
+
 ## 2.1.0 
 
 ### Minor Enhancements
@@ -12,7 +15,7 @@
   * Update to reflect release of Jekyll 3 (#52)
   * Support revised documents/collections in Jekyll 3 (#53)
 
-## Development Fixes
+### Development Fixes
   * Test against Jekyll 2, 3, and GitHub Pages (#48)
 
 ### Bug Fixes
