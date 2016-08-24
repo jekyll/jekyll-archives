@@ -45,13 +45,8 @@ module Jekyll
         @site.config['jekyll-archives'] = @config
 
         read
-        render
-        write
+        @site.pages.concat(@archives)
 
-        @site.keep_files ||= []
-        @archives.each do |archive|
-          @site.keep_files << archive.relative_path
-        end
         @site.config["archives"] = @archives
       end
 
@@ -94,21 +89,6 @@ module Jekyll
       def enabled?(archive)
         @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
           @config["enabled"].include? archive
-        end
-      end
-
-      # Renders the archives into the layouts
-      def render
-        payload = @site.site_payload
-        @archives.each do |archive|
-          archive.render(@site.layouts, payload)
-        end
-      end
-
-      # Write archives to their destination
-      def write
-        @archives.each do |archive|
-          archive.write(@site.dest)
         end
       end
 

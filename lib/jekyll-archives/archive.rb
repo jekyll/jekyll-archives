@@ -1,15 +1,11 @@
 module Jekyll
   module Archives
-    class Archive
-      include Convertible
+    class Archive < Jekyll::Page
 
-      attr_accessor :posts, :type, :name, :slug
-      attr_accessor :data, :content, :output
-      attr_accessor :path, :ext
-      attr_accessor :site
+      attr_accessor :posts, :type, :slug
 
       # Attributes for Liquid templates
-      ATTRIBUTES_FOR_LIQUID = %w[
+      ATTRIBUTES_FOR_LIQUID = %w(
         posts
         type
         title
@@ -17,7 +13,7 @@ module Jekyll
         name
         path
         url
-      ]
+      ).freeze
 
       # Initialize a new Archive page
       #
@@ -90,31 +86,6 @@ module Jekyll
         raise ArgumentError.new "Template \"#{template}\" provided is invalid."
       end
 
-      # Add any necessary layouts to this post
-      #
-      # layouts      - The Hash of {"name" => "layout"}.
-      # site_payload - The site payload Hash.
-      #
-      # Returns nothing.
-      def render(layouts, site_payload)
-        payload = Utils.deep_merge_hashes({
-          "page" => to_liquid
-        }, site_payload)
-
-        do_layout(payload, layouts)
-      end
-
-      # Convert this Convertible's data to a Hash suitable for use by Liquid.
-      #
-      # Returns the Hash representation of this Convertible.
-      def to_liquid(attrs = nil)
-        further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map { |attribute|
-          [attribute, send(attribute)]
-        }]
-
-        Utils.deep_merge_hashes(data, further_data)
-      end
-
       # Produce a title object suitable for Liquid based on type of archive.
       #
       # Returns a String (for tag and category archives) and nil for
@@ -135,17 +106,6 @@ module Jekyll
         end
       end
 
-      # Obtain destination path.
-      #
-      # dest - The String path to the destination dir.
-      #
-      # Returns the destination file path String.
-      def destination(dest)
-        path = Jekyll.sanitized_path(dest, URL.unescape_path(url))
-        path = File.join(path, "index.html") if url =~ /\/$/
-        path
-      end
-
       # Obtain the write path relative to the destination directory
       #
       # Returns the destination relative path String.
@@ -158,11 +118,6 @@ module Jekyll
       # Returns the object as a debug String.
       def inspect
         "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title} @data=#{@data.inspect}>"
-      end
-
-      # Returns the Boolean of whether this Page is HTML or not.
-      def html?
-        true
       end
     end
   end
