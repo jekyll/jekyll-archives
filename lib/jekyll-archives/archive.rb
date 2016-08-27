@@ -97,9 +97,8 @@ module Jekyll
       #
       # Returns nothing.
       def render(layouts, site_payload)
-        payload = Utils.deep_merge_hashes({
-          "page" => to_liquid
-        }, site_payload)
+        payload = site_payload.dup
+        payload["page"] = to_liquid
 
         do_layout(payload, layouts)
       end
