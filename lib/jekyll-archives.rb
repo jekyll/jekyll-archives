@@ -45,14 +45,15 @@ module Jekyll
         @site.config['jekyll-archives'] = @config
 
         read
-        render
-        write
 
         @site.keep_files ||= []
         @archives.each do |archive|
           @site.keep_files << archive.relative_path
         end
         @site.config["archives"] = @archives
+
+        render
+        write
       end
 
       # Read archive data from posts
