@@ -13,7 +13,6 @@ module Jekyll
         name
         path
         url
-        permalink
       ).freeze
 
       # Initialize a new Archive page
@@ -31,8 +30,8 @@ module Jekyll
         @config = site.config['jekyll-archives']
 
         # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-        if title.is_a? String
-          @slug = Utils.slugify(title)
+        if title.to_s.length
+          @slug = Utils.slugify(title.to_s)
         end
 
         # Use ".html" for file extension and url for path
@@ -87,10 +86,6 @@ module Jekyll
         raise ArgumentError.new "Template \"#{template}\" provided is invalid."
       end
 
-      def permalink
-        data && data.is_a?(Hash) && data['permalink']
-      end
-
       # Produce a title object suitable for Liquid based on type of archive.
       #
       # Returns a String (for tag and category archives) and nil for
@@ -108,25 +103,6 @@ module Jekyll
         if @title.is_a? Hash
           args = @title.values.map { |s| s.to_i }
           Date.new(*args)
-        end
-      end
-
-      # Add dependencies for incremental mode
-      def add_dependencies
-        if defined? site.regenerator
-          archive_path = site.in_dest_dir(relative_path)
-          site.regenerator.add(archive_path)
-          @posts.each do |post|
-            site.regenerator.add_dependency(archive_path, post.path)
-          end
-        end
-      end
-
-      def regenerate?
-        if defined? site.regenerator
-          site.regenerator.regenerate?(self)
-        else
-          true
         end
       end
 

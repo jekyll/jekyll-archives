@@ -6,6 +6,14 @@ module Jekyll
     autoload :Archive, 'jekyll-archives/archive'
     autoload :VERSION, 'jekyll-archives/version'
 
+    if (Jekyll.const_defined? :Hooks)
+      Jekyll::Hooks.register :site, :after_reset do |site|
+        # We need to disable incremental regen for Archives to generate with the
+        # correct content
+        site.regenerator.instance_variable_set(:@disabled, true)
+      end
+    end
+
     class Archives < Jekyll::Generator
       safe true
 
@@ -84,16 +92,40 @@ module Jekyll
         end
       end
 
-      # Write archives to their destination
-      def write
-        @archives.each do |archive|
-          archive.write(@site.dest) if archive.regenerate?
-          archive.add_dependencies
+      # Helper method for tags
+      # Receives an array of strings
+      # Returns an array of strings without dashes
+      def remove_dashes(tags)
+        cleaned_tags = []
+        tags.each do |tag|
+          cleaned_tags << tag.gsub(/-/, ' ').squeeze
         end
+        cleaned_tags
       end
 
+      # Helper method for tags
+      # Receives a post, and an external hash
+      # Assigns posts associated with particular tags to the provided hash.
+      def post_attr_tags(post, hash)
+        post.data['tags'] ||= []
+        post.data['tags'] = remove_dashes(post.data['tags'])
+        post.data['tags'].each { |t| hash[t] << post } if post.data['tags']
+      end
+
+      # Custom `post_attr_hash` method for tags
       def tags
-        @site.post_attr_hash('tags')
+        hash = Hash.new { |h, key| h[key] = [] }
+
+        # In Jekyll 3, Collection#each should be called on the #docs array directly.
+        if Jekyll::VERSION >= '3.0.0'
+          @posts.docs.each do |p|
+            post_attr_tags(p, hash)
+          end
+        else
+          @posts.each { |p| post_attr_tags(p, hash) }
+        end
+        hash.values.each { |posts| posts.sort!.reverse! }
+        hash
       end
 
       def categories
