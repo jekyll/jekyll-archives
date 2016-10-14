@@ -6,14 +6,6 @@ module Jekyll
     autoload :Archive, 'jekyll-archives/archive'
     autoload :VERSION, 'jekyll-archives/version'
 
-    if (Jekyll.const_defined? :Hooks)
-      Jekyll::Hooks.register :site, :after_reset do |site|
-        # We need to disable incremental regen for Archives to generate with the
-        # correct content
-        site.regenerator.instance_variable_set(:@disabled, true)
-      end
-    end
-
     class Archives < Jekyll::Generator
       safe true
 
@@ -92,6 +84,14 @@ module Jekyll
         end
       end
 
+      # Write archives to their destination
+      def write
+        @archives.each do |archive|
+          archive.write(@site.dest) if archive.regenerate?
+          archive.add_dependencies
+        end
+      end
+
       def tags
         @site.post_attr_hash('tags')
       end
@@ -105,7 +105,7 @@ module Jekyll
         hash = Hash.new { |h, key| h[key] = [] }
 
         # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if Jekyll::VERSION >= '3.0.0' 
+        if Jekyll::VERSION >= '3.0.0'
           @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
         else
           @posts.each { |p| hash[p.date.strftime("%Y")] << p }
