@@ -98,7 +98,7 @@ module Jekyll
       def remove_dashes(tags)
         cleaned_tags = []
         tags.each do |tag|
-          cleaned_tags << tag.gsub(/-/, ' ').squeeze
+          cleaned_tags << tag.gsub(/-/, ' ')
         end
         cleaned_tags
       end
