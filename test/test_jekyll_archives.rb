@@ -16,18 +16,21 @@ class TestJekyllArchives < Minitest::Test
       @archives.generate(@site)
       assert archive_exists? @site, "2014/index.html"
       assert archive_exists? @site, "2013/index.html"
+      assert archive_exists? @site, "2016/index.html"
     end
 
     should "generate archive pages by month" do
       @archives.generate(@site)
       assert archive_exists? @site, "2014/08/index.html"
       assert archive_exists? @site, "2014/03/index.html"
+      assert archive_exists? @site, "2016/11/index.html"
     end
 
     should "generate archive pages by day" do
       @archives.generate(@site)
       assert archive_exists? @site, "2014/08/17/index.html"
       assert archive_exists? @site, "2013/08/16/index.html"
+      assert archive_exists? @site, "2016/11/09/index.html"
     end
 
     should "generate archive pages by tag" do
@@ -35,6 +38,8 @@ class TestJekyllArchives < Minitest::Test
       assert archive_exists? @site, "tag/test-tag/index.html"
       assert archive_exists? @site, "tag/tagged/index.html"
       assert archive_exists? @site, "tag/new/index.html"
+      assert archive_exists? @site, "tag/words-with-dashes/index.html"
+      assert archive_exists? @site, "tag/words-with-spaces/index.html"
     end
 
     should "generate archive pages by category" do
@@ -120,7 +125,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
-      assert_equal 12, read_file("length.html").to_i
+      assert_equal 17, read_file("length.html").to_i
     end
   end
 
@@ -173,6 +178,10 @@ class TestJekyllArchives < Minitest::Test
       @year_archive = @archives.detect {|a| a.type == "year"}
       @month_archive = @archives.detect {|a| a.type == "month"}
       @day_archive = @archives.detect {|a| a.type == "day"}
+    end
+
+    should "populate the {{ site.tags }} with tags that do not contain dashes" do
+      !@tag_archive.title.include? '-'
     end
 
     should "populate the title field in case of category or tag" do

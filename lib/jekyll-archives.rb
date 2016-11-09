@@ -92,8 +92,40 @@ module Jekyll
         end
       end
 
+      # Helper method for tags
+      # Receives an array of strings
+      # Returns an array of strings without dashes
+      def remove_dashes(tags)
+        cleaned_tags = []
+        tags.each do |tag|
+          cleaned_tags << tag.gsub(/-/, ' ')
+        end
+        cleaned_tags
+      end
+
+      # Helper method for tags
+      # Receives a post, and an external hash
+      # Assigns posts associated with particular tags to the provided hash.
+      def post_attr_tags(post, hash)
+        post.data['tags'] ||= []
+        post.data['tags'] = remove_dashes(post.data['tags'])
+        post.data['tags'].each { |t| hash[t] << post } if post.data['tags']
+      end
+
+      # Custom `post_attr_hash` method for tags
       def tags
-        @site.post_attr_hash('tags')
+        hash = Hash.new { |h, key| h[key] = [] }
+
+        # In Jekyll 3, Collection#each should be called on the #docs array directly.
+        if Jekyll::VERSION >= '3.0.0'
+          @posts.docs.each do |p|
+            post_attr_tags(p, hash)
+          end
+        else
+          @posts.each { |p| post_attr_tags(p, hash) }
+        end
+        hash.values.each { |posts| posts.sort!.reverse! }
+        hash
       end
 
       def categories
@@ -105,7 +137,7 @@ module Jekyll
         hash = Hash.new { |h, key| h[key] = [] }
 
         # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if Jekyll::VERSION >= '3.0.0' 
+        if Jekyll::VERSION >= '3.0.0'
           @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
         else
           @posts.each { |p| hash[p.date.strftime("%Y")] << p }
