@@ -6,14 +6,6 @@ module Jekyll
     autoload :Archive, "jekyll-archives/archive"
     autoload :VERSION, "jekyll-archives/version"
 
-    if Jekyll.const_defined? :Hooks
-      Jekyll::Hooks.register :site, :after_reset do |site|
-        # We need to disable incremental regen for Archives to generate with the
-        # correct content
-        site.regenerator.instance_variable_set(:@disabled, true)
-      end
-    end
-
     class Archives < Jekyll::Generator
       safe true
 
@@ -45,13 +37,8 @@ module Jekyll
         @site.config["jekyll-archives"] = @config
 
         read
-        render
-        write
+        @site.pages.concat(@archives)
 
-        @site.keep_files ||= []
-        @archives.each do |archive|
-          @site.keep_files << archive.relative_path
-        end
         @site.config["archives"] = @archives
       end
 
@@ -108,7 +95,8 @@ module Jekyll
       # Write archives to their destination
       def write
         @archives.each do |archive|
-          archive.write(@site.dest)
+          archive.write(@site.dest) if archive.regenerate?
+          archive.add_dependencies
         end
       end
 
