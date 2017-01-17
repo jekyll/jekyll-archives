@@ -4,6 +4,7 @@
 
   * Make Archive subclass of Page (#67)
   * Don't limit slugs/title to strings (#41)
+  * Enable incremental operation (#58)
 
 ### Development Fixes
 
@@ -23,8 +24,6 @@
 ### Development Fixes
 
   * Test against Jekyll 2, 3, and GitHub Pages (#48)
-
-
 
 ## 2.0.0 / 2015-01-06
 
