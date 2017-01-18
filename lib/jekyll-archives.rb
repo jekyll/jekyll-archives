@@ -22,10 +22,15 @@ module Jekyll
       }
 
       def initialize(config = nil)
+        @configs = []
         if config['jekyll-archives'].nil?
-          @config = DEFAULTS
+          @configs << DEFAULTS
+        elsif config['jekyll-archives'].is_a? Array
+          config['jekyll-archives'].each do |c|
+            @configs << Utils.deep_merge_hashes(DEFAULTS, c)
+          end
         else
-          @config = Utils.deep_merge_hashes(DEFAULTS, config['jekyll-archives'])
+          @configs << Utils.deep_merge_hashes(DEFAULTS, config['jekyll-archives'])
         end
       end
 
@@ -34,9 +39,12 @@ module Jekyll
         @posts = site.posts
         @archives = []
 
-        @site.config['jekyll-archives'] = @config
+        @configs.each do |c|
+          @config = c
+          @site.config['jekyll-archives'] = @config
+          read
+        end
 
-        read
         @site.pages.concat(@archives)
 
         @site.config["archives"] = @archives
