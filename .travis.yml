@@ -15,6 +15,3 @@ matrix:
     - # GitHub Pages
       rvm: 2.1.1
       env: GH_PAGES=true
-    - # Ruby 1.9
-      rvm: 1.9
-      env: JEKYLL_VERSION=2.0
