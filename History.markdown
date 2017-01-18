@@ -10,6 +10,7 @@
 
   * Update Travis config and Gemfile for Ruby < 2.2.2 support (#68)
   * Consolidate History file to work with jekyllbot (#80)
+  * Remove Travis test for Ruby 1.9 (#87)
 
 ## 2.1.0
 
