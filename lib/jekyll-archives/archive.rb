@@ -168,6 +168,7 @@ module Jekyll
       def inspect
         "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title} @data=#{@data.inspect}>"
       end
+
     end
   end
 end
