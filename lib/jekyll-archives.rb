@@ -84,22 +84,6 @@ module Jekyll
         end
       end
 
-      # Renders the archives into the layouts
-      def render
-        payload = @site.site_payload
-        @archives.each do |archive|
-          archive.render(@site.layouts, payload)
-        end
-      end
-
-      # Write archives to their destination
-      def write
-        @archives.each do |archive|
-          archive.write(@site.dest) if archive.regenerate?
-          archive.add_dependencies
-        end
-      end
-
       def tags
         @site.post_attr_hash('tags')
       end
