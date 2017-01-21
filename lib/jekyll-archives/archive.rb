@@ -1,7 +1,6 @@
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
-
       attr_accessor :posts, :type, :slug
 
       # Attributes for Liquid templates
@@ -30,10 +29,9 @@ module Jekyll
         @title  = title
         @config = site.config["jekyll-archives"]
 
-        # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-        if title.is_a? String
-          @slug = Utils.slugify(title)
-        end
+        # Generate slug if tag or category
+        # (taken from jekyll/jekyll/features/support/env.rb)
+        @slug = Utils.slugify(title) if title.is_a? String
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -68,7 +66,7 @@ module Jekyll
       # desired placeholder replacements. For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
-          @title.merge({ :type => @type })
+          @title.merge(:type => @type)
         else
           { :name => @slug, :type => @type }
         end
@@ -88,7 +86,7 @@ module Jekyll
       end
 
       def permalink
-        data && data.is_a?(Hash) && data['permalink']
+        data && data.is_a?(Hash) && data["permalink"]
       end
 
       # Add any necessary layouts to this post
@@ -115,7 +113,7 @@ module Jekyll
           end
         end
       end
-      
+
       # Convert this Convertible's data to a Hash suitable for use by Liquid.
       #
       # Returns the Hash representation of this Convertible.
@@ -132,9 +130,7 @@ module Jekyll
       # Returns a String (for tag and category archives) and nil for
       # date-based archives.
       def title
-        if @title.is_a? String
-          @title
-        end
+        @title if @title.is_a? String
       end
 
       # Produce a date object if a date-based archive
@@ -151,8 +147,8 @@ module Jekyll
       #
       # Returns the destination relative path String.
       def relative_path
-        path = URL.unescape_path(url).gsub(/^\//, "")
-        path = File.join(path, "index.html") if url =~ /\/$/
+        path = URL.unescape_path(url).gsub(%r!^\/!, "")
+        path = File.join(path, "index.html") if url =~ %r!\/$!
         path
       end
 

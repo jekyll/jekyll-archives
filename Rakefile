@@ -1,7 +1,7 @@
 # From jekyll/jekyll-mentions
 
-require 'rubygems'
-require 'bundler'
+require "rubygems"
+require "bundler"
 
 begin
   Bundler.setup(:default, :development, :test)
@@ -11,25 +11,22 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 
-
 # Test task
 
-require 'rake'
-require 'rake/testtask'
+require "rake"
+require "rake/testtask"
 
 Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+  test.libs << "lib" << "test"
+  test.pattern = "test/**/test_*.rb"
 end
 
-task :default => 'test'
-
+task :default => "test"
 
 # Release task
 
 def name
-  @name ||= File.basename(Dir['*.gemspec'].first, ".*")
+  @name ||= File.basename(Dir["*.gemspec"].first, ".*")
 end
 
 def version
@@ -46,7 +43,7 @@ end
 
 desc "Release #{name} v#{version}"
 task :release => :build do
-  unless `git branch` =~ /^\* master$/
+  unless `git branch` =~ %r!^\* master$!
     puts "You must be on the master branch to release!"
     exit!
   end

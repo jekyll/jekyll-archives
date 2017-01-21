@@ -3,10 +3,8 @@ require "helper"
 class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.read
       @archives = Jekyll::Archives::Archives.new(@site.config)
@@ -50,11 +48,9 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with custom layout path" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "layout"  => "archive-too",
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "layout"  => "archive-too",
+        "enabled" => true
       })
       @site.process
     end
@@ -111,10 +107,8 @@ class TestJekyllArchives < Minitest::Test
 
   context "the archives" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.process
     end
@@ -137,10 +131,8 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with enabled array" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => ["tags"]
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => ["tags"]
       })
       @site.process
     end
@@ -161,10 +153,8 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.process
       @archives = @site.config["archives"]
