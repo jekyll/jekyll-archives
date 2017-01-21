@@ -91,20 +91,6 @@ module Jekyll
         data && data.is_a?(Hash) && data['permalink']
       end
 
-      # Add any necessary layouts to this post
-      #
-      # layouts      - The Hash of {"name" => "layout"}.
-      # site_payload - The site payload Hash.
-      #
-      # Returns nothing.
-      def render(layouts, site_payload)
-        payload = Utils.deep_merge_hashes({
-          "page" => to_liquid
-        }, site_payload)
-
-        do_layout(payload, layouts)
-      end
-
       # Add dependencies for incremental mode
       def add_dependencies
         if defined? site.regenerator
@@ -114,17 +100,6 @@ module Jekyll
             site.regenerator.add_dependency(archive_path, post.path)
           end
         end
-      end
-      
-      # Convert this Convertible's data to a Hash suitable for use by Liquid.
-      #
-      # Returns the Hash representation of this Convertible.
-      def to_liquid(attrs = nil)
-        further_data = Hash[(attrs || self.class::ATTRIBUTES_FOR_LIQUID).map { |attribute|
-          [attribute, send(attribute)]
-        }]
-
-        Utils.deep_merge_hashes(data, further_data)
       end
 
       # Produce a title object suitable for Liquid based on type of archive.
