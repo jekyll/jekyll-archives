@@ -1,7 +1,6 @@
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
-
       attr_accessor :posts, :type, :slug
 
       # Attributes for Liquid templates
@@ -28,12 +27,11 @@ module Jekyll
         @posts  = posts
         @type   = type
         @title  = title
-        @config = site.config['jekyll-archives']
+        @config = site.config["jekyll-archives"]
 
-        # Generate slug if tag or category (taken from jekyll/jekyll/features/support/env.rb)
-        if title.is_a? String
-          @slug = Utils.slugify(title)
-        end
+        # Generate slug if tag or category
+        # (taken from jekyll/jekyll/features/support/env.rb)
+        @slug = Utils.slugify(title) if title.is_a? String
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -50,17 +48,17 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config['permalinks'][type]
+        @config["permalinks"][type]
       end
 
       # The layout to use for rendering
       #
       # Returns the layout as a String
       def layout
-        if @config['layouts'] && @config['layouts'][type]
-          @config['layouts'][type]
+        if @config["layouts"] && @config["layouts"][type]
+          @config["layouts"][type]
         else
-          @config['layout']
+          @config["layout"]
         end
       end
 
@@ -68,7 +66,7 @@ module Jekyll
       # desired placeholder replacements. For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
-          @title.merge({ :type => @type })
+          @title.merge(:type => @type)
         else
           { :name => @slug, :type => @type }
         end
@@ -79,16 +77,16 @@ module Jekyll
       # Returns the String url.
       def url
         @url ||= URL.new({
-          :template => template,
+          :template     => template,
           :placeholders => url_placeholders,
-          :permalink => nil
+          :permalink    => nil
         }).to_s
       rescue ArgumentError
-        raise ArgumentError.new "Template \"#{template}\" provided is invalid."
+        raise ArgumentError, "Template \"#{template}\" provided is invalid."
       end
 
       def permalink
-        data && data.is_a?(Hash) && data['permalink']
+        data && data.is_a?(Hash) && data["permalink"]
       end
 
       # Add dependencies for incremental mode
@@ -107,9 +105,7 @@ module Jekyll
       # Returns a String (for tag and category archives) and nil for
       # date-based archives.
       def title
-        if @title.is_a? String
-          @title
-        end
+        @title if @title.is_a? String
       end
 
       # Produce a date object if a date-based archive
@@ -117,7 +113,7 @@ module Jekyll
       # Returns a Date.
       def date
         if @title.is_a? Hash
-          args = @title.values.map { |s| s.to_i }
+          args = @title.values.map(&:to_i)
           Date.new(*args)
         end
       end
@@ -126,8 +122,8 @@ module Jekyll
       #
       # Returns the destination relative path String.
       def relative_path
-        path = URL.unescape_path(url).gsub(/^\//, '')
-        path = File.join(path, "index.html") if url =~ /\/$/
+        path = URL.unescape_path(url).gsub(%r!^\/!, "")
+        path = File.join(path, "index.html") if url =~ %r!\/$!
         path
       end
 
@@ -141,7 +137,7 @@ module Jekyll
 
       # Returns the object as a debug String.
       def inspect
-        "#<Jekyll:Archive @type=#{@type.to_s} @title=#{@title} @data=#{@data.inspect}>"
+        "#<Jekyll:Archive @type=#{@type} @title=#{@title} @data=#{@data.inspect}>"
       end
     end
   end
