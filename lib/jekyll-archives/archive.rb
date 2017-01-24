@@ -89,17 +89,6 @@ module Jekyll
         data && data.is_a?(Hash) && data["permalink"]
       end
 
-      # Add dependencies for incremental mode
-      def add_dependencies
-        if defined? site.regenerator
-          archive_path = site.in_dest_dir(relative_path)
-          site.regenerator.add(archive_path)
-          @posts.each do |post|
-            site.regenerator.add_dependency(archive_path, post.path)
-          end
-        end
-      end
-
       # Produce a title object suitable for Liquid based on type of archive.
       #
       # Returns a String (for tag and category archives) and nil for
@@ -125,14 +114,6 @@ module Jekyll
         path = URL.unescape_path(url).gsub(%r!^\/!, "")
         path = File.join(path, "index.html") if url =~ %r!\/$!
         path
-      end
-
-      def regenerate?
-        if defined? site.regenerator
-          site.regenerator.regenerate?(self)
-        else
-          true
-        end
       end
 
       # Returns the object as a debug String.
