@@ -1,12 +1,10 @@
-require 'helper'
+require "helper"
 
 class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.read
       @archives = Jekyll::Archives::Archives.new(@site.config)
@@ -50,11 +48,9 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with custom layout path" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "layout" => "archive-too",
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "layout"  => "archive-too",
+        "enabled" => true
       })
       @site.process
     end
@@ -89,10 +85,10 @@ class TestJekyllArchives < Minitest::Test
     setup do
       @site = fixture_site({
         "jekyll-archives" => {
-          "enabled" => true,
+          "enabled"    => true,
           "permalinks" => {
-            "year" => "/year/:year/",
-            "tag" => "/tag-:name.html",
+            "year"     => "/year/:year/",
+            "tag"      => "/tag-:name.html",
             "category" => "/category-:name.html"
           }
         }
@@ -111,10 +107,8 @@ class TestJekyllArchives < Minitest::Test
 
   context "the archives" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.process
     end
@@ -137,10 +131,8 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with enabled array" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => ["tags"]
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => ["tags"]
       })
       @site.process
     end
@@ -161,18 +153,16 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin" do
     setup do
-      @site = fixture_site({
-        "jekyll-archives" => {
-          "enabled" => true
-        }
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => true
       })
       @site.process
       @archives = @site.config["archives"]
-      @tag_archive = @archives.detect {|a| a.type == "tag"}
-      @category_archive = @archives.detect {|a| a.type == "category"}
-      @year_archive = @archives.detect {|a| a.type == "year"}
-      @month_archive = @archives.detect {|a| a.type == "month"}
-      @day_archive = @archives.detect {|a| a.type == "day"}
+      @tag_archive = @archives.detect { |a| a.type == "tag" }
+      @category_archive = @archives.detect { |a| a.type == "category" }
+      @year_archive = @archives.detect { |a| a.type == "year" }
+      @month_archive = @archives.detect { |a| a.type == "month" }
+      @day_archive = @archives.detect { |a| a.type == "day" }
     end
 
     should "populate the title field in case of category or tag" do

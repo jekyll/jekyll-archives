@@ -1,13 +1,14 @@
-# Taken from jekyll/jekyll-mentions (Copyright (c) 2014 GitHub, Inc. Licensened under the MIT).
+# Taken from jekyll/jekyll-mentions
+# (Copyright (c) 2014 GitHub, Inc. Licensened under the MIT).
 
-require 'rubygems'
-require 'minitest/autorun'
-require 'shoulda'
+require "rubygems"
+require "minitest/autorun"
+require "shoulda"
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
-require 'jekyll-archives'
+require "jekyll-archives"
 
 TEST_DIR     = File.expand_path("../", __FILE__)
 SOURCE_DIR   = File.expand_path("source", TEST_DIR)
@@ -20,7 +21,7 @@ class Minitest::Test
         Jekyll::Utils.deep_merge_hashes(
           Jekyll::Configuration::DEFAULTS,
           {
-            "source" => SOURCE_DIR,
+            "source"      => SOURCE_DIR,
             "destination" => DEST_DIR
           }
         ),

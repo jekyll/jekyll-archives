@@ -1,32 +1,32 @@
-require 'jekyll'
+require "jekyll"
 
 module Jekyll
   module Archives
     # Internal requires
-    autoload :Archive, 'jekyll-archives/archive'
-    autoload :VERSION, 'jekyll-archives/version'
+    autoload :Archive, "jekyll-archives/archive"
+    autoload :VERSION, "jekyll-archives/version"
 
     class Archives < Jekyll::Generator
       safe true
 
       DEFAULTS = {
-        'layout' => 'archive',
-        'enabled' => [],
-        'permalinks' => {
-          'year' => '/:year/',
-          'month' => '/:year/:month/',
-          'day' => '/:year/:month/:day/',
-          'tag' => '/tag/:name/',
-          'category' => '/category/:name/'
+        "layout"     => "archive",
+        "enabled"    => [],
+        "permalinks" => {
+          "year"     => "/:year/",
+          "month"    => "/:year/:month/",
+          "day"      => "/:year/:month/:day/",
+          "tag"      => "/tag/:name/",
+          "category" => "/category/:name/"
         }
-      }
+      }.freeze
 
       def initialize(config = nil)
-        if config['jekyll-archives'].nil?
-          @config = DEFAULTS
-        else
-          @config = Utils.deep_merge_hashes(DEFAULTS, config['jekyll-archives'])
-        end
+        @config = if config["jekyll-archives"].nil?
+                    DEFAULTS
+                  else
+                    Utils.deep_merge_hashes(DEFAULTS, config["jekyll-archives"])
+                  end
       end
 
       def generate(site)
@@ -34,7 +34,7 @@ module Jekyll
         @posts = site.posts
         @archives = []
 
-        @site.config['jekyll-archives'] = @config
+        @site.config["jekyll-archives"] = @config
 
         read
         @site.pages.concat(@archives)
@@ -80,7 +80,7 @@ module Jekyll
       # Checks if archive type is enabled in config
       def enabled?(archive)
         @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
-          @config["enabled"].include? archive
+                                                                       @config["enabled"].include? archive
         end
       end
 
@@ -101,11 +101,11 @@ module Jekyll
       end
 
       def tags
-        @site.post_attr_hash('tags')
+        @site.post_attr_hash("tags")
       end
 
       def categories
-        @site.post_attr_hash('categories')
+        @site.post_attr_hash("categories")
       end
 
       # Custom `post_attr_hash` method for years
@@ -113,7 +113,7 @@ module Jekyll
         hash = Hash.new { |h, key| h[key] = [] }
 
         # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if Jekyll::VERSION >= '3.0.0' 
+        if Jekyll::VERSION >= "3.0.0"
           @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
         else
           @posts.each { |p| hash[p.date.strftime("%Y")] << p }
