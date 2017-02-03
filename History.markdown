@@ -5,12 +5,16 @@
   * Make Archive subclass of Page (#67)
   * Don't limit slugs/title to strings (#41)
   * Enable incremental operation (#58)
+  * Remove deprecated defs (#89)
 
 ### Development Fixes
 
   * Update Travis config and Gemfile for Ruby < 2.2.2 support (#68)
   * Consolidate History file to work with jekyllbot (#80)
   * Remove Travis test for Ruby 1.9 (#87)
+  * Inherit Jekyll's rubocop config for consistency (#65)
+  * Bump travis ruby versions (#91)
+  * Fix Travis build error (#93)
 
 ## 2.1.0
 
