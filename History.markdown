@@ -13,6 +13,7 @@
   * Consolidate History file to work with jekyllbot (#80)
   * Remove Travis test for Ruby 1.9 (#87)
   * Inherit Jekyll's rubocop config for consistency (#65)
+  * Bump travis ruby versions (#91)
 
 ## 2.1.0
 
