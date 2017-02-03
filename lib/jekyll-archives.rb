@@ -33,10 +33,10 @@ module Jekyll
         @site = site
 
         # Archive the posts collection by default
-        @site.posts.metadata['archive'] = true
+        @site.posts.metadata["archive"] = true
 
         @archives = []
-        @site.config['jekyll-archives'] = @config
+        @site.config["jekyll-archives"] = @config
 
         read
         @site.pages.concat(@archives)
@@ -82,7 +82,7 @@ module Jekyll
       def enabled?(archive)
         @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
                                                                        @config["enabled"].include? archive
-        end
+                                                                     end
       end
 
       def date_attr_hash(date_format, date_posts)
@@ -100,14 +100,14 @@ module Jekyll
         hash = Hash.new { |h, key| h[key] = [] }
 
         @site.collections.each do |name, collection|
-          if collection.metadata['archive']
+          if collection.metadata["archive"]
             collection.docs.each do |d|
               case doc_attr
-              when 'tags'
-                d.data['tags'].each { |t| hash[t] << d } if d.data['tags']
-              when 'categories'
-                d.data['categories'].each { |t| hash[t] << d } if d.data['categories']
-              when 'years'
+              when "tags"
+                d.data["tags"].each { |t| hash[t] << d } if d.data["tags"]
+              when "categories"
+                d.data["categories"].each { |t| hash[t] << d } if d.data["categories"]
+              when "years"
                 hash[d.date.strftime("%Y")] << d
               end
             end
@@ -119,24 +119,24 @@ module Jekyll
       end
 
       def tags
-        if Jekyll::VERSION >= '3.0.0'
-          doc_attr_hash('tags')
+        if Jekyll::VERSION >= "3.0.0"
+          doc_attr_hash("tags")
         else
-          @site.post_attr_hash('tags')
+          @site.post_attr_hash("tags")
         end
       end
 
       def categories
-        if Jekyll::VERSION >= '3.0.0'
-          doc_attr_hash('categories')
+        if Jekyll::VERSION >= "3.0.0"
+          doc_attr_hash("categories")
         else
-          @site.post_attr_hash('categories')
+          @site.post_attr_hash("categories")
         end
       end
 
       def years
-        if Jekyll::VERSION >= '3.0.0'
-          doc_attr_hash('years')
+        if Jekyll::VERSION >= "3.0.0"
+          doc_attr_hash("years")
         else
           date_attr_hash("%Y", @site.posts)
         end
