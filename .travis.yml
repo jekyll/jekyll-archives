@@ -3,14 +3,18 @@ script : script/cibuild
 cache: bundler
 sudo: false
 
+before_install: gem update --system
+
 rvm:
   - 2.3.3
   - 2.2.6
   - 2.1.9
+
 env:
   - ""
   - JEKYLL_VERSION=3.0
   - JEKYLL_VERSION=2.0
+
 matrix:
   include:
     - # GitHub Pages
