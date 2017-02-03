@@ -5,6 +5,7 @@
   * Make Archive subclass of Page (#67)
   * Don't limit slugs/title to strings (#41)
   * Enable incremental operation (#58)
+  * Remove deprecated defs (#89)
 
 ### Development Fixes
 
