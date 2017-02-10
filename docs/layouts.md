@@ -1,6 +1,6 @@
 # Layouts
 
-Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [type-specific layouts](./configuration.md#type-specific-layouts). 
+Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [archive-specific layouts](./configuration.md#archive-specific-layouts).
 
 ### Layout attributes
 #### Title (`page.title`)
