@@ -18,7 +18,14 @@ module Jekyll
           "day"      => "/:year/:month/:day/",
           "tag"      => "/tag/:name/",
           "category" => "/category/:name/"
-        }
+        },
+	"types"      => {
+          "year"     => "year",
+          "month"    => "month",
+          "day"      => "day",
+          "tag"      => "tag",
+          "category" => "category"
+	}
       }.freeze
 
       def initialize(config = nil)
@@ -50,28 +57,47 @@ module Jekyll
       end
 
       def read_tags
-        if enabled? "tags"
+	@config["types"].select { |id, type|
+          type == "tag" && (enabled?("tags") || enabled?(id))
+        }.keys.each do |id|
           tags.each do |title, posts|
-            @archives << Archive.new(@site, title, "tag", posts)
+            @archives << Archive.new(@site, title, id, posts)
           end
         end
       end
 
       def read_categories
-        if enabled? "categories"
+	@config["types"].select { |id, type|
+          type == "category" && (enabled?("categories") || enabled?(id))
+        }.keys.each do |id|
           categories.each do |title, posts|
-            @archives << Archive.new(@site, title, "category", posts)
+            @archives << Archive.new(@site, title, id, posts)
           end
         end
       end
 
       def read_dates
+        ys = @config["types"].select { |id, type|
+            type == "year" && (enabled?("years") || enabled?(id))
+          }.keys
+        ms = @config["types"].select { |id, type|
+            type == "month" && (enabled?("months") || enabled?(id))
+          }.keys
+        ds = @config["types"].select { |id, type|
+            type == "day" && (enabled?("days") || enabled?(id))
+          }.keys
         years.each do |year, posts|
-          @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
+          ys.each do |id|
+            @archives << Archive.new(@site, { :year => year }, id, posts)
+          end
           months(posts).each do |month, posts|
-            @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
+            ms.each do |id|
+              @archives << Archive.new(@site, { :year => year, :month => month }, id, posts)
+            end
             days(posts).each do |day, posts|
-              @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
+              ds.each do |id|
+                @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, id, posts)
+              end
             end
           end
         end
