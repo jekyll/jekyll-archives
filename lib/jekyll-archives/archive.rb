@@ -26,7 +26,7 @@ module Jekyll
       def initialize(site, title, id, posts)
         @site   = site
         @posts  = posts
-	@id = id
+        @id = id
         @title  = title
         @config = site.config["jekyll-archives"]
         @type = @config["types"][id]

@@ -191,9 +191,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default tag archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["foo"],
-	"types" => { "foo" => "tag"},
-	"permalinks" => { "foo" => "/t/:name/"}
+        "enabled"    => ["foo"],
+        "types"      => { "foo" => "tag" },
+        "permalinks" => { "foo" => "/t/:name/" },
       })
       @site.process
     end
@@ -218,9 +218,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with all tags enabled and non-default tag archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["tags"],
-	"types" => { "foo" => "tag"},
-	"permalinks" => { "foo" => "/t/:name/"}
+        "enabled"    => ["tags"],
+        "types"      => { "foo" => "tag" },
+        "permalinks" => { "foo" => "/t/:name/" },
       })
       @site.process
     end
@@ -245,9 +245,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default category archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["foo"],
-	"types" => { "foo" => "category"},
-	"permalinks" => { "foo" => "/c/:name/"}
+        "enabled"    => ["foo"],
+        "types"      => { "foo" => "category" },
+        "permalinks" => { "foo" => "/c/:name/" },
       })
       @site.process
     end
@@ -270,9 +270,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with all categories enabled and non-default category archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["categories"],
-	"types" => { "foo" => "category"},
-	"permalinks" => { "foo" => "/c/:name/"}
+        "enabled"    => ["categories"],
+        "types"      => { "foo" => "category" },
+        "permalinks" => { "foo" => "/c/:name/" },
       })
       @site.process
     end
@@ -295,9 +295,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default year archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["foo"],
-	"types" => { "foo" => "year"},
-	"permalinks" => { "foo" => "/y/:year/"}
+        "enabled"    => ["foo"],
+        "types"      => { "foo" => "year" },
+        "permalinks" => { "foo" => "/y/:year/" },
       })
       @site.process
     end
@@ -320,9 +320,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with all years enabled and non-default year archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["years"],
-	"types" => { "foo" => "year"},
-	"permalinks" => { "foo" => "/y/:year/"}
+        "enabled"    => ["years"],
+        "types"      => { "foo" => "year" },
+        "permalinks" => { "foo" => "/y/:year/" },
       })
       @site.process
     end
@@ -345,9 +345,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default month archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["foo"],
-	"types" => { "foo" => "month"},
-	"permalinks" => { "foo" => "/m/:year/:month/"}
+        "enabled"    => ["foo"],
+        "types"      => { "foo" => "month" },
+        "permalinks" => { "foo" => "/m/:year/:month/" },
       })
       @site.process
     end
@@ -370,9 +370,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with all months enabled and non-default month archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["months"],
-	"types" => { "foo" => "month"},
-	"permalinks" => { "foo" => "/m/:year/:month/"}
+        "enabled"    => ["months"],
+        "types"      => { "foo" => "month" },
+        "permalinks" => { "foo" => "/m/:year/:month/" },
       })
       @site.process
     end
@@ -395,9 +395,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default day archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["foo"],
-	"types" => { "foo" => "day"},
-	"permalinks" => { "foo" => "/d/:year/:month/:day/"}
+        "enabled"    => ["foo"],
+        "types"      => { "foo" => "day" },
+        "permalinks" => { "foo" => "/d/:year/:month/:day/" },
       })
       @site.process
     end
@@ -420,9 +420,9 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with all days enabled and non-default day archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["days"],
-	"types" => { "foo" => "day"},
-	"permalinks" => { "foo" => "/d/:year/:month/:day/"}
+        "enabled"    => ["days"],
+        "types"      => { "foo" => "day" },
+        "permalinks" => { "foo" => "/d/:year/:month/:day/" },
       })
       @site.process
     end
@@ -445,21 +445,21 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with non-default archives defined and only default archives enabled" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["tag", "category", "year", "month", "day"],
-	"types" => {
-		"t" => "tag",
-		"c" => "category",
-		"y" => "year",
-		"m" => "month",
-		"d" => "day"
-	},
-	"permalinks" => {
-		"t" => "/t/:name/",
-		"c" => "/c/:name/",
-		"y" => "/y/:year/",
-		"m" => "/m/:year/:month/",
-		"d" => "/d/:year/:month/:day/"
-	}
+        "enabled"    => %w(tag category year month day),
+        "types"      => {
+          "t" => "tag",
+          "c" => "category",
+          "y" => "year",
+          "m" => "month",
+          "d" => "day",
+        },
+        "permalinks" => {
+          "t" => "/t/:name/",
+          "c" => "/c/:name/",
+          "y" => "/y/:year/",
+          "m" => "/m/:year/:month/",
+          "d" => "/d/:year/:month/:day/",
+        },
       })
       @site.process
     end
@@ -488,21 +488,21 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with non-default archives defined and all enabled" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => "all",
-	"types" => {
-		"t" => "tag",
-		"c" => "category",
-		"y" => "year",
-		"m" => "month",
-		"d" => "day"
-	},
-	"permalinks" => {
-		"t" => "/t/:name/",
-		"c" => "/c/:name/",
-		"y" => "/y/:year/",
-		"m" => "/m/:year/:month/",
-		"d" => "/d/:year/:month/:day/"
-	}
+        "enabled"    => "all",
+        "types"      => {
+          "t" => "tag",
+          "c" => "category",
+          "y" => "year",
+          "m" => "month",
+          "d" => "day",
+        },
+        "permalinks" => {
+          "t" => "/t/:name/",
+          "c" => "/c/:name/",
+          "y" => "/y/:year/",
+          "m" => "/m/:year/:month/",
+          "d" => "/d/:year/:month/:day/",
+        },
       })
       @site.process
     end
@@ -532,13 +532,13 @@ class TestJekyllArchives < Minitest::Test
     setup do
       @site = fixture_site("jekyll-archives" => {
         "enabled" => "all",
-	"types" => {
-		"foo-t" => "tag",
-		"foo-c" => "category",
-		"foo-y" => "year",
-		"foo-m" => "month",
-		"foo-d" => "day"
-	},
+        "types"   => {
+          "foo-t" => "tag",
+          "foo-c" => "category",
+          "foo-y" => "year",
+          "foo-m" => "month",
+          "foo-d" => "day",
+        },
       })
       @site.process
     end

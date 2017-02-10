@@ -57,9 +57,9 @@ module Jekyll
       end
 
       def read_tags
-	@config["types"].select { |id, type|
+        @config["types"].select do |id, type|
           type == "tag" && (enabled?("tags") || enabled?(id))
-        }.keys.each do |id|
+        end.keys.each do |id|
           tags.each do |title, posts|
             @archives << Archive.new(@site, title, id, posts)
           end
@@ -67,9 +67,9 @@ module Jekyll
       end
 
       def read_categories
-	@config["types"].select { |id, type|
+        @config["types"].select do |id, type|
           type == "category" && (enabled?("categories") || enabled?(id))
-        }.keys.each do |id|
+        end.keys.each do |id|
           categories.each do |title, posts|
             @archives << Archive.new(@site, title, id, posts)
           end
@@ -77,15 +77,15 @@ module Jekyll
       end
 
       def read_dates
-        ys = @config["types"].select { |id, type|
-            type == "year" && (enabled?("years") || enabled?(id))
-          }.keys
-        ms = @config["types"].select { |id, type|
-            type == "month" && (enabled?("months") || enabled?(id))
-          }.keys
-        ds = @config["types"].select { |id, type|
-            type == "day" && (enabled?("days") || enabled?(id))
-          }.keys
+        ys = @config["types"].select do |id, type|
+          type == "year" && (enabled?("years") || enabled?(id))
+        end.keys
+        ms = @config["types"].select do |id, type|
+          type == "month" && (enabled?("months") || enabled?(id))
+        end.keys
+        ds = @config["types"].select do |id, type|
+          type == "day" && (enabled?("days") || enabled?(id))
+        end.keys
         years.each do |year, posts|
           ys.each do |id|
             @archives << Archive.new(@site, { :year => year }, id, posts)
