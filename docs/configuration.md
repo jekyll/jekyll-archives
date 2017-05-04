@@ -28,9 +28,10 @@ jekyll-archives:
 ---
 
 #### Enabled archives
-| Key | Value type | Values |
-|---|---|---|---|
-| `enabled` | String or Array | `'all'` or an array of any combination of `year`, `month`, `day`, `categories`, `tags` |
+Key | Value type | Values 
+-|-|-
+`enabled` | String or Array | `'all'` or an array of any combination of `year`, `month`, `day`, `categories`, `tags`
+
 ##### Description
 This option sets which types of archives will be created. Must be set to an array of enabled archive types, or the string 'all' (to enable all archives).
 ##### Sample values
