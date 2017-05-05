@@ -48,9 +48,10 @@ enabled:
 ---
 
 #### Default layout
-| Key | Value type | Values |
-|---|---|---|---|
-| `layout` | String  | The layout name of the default archive layout |
+ Key | Value type | Values 
+-|-|-
+ `layout` | String  | The layout name of the default archive layout 
+
 ##### Description
 Sets the default layout to use if no type-specific layout (see [Type-specific layouts](#type-specific-layouts) below) for an archive is specified.
 ##### Sample values
@@ -62,9 +63,10 @@ layout: custom-archive-layout    # _layouts/custom-archive-layout.html
 ---
 
 #### Type-specific layouts
-| Key | Value type | Values |
-|---|---|---|---|
-| `layouts` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its archive name. |
+Key | Value type | Values
+-|-|-
+`layouts` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its archive name. 
+ 
 ##### Description
 Maps archive types to the layout they will be rendered in. Not all types need to be specified; those without a specific layout will fall back to the default layout.
 ##### Sample values
@@ -79,9 +81,10 @@ layouts:
 ---
 
 #### Permalinks
-| Key | Value type | Values |
-|---|---|---|---|
-| `permalinks` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its permalink format. |
+Key | Value type | Values 
+-|-|-
+`permalinks` | Map, String &rarr; String | A map of layout type (`year`, `month`, `day`, `category`, `tag`) to its permalink format.
+
 ##### Description
 Maps archive types to the permalink format used for archive pages. The permalink style is the same as regular Jekyll posts and pages, but with different variables.
 
