@@ -15,6 +15,7 @@ module Jekyll
         path
         url
         permalink
+        slug
       ).freeze
 
       # Initialize a new Archive page
