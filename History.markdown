@@ -1,5 +1,9 @@
 ## HEAD
 
+### Major Enhancements
+
+  * Adds support for archiving by language
+
 ### Minor Enhancements
 
   * Make Archive subclass of Page (#67)
