@@ -16,6 +16,7 @@
   * Bump travis ruby versions (#91)
   * Fix Travis build error (#93)
   * Define path with __dir__ (#105)
+  * Appease Rubocop (#104)
 
 ## 2.1.0
 
