@@ -22,7 +22,7 @@ class Minitest::Test
           Jekyll::Configuration::DEFAULTS,
           {
             "source"      => SOURCE_DIR,
-            "destination" => DEST_DIR
+            "destination" => DEST_DIR,
           }
         ),
         config

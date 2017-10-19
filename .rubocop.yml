@@ -1,7 +1,6 @@
 inherit_gem:
   jekyll: .rubocop.yml
 
-
 Metrics/BlockLength:
   Exclude:
     - test/**/*.rb

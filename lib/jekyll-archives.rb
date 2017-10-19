@@ -17,8 +17,8 @@ module Jekyll
           "month"    => "/:year/:month/",
           "day"      => "/:year/:month/:day/",
           "tag"      => "/tag/:name/",
-          "category" => "/category/:name/"
-        }
+          "category" => "/category/:name/",
+        },
       }.freeze
 
       def initialize(config = nil)
