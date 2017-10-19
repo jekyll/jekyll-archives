@@ -5,8 +5,8 @@ require "rubygems"
 require "minitest/autorun"
 require "shoulda"
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.join(__dir__, "..", "lib"))
+$LOAD_PATH.unshift(__dir__)
 
 require "jekyll-archives"
 
