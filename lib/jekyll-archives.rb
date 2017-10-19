@@ -31,14 +31,15 @@ module Jekyll
 
       def generate(site)
         @site = site
-        @posts = site.posts
-        @archives = []
 
+        # Archive the posts collection by default
+        @site.posts.metadata["archive"] = true
+
+        @archives = []
         @site.config["jekyll-archives"] = @config
 
         read
         @site.pages.concat(@archives)
-
         @site.config["archives"] = @archives
       end
 
@@ -81,43 +82,72 @@ module Jekyll
       def enabled?(archive)
         @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
                                                                        @config["enabled"].include? archive
+                                                                     end
+      end
+
+      def date_attr_hash(date_format, date_posts)
+        hash = Hash.new { |h, key| h[key] = [] }
+
+        date_posts.each do |p|
+          hash[p.date.strftime(date_format)] << p
         end
+
+        hash.values.each { |posts| posts.sort!.reverse! }
+        hash
+      end
+
+      def doc_attr_hash(doc_attr)
+        hash = Hash.new { |h, key| h[key] = [] }
+
+        @site.collections.each do |name, collection|
+          if collection.metadata["archive"]
+            collection.docs.each do |d|
+              case doc_attr
+              when "tags"
+                d.data["tags"].each { |t| hash[t] << d } if d.data["tags"]
+              when "categories"
+                d.data["categories"].each { |t| hash[t] << d } if d.data["categories"]
+              when "years"
+                hash[d.date.strftime("%Y")] << d
+              end
+            end
+          end
+        end
+
+        hash.values.each { |posts| posts.sort!.reverse! }
+        hash
       end
 
       def tags
-        @site.post_attr_hash("tags")
+        if Jekyll::VERSION >= "3.0.0"
+          doc_attr_hash("tags")
+        else
+          @site.post_attr_hash("tags")
+        end
       end
 
       def categories
-        @site.post_attr_hash("categories")
+        if Jekyll::VERSION >= "3.0.0"
+          doc_attr_hash("categories")
+        else
+          @site.post_attr_hash("categories")
+        end
       end
 
-      # Custom `post_attr_hash` method for years
       def years
-        hash = Hash.new { |h, key| h[key] = [] }
-
-        # In Jekyll 3, Collection#each should be called on the #docs array directly.
         if Jekyll::VERSION >= "3.0.0"
-          @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
+          doc_attr_hash("years")
         else
-          @posts.each { |p| hash[p.date.strftime("%Y")] << p }
+          date_attr_hash("%Y", @site.posts)
         end
-        hash.values.each { |posts| posts.sort!.reverse! }
-        hash
       end
 
       def months(year_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        year_posts.each { |p| hash[p.date.strftime("%m")] << p }
-        hash.values.each { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash("%m", year_posts)
       end
 
       def days(month_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        month_posts.each { |p| hash[p.date.strftime("%d")] << p }
-        hash.values.each { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash("%d", month_posts)
       end
     end
   end

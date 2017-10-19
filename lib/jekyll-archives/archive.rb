@@ -18,10 +18,14 @@ module Jekyll
       # Initialize a new Archive page
       #
       # site  - The Site object.
-      # title - The name of the tag/category or a Hash of the year/month/day in case of date.
-      #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
-      # type  - The type of archive. Can be one of "year", "month", "day", "category", or "tag"
-      # posts - The array of posts that belong in this archive.
+      # title - The name of the tag/category or a Hash of
+      #         the year/month/day in case of date.
+      #         e.g. { :year => 2014, :month => 08 } or
+      #         "my-category" or "my-tag".
+      # type  - The type of archive. Can be one of "year",
+      #         "month", "day", "category", or "tag"
+      # posts - The array of posts that belong in this
+      #         archive.
       def initialize(site, title, type, posts)
         @site   = site
         @posts  = posts
@@ -62,8 +66,9 @@ module Jekyll
         end
       end
 
-      # Returns a hash of URL placeholder names (as symbols) mapping to the
-      # desired placeholder replacements. For details see "url.rb".
+      # Returns a hash of URL placeholder names (as symbols)
+      # mapping to the desired placeholder replacements.
+      # For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
           @title.merge(:type => @type)
@@ -72,7 +77,8 @@ module Jekyll
         end
       end
 
-      # The generated relative url of this page. e.g. /about.html.
+      # The generated relative url of this page. e.g.
+      # /about.html.
       #
       # Returns the String url.
       def url
@@ -89,10 +95,11 @@ module Jekyll
         data && data.is_a?(Hash) && data["permalink"]
       end
 
-      # Produce a title object suitable for Liquid based on type of archive.
+      # Produce a title object suitable for Liquid based on
+      # type of archive.
       #
-      # Returns a String (for tag and category archives) and nil for
-      # date-based archives.
+      # Returns a String (for tag and category archives) and
+      # nil for date-based archives.
       def title
         @title if @title.is_a? String
       end
@@ -107,7 +114,8 @@ module Jekyll
         end
       end
 
-      # Obtain the write path relative to the destination directory
+      # Obtain the write path relative to the destination
+      # directory.
       #
       # Returns the destination relative path String.
       def relative_path
