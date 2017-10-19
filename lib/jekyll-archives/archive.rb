@@ -39,7 +39,7 @@ module Jekyll
         @name = File.basename(relative_path, @ext)
 
         @data = {
-          "layout" => layout
+          "layout" => layout,
         }
         @content = ""
       end

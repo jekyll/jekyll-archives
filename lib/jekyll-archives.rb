@@ -17,8 +17,9 @@ module Jekyll
           "month"    => "/:year/:month/",
           "day"      => "/:year/:month/:day/",
           "tag"      => "/tag/:name/",
-          "category" => "/category/:name/"
-        }
+          "category" => "/category/:name/",
+          "language" => "/language/:name/",
+        },
       }.freeze
 
       def initialize(config = nil)
@@ -47,6 +48,7 @@ module Jekyll
         read_tags
         read_categories
         read_dates
+        read_languages
       end
 
       def read_tags
@@ -77,11 +79,21 @@ module Jekyll
         end
       end
 
+      def read_languages
+        if enabled? "language"
+          languages.each do |language, posts|
+            @archives << Archive.new(@site, language, "language", posts)
+          end
+        end
+      end
+
       # Checks if archive type is enabled in config
       def enabled?(archive)
-        @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
-                                                                       @config["enabled"].include? archive
+        if @config["enabled"].is_a? Array
+          return @config["enabled"].include? archive
         end
+
+        @config["enabled"] == true || @config["enabled"] == "all"
       end
 
       def tags
@@ -118,6 +130,11 @@ module Jekyll
         month_posts.each { |p| hash[p.date.strftime("%d")] << p }
         hash.values.each { |posts| posts.sort!.reverse! }
         hash
+      end
+
+      # TODO: would prefer to enable arbitrary front-matter archiving, but this'll do for now. Also would prefer that language isnt an array, but just doing like categories frontmatter for now.
+      def languages
+        @site.post_attr_hash("language")
       end
     end
   end
