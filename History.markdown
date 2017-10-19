@@ -15,6 +15,7 @@
   * Inherit Jekyll's rubocop config for consistency (#65)
   * Bump travis ruby versions (#91)
   * Fix Travis build error (#93)
+  * Define path with __dir__ (#105)
 
 ## 2.1.0
 
