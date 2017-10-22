@@ -18,6 +18,7 @@
   * Define path with __dir__ (#105)
   * Appease Rubocop (#104)
   * update Rubocop and Travis config (#110)
+  * Update .travis.yml (#111)
 
 ## 2.1.0
 
