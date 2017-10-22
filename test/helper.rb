@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Taken from jekyll/jekyll-mentions
 # (Copyright (c) 2014 GitHub, Inc. Licensened under the MIT).
 
@@ -10,7 +12,7 @@ $LOAD_PATH.unshift(__dir__)
 
 require "jekyll-archives"
 
-TEST_DIR     = File.expand_path("../", __FILE__)
+TEST_DIR     = __dir__
 SOURCE_DIR   = File.expand_path("source", TEST_DIR)
 DEST_DIR     = File.expand_path("destination", TEST_DIR)
 
