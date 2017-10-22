@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Taken from jekyll/jekyll-mentions
 # (Copyright (c) 2014 GitHub, Inc. Licensened under the MIT).
 
@@ -5,12 +7,12 @@ require "rubygems"
 require "minitest/autorun"
 require "shoulda"
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
-$LOAD_PATH.unshift(File.dirname(__FILE__))
+$LOAD_PATH.unshift(File.join(__dir__, "..", "lib"))
+$LOAD_PATH.unshift(__dir__)
 
 require "jekyll-archives"
 
-TEST_DIR     = File.expand_path("../", __FILE__)
+TEST_DIR     = __dir__
 SOURCE_DIR   = File.expand_path("source", TEST_DIR)
 DEST_DIR     = File.expand_path("destination", TEST_DIR)
 
@@ -22,7 +24,7 @@ class Minitest::Test
           Jekyll::Configuration::DEFAULTS,
           {
             "source"      => SOURCE_DIR,
-            "destination" => DEST_DIR
+            "destination" => DEST_DIR,
           }
         ),
         config
