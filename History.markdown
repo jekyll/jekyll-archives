@@ -17,6 +17,7 @@
   * Fix Travis build error (#93)
   * Define path with __dir__ (#105)
   * Appease Rubocop (#104)
+  * update Rubocop and Travis config (#110)
 
 ## 2.1.0
 
