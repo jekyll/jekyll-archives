@@ -20,6 +20,10 @@
   * update Rubocop and Travis config (#110)
   * Update .travis.yml (#111)
 
+### Documentation
+
+  * docs/configuration: GitHub table display was messed up (#96)
+
 ## 2.1.0
 
 ### Minor Enhancements
