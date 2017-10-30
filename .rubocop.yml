@@ -1,15 +1,10 @@
 inherit_gem:
   jekyll: .rubocop.yml
 
-Lint/ShadowingOuterLocalVariable:
-  Exclude:
-    - lib/jekyll-archives.rb
-
 Metrics/BlockLength:
   Exclude:
     - test/**/*.rb
+
 Metrics/LineLength:
   Exclude:
     - test/**/*.rb
-    - lib/jekyll-archives.rb
-    - lib/jekyll-archives/archive.rb
