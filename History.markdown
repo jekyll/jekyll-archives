@@ -23,6 +23,7 @@
 ### Documentation
 
   * docs/configuration: GitHub table display was messed up (#96)
+  * Update Readme Installation Guide (#116)
 
 ## 2.1.0
 
