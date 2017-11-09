@@ -13,7 +13,8 @@ Automatically generate post archives by dates, tags, and categories.
 2. Add the following to your site's `_config.yml`:
 
 ```yml
-gems:
+# Plugins (previously gems:)
+plugins:
   - jekyll-archives
 ```
 
