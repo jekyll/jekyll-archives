@@ -19,6 +19,7 @@
   * Appease Rubocop (#104)
   * update Rubocop and Travis config (#110)
   * Update .travis.yml (#111)
+  * Modernize tests &amp; linting (#114)
 
 ### Documentation
 
