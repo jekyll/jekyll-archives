@@ -13,7 +13,7 @@ rvm:
 
 env:
   - ""
-  - JEKYLL_VERSION=3.4
+  - JEKYLL_VERSION=3.6
 
 matrix:
   include:
