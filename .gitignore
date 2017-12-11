@@ -4,3 +4,4 @@ test/destination
 .bundle
 pkg/
 .jekyll-metadata
+site/
