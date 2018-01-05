@@ -20,6 +20,7 @@
   * update Rubocop and Travis config (#110)
   * Update .travis.yml (#111)
   * Modernize tests &amp; linting (#114)
+  * Test against Ruby 2.5 (#118)
 
 ### Documentation
 
