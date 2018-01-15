@@ -21,13 +21,13 @@ module Jekyll
           "tag"      => "/tag/:name/",
           "category" => "/category/:name/",
         },
-	"types"      => {
+        "types"      => {
           "year"     => "year",
           "month"    => "month",
           "day"      => "day",
           "tag"      => "tag",
-          "category" => "category"
-	}
+          "category" => "category",
+        },
       }.freeze
 
       def initialize(config = nil)
@@ -55,47 +55,35 @@ module Jekyll
       end
 
       def read_tags
-        @config["types"].select do |id, type|
-          type == "tag" && (enabled?("tags") || enabled?(id))
-        end.keys.each do |id|
-          tags.each do |title, posts|
-            @archives << Archive.new(@site, title, id, posts)
-          end
-        end
+        @config["types"].select { |id, type| type == "tag" && (enabled?("tags") || enabled?(id)) }.each_key { |id| tags.each { |title, posts| @archives << Archive.new(@site, title, id, posts) } }
       end
 
       def read_categories
-        @config["types"].select do |id, type|
-          type == "category" && (enabled?("categories") || enabled?(id))
-        end.keys.each do |id|
-          categories.each do |title, posts|
-            @archives << Archive.new(@site, title, id, posts)
-          end
-        end
+        @config["types"].select { |id, type| type == "category" && (enabled?("categories") || enabled?(id)) }.each_key { |id| categories.each { |title, posts| @archives << Archive.new(@site, title, id, posts) } }
+      end
+
+      def enabled_years
+        @config["types"].select { |id, type| type == "year" && (enabled?("years") || enabled?(id)) }.keys
+      end
+
+      def enabled_months
+        @config["types"].select { |id, type| type == "month" && (enabled?("months") || enabled?(id)) }.keys
+      end
+
+      def enabled_days
+        @config["types"].select { |id, type| type == "day" && (enabled?("days") || enabled?(id)) }.keys
       end
 
       def read_dates
-        ys = @config["types"].select do |id, type|
-          type == "year" && (enabled?("years") || enabled?(id))
-        end.keys
-        ms = @config["types"].select do |id, type|
-          type == "month" && (enabled?("months") || enabled?(id))
-        end.keys
-        ds = @config["types"].select do |id, type|
-          type == "day" && (enabled?("days") || enabled?(id))
-        end.keys
+        ys = enabled_years
+        ms = enabled_months
+        ds = enabled_days
         years.each do |year, posts|
-          ys.each do |id|
-            @archives << Archive.new(@site, { :year => year }, id, posts)
-          end
+          ys.each { |id| @archives << Archive.new(@site, { :year => year }, id, posts) }
           months(posts).each do |month, posts|
-            ms.each do |id|
-              @archives << Archive.new(@site, { :year => year, :month => month }, id, posts)
-            end
+            ms.each { |id| @archives << Archive.new(@site, { :year => year, :month => month }, id, posts) }
             days(posts).each do |day, posts|
-              ds.each do |id|
-                @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, id, posts)
-              end
+              ds.each { |id| @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, id, posts) }
             end
           end
         end
