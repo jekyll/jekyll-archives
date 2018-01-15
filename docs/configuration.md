@@ -37,9 +37,10 @@ jekyll-archives:
 ---
 
 #### Enabled archives
-| Key | Value type | Values |
-|---|---|---|---|
+| Key       | Value type      | Values |
+|-----------|-----------------|--------|
 | `enabled` | String or Array | `'all'` or an array of any combination of `years`, `months`, `days`, `categories`, `tags`, or archive names (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) |
+
 ##### Description
 This option sets which types of archives will be created. Must be set to an array of enabled archives, or the string 'all' (to enable all archives).
 
@@ -58,9 +59,10 @@ enabled:
 ---
 
 #### Default layout
-| Key | Value type | Values |
-|---|---|---|---|
-| `layout` | String  | The layout name of the default archive layout |
+| Key      | Value type | Values |
+|----------|------------|--------|
+| `layout` | String     | The layout name of the default archive layout |
+
 ##### Description
 Sets the default layout to use if no type-specific layout (see [Type-specific layouts](#type-specific-layouts) below) for an archive is specified.
 ##### Sample values
@@ -72,9 +74,10 @@ layout: custom-archive-layout    # _layouts/custom-archive-layout.html
 ---
 
 #### Archive-specific layouts
-| Key | Value type | Values |
-|---|---|---|---|
+| Key       | Value type                | Values |
+|-----------|---------------------------|--------|
 | `layouts` | Map, String &rarr; String | A map of archive name (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) to its layout. |
+
 ##### Description
 Maps archive names to the layout they will be rendered in. Not all names need to be specified; those without a specific layout will fall back to the default layout.
 ##### Sample values
@@ -89,9 +92,10 @@ layouts:
 ---
 
 #### Permalinks
-| Key | Value type | Values |
-|---|---|---|---|
+| Key          | Value type                | Values |
+|--------------|---------------------------|--------|
 | `permalinks` | Map, String &rarr; String | A map of archive name (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) to its permalink format. |
+
 ##### Description
 Maps archive names to the permalink format used for archive pages. The permalink style is the same as regular Jekyll posts and pages, but with different variables.
 

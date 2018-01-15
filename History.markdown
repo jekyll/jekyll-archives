@@ -19,6 +19,17 @@
   * Inherit Jekyll's rubocop config for consistency (#65)
   * Bump travis ruby versions (#91)
   * Fix Travis build error (#93)
+  * Define path with __dir__ (#105)
+  * Appease Rubocop (#104)
+  * update Rubocop and Travis config (#110)
+  * Update .travis.yml (#111)
+  * Modernize tests &amp; linting (#114)
+  * Test against Ruby 2.5 (#118)
+
+### Documentation
+
+  * docs/configuration: GitHub table display was messed up (#96)
+  * Update Readme Installation Guide (#116)
 
 ## 2.1.0
 

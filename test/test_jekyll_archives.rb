@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require "helper"
 
 class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => true
+        "enabled" => true,
       })
       @site.read
       @archives = Jekyll::Archives::Archives.new(@site.config)
@@ -50,7 +52,7 @@ class TestJekyllArchives < Minitest::Test
     setup do
       @site = fixture_site("jekyll-archives" => {
         "layout"  => "archive-too",
-        "enabled" => true
+        "enabled" => true,
       })
       @site.process
     end
@@ -67,9 +69,9 @@ class TestJekyllArchives < Minitest::Test
         "jekyll-archives" => {
           "enabled" => true,
           "layouts" => {
-            "year" => "archive-too"
-          }
-        }
+            "year" => "archive-too",
+          },
+        },
       })
       @site.process
     end
@@ -89,9 +91,9 @@ class TestJekyllArchives < Minitest::Test
           "permalinks" => {
             "year"     => "/year/:year/",
             "tag"      => "/tag-:name.html",
-            "category" => "/category-:name.html"
-          }
-        }
+            "category" => "/category-:name.html",
+          },
+        },
       })
       @site.process
     end
@@ -108,7 +110,7 @@ class TestJekyllArchives < Minitest::Test
   context "the archives" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => true
+        "enabled" => true,
       })
       @site.process
     end
@@ -132,7 +134,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with enabled array" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["tags"]
+        "enabled" => ["tags"],
       })
       @site.process
     end
@@ -154,7 +156,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "enabled" => true
+        "enabled" => true,
       })
       @site.process
       @archives = @site.config["archives"]

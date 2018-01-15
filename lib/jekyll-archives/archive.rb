@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
@@ -41,7 +43,7 @@ module Jekyll
         @name = File.basename(relative_path, @ext)
 
         @data = {
-          "layout" => layout
+          "layout" => layout,
         }
         @content = ""
       end
@@ -92,7 +94,7 @@ module Jekyll
         @url ||= URL.new({
           :template     => template,
           :placeholders => url_placeholders,
-          :permalink    => nil
+          :permalink    => nil,
         }).to_s
       rescue ArgumentError
         raise ArgumentError, "Template \"#{template}\" provided is invalid."

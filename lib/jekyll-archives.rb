@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "jekyll"
 
 module Jekyll
@@ -17,7 +19,7 @@ module Jekyll
           "month"    => "/:year/:month/",
           "day"      => "/:year/:month/:day/",
           "tag"      => "/tag/:name/",
-          "category" => "/category/:name/"
+          "category" => "/category/:name/",
         },
 	"types"      => {
           "year"     => "year",
@@ -29,11 +31,7 @@ module Jekyll
       }.freeze
 
       def initialize(config = nil)
-        @config = if config["jekyll-archives"].nil?
-                    DEFAULTS
-                  else
-                    Utils.deep_merge_hashes(DEFAULTS, config["jekyll-archives"])
-                  end
+        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
       end
 
       def generate(site)
@@ -107,7 +105,7 @@ module Jekyll
       def enabled?(archive)
         @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
                                                                        @config["enabled"].include? archive
-        end
+                                                                     end
       end
 
       def tags
@@ -128,21 +126,21 @@ module Jekyll
         else
           @posts.each { |p| hash[p.date.strftime("%Y")] << p }
         end
-        hash.values.each { |posts| posts.sort!.reverse! }
+        hash.each_value { |posts| posts.sort!.reverse! }
         hash
       end
 
       def months(year_posts)
         hash = Hash.new { |h, key| h[key] = [] }
         year_posts.each { |p| hash[p.date.strftime("%m")] << p }
-        hash.values.each { |posts| posts.sort!.reverse! }
+        hash.each_value { |posts| posts.sort!.reverse! }
         hash
       end
 
       def days(month_posts)
         hash = Hash.new { |h, key| h[key] = [] }
         month_posts.each { |p| hash[p.date.strftime("%d")] << p }
-        hash.values.each { |posts| posts.sort!.reverse! }
+        hash.each_value { |posts| posts.sort!.reverse! }
         hash
       end
     end

@@ -1,10 +1,21 @@
 inherit_gem:
   jekyll: .rubocop.yml
 
+AllCops:
+  TargetRubyVersion: 2.1
+  Exclude:
+    - vendor/**/*
+
+Lint/ShadowingOuterLocalVariable:
+  Exclude:
+    - lib/jekyll-archives.rb
 
 Metrics/BlockLength:
   Exclude:
     - test/**/*.rb
+
 Metrics/LineLength:
   Exclude:
+    - lib/jekyll-archives.rb
+    - lib/jekyll-archives/archive.rb
     - test/**/*.rb
