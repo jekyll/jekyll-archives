@@ -118,5 +118,5 @@ These variables are:
 permalinks:
   year: '/archives/year/:year/'
   month: '/archives/month/:year-:month/'
-  tag: '/archives/tag/:name/`
+  tag: '/archives/tag/:name/'
 ```
