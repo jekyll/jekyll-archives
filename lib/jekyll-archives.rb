@@ -41,46 +41,46 @@ module Jekyll
       end
 
       def enabled?(archive)
-        @config['enabled'] == true || @config['enabled'] == 'all' ||
-          (@config['enabled'].is_a?(Array) && @config['enabled'].include?(archive))
+        @config["enabled"] == true || @config["enabled"] == "all" ||
+          (@config["enabled"].is_a?(Array) && @config["enabled"].include?(archive))
       end
 
       # Read archive data from posts
       def read
-        read_tags if enabled?('tags')
-        read_categories if enabled?('categories')
-        read_posts_per_year if enabled?('year')
-        read_posts_per_month if enabled?('month')
-        read_posts_per_day if enabled?('day')
+        read_tags if enabled?("tags")
+        read_categories if enabled?("categories")
+        read_posts_per_year if enabled?("year")
+        read_posts_per_month if enabled?("month")
+        read_posts_per_day if enabled?("day")
       end
 
       def read_tags
-        @archives += @site.post_attr_hash('tags').map do |title, posts|
-          Archive.new(@site, title, 'tag', posts)
+        @archives += @site.post_attr_hash("tags").map do |title, posts|
+          Archive.new(@site, title, "tag", posts)
         end
       end
 
       def read_categories
-        @archives += @site.post_attr_hash('categories').map do |title, posts|
-          Archive.new(@site, title, 'category', posts)
+        @archives += @site.post_attr_hash("categories").map do |title, posts|
+          Archive.new(@site, title, "category", posts)
         end
       end
 
       def read_posts_per_year
         @archives += @posts.docs.group_by { |p| p.date.year }.map do |year, posts_for_year|
-          Archive.new(@site, { :year => year }, 'year', posts_for_year.sort.reverse)
+          Archive.new(@site, { :year => year }, "year", posts_for_year.sort.reverse)
         end
       end
 
       def read_posts_per_month
         @archives += @posts.docs.group_by { |p| [p.date.year, p.date.month] }.map do |(year, month), posts_for_month|
-          Archive.new(@site, { :year => year, :month => month }, 'month', posts_for_month.sort.reverse)
+          Archive.new(@site, { :year => year, :month => month }, "month", posts_for_month.sort.reverse)
         end
       end
 
       def read_posts_per_day
         @archives += @posts.docs.group_by { |p| [p.date.year, p.date.month, p.date.day] }.map do |(year, month, day), posts_for_day|
-          Archive.new(@site, { :year => year, :month => month, :day => day }, 'day', posts_for_day.sort.reverse)
+          Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts_for_day.sort.reverse)
         end
       end
     end

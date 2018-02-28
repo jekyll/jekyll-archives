@@ -69,10 +69,10 @@ module Jekyll
       def url_placeholders
         if @title.is_a? Hash
           {
-            :year => @title[:year].to_s,
-            :month => @title[:month].to_s.rjust(2, '0'),
-            :day => @title[:day].to_s.rjust(2, '0'),
-            :type => @type
+            :year  => @title[:year].to_s,
+            :month => @title[:month].to_s.rjust(2, "0"),
+            :day   => @title[:day].to_s.rjust(2, "0"),
+            :type  => @type,
           }
         else
           { :name => @slug, :type => @type }
