@@ -1,30 +1,30 @@
 # frozen_string_literal: true
 
-require "jekyll"
+require 'jekyll'
 
 module Jekyll
   module Archives
     # Internal requires
-    autoload :Archive, "jekyll-archives/archive"
-    autoload :VERSION, "jekyll-archives/version"
+    autoload :Archive, 'jekyll-archives/archive'
+    autoload :VERSION, 'jekyll-archives/version'
 
     class Archives < Jekyll::Generator
       safe true
 
       DEFAULTS = {
-        "layout"     => "archive",
-        "enabled"    => [],
-        "permalinks" => {
-          "year"     => "/:year/",
-          "month"    => "/:year/:month/",
-          "day"      => "/:year/:month/:day/",
-          "tag"      => "/tag/:name/",
-          "category" => "/category/:name/",
-        },
+        'layout'     => 'archive',
+        'enabled'    => [],
+        'permalinks' => {
+          'year'     => '/:year/',
+          'month'    => '/:year/:month/',
+          'day'      => '/:year/:month/:day/',
+          'tag'      => '/tag/:name/',
+          'category' => '/category/:name/'
+        }
       }.freeze
 
       def initialize(config = nil)
-        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
+        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch('jekyll-archives', {}))
       end
 
       def generate(site)
@@ -32,90 +32,58 @@ module Jekyll
         @posts = site.posts
         @archives = []
 
-        @site.config["jekyll-archives"] = @config
+        @site.config['jekyll-archives'] = @config
 
         read
         @site.pages.concat(@archives)
 
-        @site.config["archives"] = @archives
+        @site.config['archives'] = @archives
+      end
+
+      private
+
+      def enabled?(archive)
+        @config['enabled'] == true || @config['enabled'] == 'all' ||
+          (@config['enabled'].is_a?(Array) && @config['enabled'].include?(archive))
       end
 
       # Read archive data from posts
       def read
-        read_tags
-        read_categories
-        read_dates
+        read_tags if enabled?('tags')
+        read_categories if enabled?('categories')
+        read_posts_per_year if enabled?('year')
+        read_posts_per_month if enabled?('month')
+        read_posts_per_day if enabled?('day')
       end
 
       def read_tags
-        if enabled? "tags"
-          tags.each do |title, posts|
-            @archives << Archive.new(@site, title, "tag", posts)
-          end
+        @archives += @site.post_attr_hash('tags').map do |title, posts|
+          Archive.new(site: @site, title: title, type: 'tag', posts: posts)
         end
       end
 
       def read_categories
-        if enabled? "categories"
-          categories.each do |title, posts|
-            @archives << Archive.new(@site, title, "category", posts)
-          end
+        @archives += @site.post_attr_hash('categories').map do |title, posts|
+          Archive.new(site: @site, title: title, type: 'category', posts: posts)
         end
       end
 
-      def read_dates
-        years.each do |year, posts|
-          @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
-          months(posts).each do |month, posts|
-            @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
-            days(posts).each do |day, posts|
-              @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
-            end
-          end
+      def read_posts_per_year
+        @archives += @posts.docs.group_by { |p| p.date.year }.map do |year, posts_for_year|
+          Archive.new(site: @site, title: { year: year }, type: 'year', posts: posts_for_year.sort.reverse)
         end
       end
 
-      # Checks if archive type is enabled in config
-      def enabled?(archive)
-        @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
-                                                                       @config["enabled"].include? archive
-                                                                     end
-      end
-
-      def tags
-        @site.post_attr_hash("tags")
-      end
-
-      def categories
-        @site.post_attr_hash("categories")
-      end
-
-      # Custom `post_attr_hash` method for years
-      def years
-        hash = Hash.new { |h, key| h[key] = [] }
-
-        # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if Jekyll::VERSION >= "3.0.0"
-          @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
-        else
-          @posts.each { |p| hash[p.date.strftime("%Y")] << p }
+      def read_posts_per_month
+        @archives += @posts.docs.group_by { |p| [p.date.year, p.date.month] }.map do |(year, month), posts_for_month|
+          Archive.new(site: @site, title: { year: year, month: month }, type: 'month', posts: posts_for_month.sort.reverse)
         end
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
       end
 
-      def months(year_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        year_posts.each { |p| hash[p.date.strftime("%m")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
-      end
-
-      def days(month_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        month_posts.each { |p| hash[p.date.strftime("%d")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+      def read_posts_per_day
+        @archives += @posts.docs.group_by { |p| [p.date.year, p.date.month, p.date.day] }.map do |(year, month, day), posts_for_day|
+          Archive.new(site: @site, title: { year: year, month: month, day: day }, type: 'day', posts: posts_for_day.sort.reverse)
+        end
       end
     end
   end
