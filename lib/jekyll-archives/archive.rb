@@ -68,7 +68,12 @@ module Jekyll
       # desired placeholder replacements. For details see "url.rb".
       def url_placeholders
         if @title.is_a? Hash
-          @title.merge(:type => @type)
+          {
+            :year => @title[:year].to_s,
+            :month => @title[:month].to_s.rjust(2, '0'),
+            :day => @title[:day].to_s.rjust(2, '0'),
+            :type => @type
+          }
         else
           { :name => @slug, :type => @type }
         end
