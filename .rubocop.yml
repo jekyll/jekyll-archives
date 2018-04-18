@@ -10,6 +10,10 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - lib/jekyll-archives.rb
 
+Lint/SafeNavigationConsistency:
+  Exclude:
+    - lib/jekyll-archives/archive.rb
+
 Metrics/BlockLength:
   Exclude:
     - test/**/*.rb
