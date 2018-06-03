@@ -114,7 +114,11 @@ module Jekyll
       # Returns the destination relative path String.
       def relative_path
         path = URL.unescape_path(url).gsub(%r!^\/!, "")
-        path = File.join(path, "index.html") if url =~ %r!\/$!
+        if url =~ %r!\/$!
+          path = File.join(path, "index.html")
+        elsif url !~ %r!\.html$!
+          path += ".html"
+        end
         path
       end
 
