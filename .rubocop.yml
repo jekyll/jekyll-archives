@@ -1,14 +1,20 @@
+require: rubocop-jekyll
+
 inherit_gem:
-  jekyll: .rubocop.yml
+  rubocop-jekyll: .rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.3
   Exclude:
     - vendor/**/*
 
 Lint/ShadowingOuterLocalVariable:
   Exclude:
     - lib/jekyll-archives.rb
+
+Lint/SafeNavigationConsistency:
+  Exclude:
+    - lib/jekyll-archives/archive.rb
 
 Metrics/BlockLength:
   Exclude:

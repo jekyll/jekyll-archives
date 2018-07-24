@@ -16,32 +16,32 @@ TEST_DIR     = __dir__
 SOURCE_DIR   = File.expand_path("source", TEST_DIR)
 DEST_DIR     = File.expand_path("destination", TEST_DIR)
 
-class Minitest::Test
-  def fixture_site(config = {})
-    Jekyll::Site.new(
-      Jekyll::Utils.deep_merge_hashes(
+module Minitest
+  class Test
+    def fixture_site(config = {})
+      Jekyll::Site.new(
         Jekyll::Utils.deep_merge_hashes(
-          Jekyll::Configuration::DEFAULTS,
-          {
+          Jekyll::Utils.deep_merge_hashes(
+            Jekyll::Configuration::DEFAULTS,
             "source"      => SOURCE_DIR,
-            "destination" => DEST_DIR,
-          }
-        ),
-        config
+            "destination" => DEST_DIR
+          ),
+          config
+        )
       )
-    )
-  end
+    end
 
-  def archive_exists?(site, path)
-    site.config["archives"].any? { |archive| archive.path == path }
-  end
+    def archive_exists?(site, path)
+      site.config["archives"].any? { |archive| archive.path == path }
+    end
 
-  def read_file(path)
-    read_path = File.join(DEST_DIR, path)
-    if File.exist? read_path
-      File.read(read_path).strip
-    else
-      return false
+    def read_file(path)
+      read_path = File.join(DEST_DIR, path)
+      if File.exist? read_path
+        File.read(read_path).strip
+      else
+        return false
+      end
     end
   end
 end

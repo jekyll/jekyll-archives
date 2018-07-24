@@ -14,14 +14,16 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/jekyll/jekyll-archives"
   s.licenses    = ["MIT"]
 
-  all_files       = `git ls-files -z`.split("\x0")
-  s.files         = all_files.grep(%r!^(lib)/!)
+  all_files     = `git ls-files -z`.split("\x0")
+  s.files       = all_files.grep(%r!^(lib)/!)
 
-  s.add_dependency "jekyll", ">= 3.1"
+  s.required_ruby_version = ">= 2.3.0"
 
-  s.add_development_dependency  "minitest"
-  s.add_development_dependency  "rake"
-  s.add_development_dependency  "rdoc"
-  s.add_development_dependency  "rubocop", "0.51"
-  s.add_development_dependency  "shoulda"
+  s.add_dependency "jekyll", "~> 3.6"
+
+  s.add_development_dependency "minitest"
+  s.add_development_dependency "rake"
+  s.add_development_dependency "rdoc"
+  s.add_development_dependency "rubocop-jekyll", "~> 0.1.0"
+  s.add_development_dependency "shoulda"
 end

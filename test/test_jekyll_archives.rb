@@ -65,14 +65,14 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with type-specific layout" do
     setup do
-      @site = fixture_site({
+      @site = fixture_site(
         "jekyll-archives" => {
           "enabled" => true,
           "layouts" => {
             "year" => "archive-too",
           },
-        },
-      })
+        }
+      )
       @site.process
     end
 
@@ -85,7 +85,7 @@ class TestJekyllArchives < Minitest::Test
 
   context "the jekyll-archives plugin with custom permalinks" do
     setup do
-      @site = fixture_site({
+      @site = fixture_site(
         "jekyll-archives" => {
           "enabled"    => true,
           "permalinks" => {
@@ -93,8 +93,8 @@ class TestJekyllArchives < Minitest::Test
             "tag"      => "/tag-:name.html",
             "category" => "/category-:name.html",
           },
-        },
-      })
+        }
+      )
       @site.process
     end
 
