@@ -1,0 +1,10 @@
+title: Jekyll Archives
+description: Automatically generate post archives by dates, tags, and categories.
+
+permalink: pretty
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+theme: jekyll-theme-primer

@@ -24,11 +24,7 @@ module Jekyll
       }.freeze
 
       def initialize(config = nil)
-        @config = if config["jekyll-archives"].nil?
-                    DEFAULTS
-                  else
-                    Utils.deep_merge_hashes(DEFAULTS, config["jekyll-archives"])
-                  end
+        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
       end
 
       def generate(site)
