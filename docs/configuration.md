@@ -7,6 +7,7 @@ Archives configuration is done in the site's `_config.yml` file, under the `jeky
 jekyll-archives:
   enabled: []
   layout: 'archive'
+  slug: nil
   permalinks:
     year: '/:year/'
     month: '/:year/:month/'
@@ -76,6 +77,22 @@ layouts:
   month: month-archive
   day: day-archive
   tag: tag-archive-layout
+```
+
+---
+
+#### Slugs
+| Key    | Value type | Values                                                                                               |
+|--------|------------|------------------------------------------------------------------------------------------------------|
+| `slug` | String     | A [mode for slugifying](https://www.rubydoc.info/github/jekyll/jekyll/Jekyll%2FUtils:slugify) titles |
+
+##### Description
+
+Specifies the mode to pass to `Jekyll::Utils.slugify`
+
+##### Sample values
+```yml
+slug: none|raw|default|pretty|ascii|latin
 ```
 
 ---

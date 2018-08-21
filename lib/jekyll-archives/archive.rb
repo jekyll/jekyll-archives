@@ -34,7 +34,7 @@ module Jekyll
 
         # Generate slug if tag or category
         # (taken from jekyll/jekyll/features/support/env.rb)
-        @slug = Utils.slugify(title) if title.is_a? String
+        @slug = Utils.slugify(title, mode: @config.dig('slug')) if title.is_a? String
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
