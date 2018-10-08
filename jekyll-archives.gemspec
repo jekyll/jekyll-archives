@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   all_files     = `git ls-files -z`.split("\x0")
   s.files       = all_files.grep(%r!^(lib)/!)
 
-  s.required_ruby_version = ">= 2.3.0"
+  s.required_ruby_version = ">= 2.2.0"
 
   s.add_dependency "jekyll", "~> 3.6"
 
