@@ -21,6 +21,7 @@
   * Update .travis.yml (#111)
   * Modernize tests &amp; linting (#114)
   * Test against Ruby 2.5 (#118)
+  * Lint with rubocop-jekyll (#128)
 
 ### Documentation
 
