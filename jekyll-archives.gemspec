@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency "minitest"
   s.add_development_dependency "rake"
   s.add_development_dependency "rdoc"
-  s.add_development_dependency "rubocop-jekyll", "~> 0.1.0"
+  s.add_development_dependency "rubocop-jekyll", "~> 0.2.0"
   s.add_development_dependency "shoulda"
 end

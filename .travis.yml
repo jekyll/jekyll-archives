@@ -12,10 +12,10 @@ rvm:
   - 2.5
 env:
   - ""
-  - JEKYLL_VERSION=3.7.3
+  - JEKYLL_VERSION=3.7.4
 
 matrix:
   include:
     - # GitHub Pages
-      rvm: 2.4.2
+      rvm: 2.5.1
       env: GH_PAGES=true

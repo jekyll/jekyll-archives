@@ -88,7 +88,7 @@ module Jekyll
       end
 
       def permalink
-        data&.is_a?(Hash) && data["permalink"]
+        data && data.is_a?(Hash) && data["permalink"]
       end
 
       # Produce a title object suitable for Liquid based on type of archive.

@@ -37,11 +37,9 @@ module Minitest
 
     def read_file(path)
       read_path = File.join(DEST_DIR, path)
-      if File.exist? read_path
-        File.read(read_path).strip
-      else
-        return false
-      end
+      return false unless File.exist?(read_path)
+
+      File.read(read_path).strip
     end
   end
 end
