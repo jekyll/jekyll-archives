@@ -33,7 +33,7 @@ module Jekyll
 
         # Generate slug if tag or category
         # (taken from jekyll/jekyll/features/support/env.rb)
-        @slug = Utils.slugify(title) if title.is_a? String
+        @slug = Utils.slugify(title, :mode => slug_mode) if title.is_a? String
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -116,6 +116,13 @@ module Jekyll
         path = URL.unescape_path(url).gsub(%r!^\/!, "")
         path = File.join(path, "index.html") if url =~ %r!\/$!
         path
+      end
+
+      # Return the mode to use for generating slugs.
+      #
+      # Returns a symbol or nil.
+      def slug_mode
+        @config["slug_mode"].to_sym if @config["slug_mode"]
       end
 
       # Returns the object as a debug String.
