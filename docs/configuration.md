@@ -7,7 +7,7 @@ Archives configuration is done in the site's `_config.yml` file, under the `jeky
 ```yml
 jekyll-archives:
   enabled: []
-  layout: 'archive'
+  layout: archive
   permalinks:
     year: '/:year/'
     month: '/:year/:month/'
@@ -88,7 +88,8 @@ layouts:
   year: year-archive
   month: month-archive
   day: day-archive
-  tag: tag-archive-layout
+  category: category-archive
+  tag: tag-archive
 ```
 
 ---
