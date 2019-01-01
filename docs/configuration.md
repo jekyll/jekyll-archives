@@ -1,12 +1,13 @@
-# Configuration
+## Configuration
 
 Archives configuration is done in the site's `_config.yml` file, under the `jekyll-archives` key.
 
 ### Default configuration
+
 ```yml
 jekyll-archives:
   enabled: []
-  layout: 'archive'
+  layout: archive
   permalinks:
     year: '/:year/'
     month: '/:year/:month/'
@@ -37,6 +38,7 @@ jekyll-archives:
 ---
 
 #### Enabled archives
+
 | Key       | Value type      | Values |
 |-----------|-----------------|--------|
 | `enabled` | String or Array | `'all'` or an array of any combination of `years`, `months`, `days`, `categories`, `tags`, or archive names (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) |
@@ -46,6 +48,7 @@ This option sets which types of archives will be created. Must be set to an arra
 
 If an array is used, it may contain individual archive names, or [archive types](#types) using the plural form: year**s**, month**s**, day**s**, categor**ies**, tag**s**. When archive types are used, all archives of that type are enabled.
 ##### Sample values
+
 ```yml
 enabled: all
 enabled:
@@ -59,13 +62,17 @@ enabled:
 ---
 
 #### Default layout
+
 | Key      | Value type | Values |
 |----------|------------|--------|
 | `layout` | String     | The layout name of the default archive layout |
 
 ##### Description
+
 Sets the default layout to use if no type-specific layout (see [Type-specific layouts](#type-specific-layouts) below) for an archive is specified.
+
 ##### Sample values
+
 ```yml
 layout: archive                  # _layouts/archive.html
 layout: custom-archive-layout    # _layouts/custom-archive-layout.html
@@ -73,33 +80,41 @@ layout: custom-archive-layout    # _layouts/custom-archive-layout.html
 
 ---
 
-#### Archive-specific layouts
+#### Type-specific layouts
+
 | Key       | Value type                | Values |
 |-----------|---------------------------|--------|
 | `layouts` | Map, String &rarr; String | A map of archive name (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) to its layout. |
 
 ##### Description
-Maps archive names to the layout they will be rendered in. Not all names need to be specified; those without a specific layout will fall back to the default layout.
+
+Maps archive types to the layout they will be rendered in. Not all types need to be specified; those without a specific layout will fall back to the default layout.
+
 ##### Sample values
+
 ```yml
 layouts:
   year: year-archive
   month: month-archive
   day: day-archive
-  tag: tag-archive-layout
+  category: category-archive
+  tag: tag-archive
 ```
 
 ---
 
 #### Permalinks
+
 | Key          | Value type                | Values |
 |--------------|---------------------------|--------|
 | `permalinks` | Map, String &rarr; String | A map of archive name (the keys in `types`, by default `year`, `month`, `day`, `category`, `tag`) to its permalink format. |
 
 ##### Description
-Maps archive names to the permalink format used for archive pages. The permalink style is the same as regular Jekyll posts and pages, but with different variables.
+
+Maps archive types to the permalink format used for archive pages. The permalink style is the same as regular Jekyll posts and pages, but with different variables.
 
 These variables are:
+
 * `:year` for year archives
 * `:year` and `:month` for month archives
 * `:year`, `:month`, and `:day` for day archives
@@ -112,12 +127,14 @@ If the permalink for an archive which is not part of the [default configuration]
 * `/{archive-name}/:year/:month/:day/` for archives whose type is `day`
 
 *Note:* trailing slashes are required to create the archive as an `index.html` file of a directory.
+
 ##### Sample values
+
 ```yml
 permalinks:
   year: '/archives/year/:year/'
   month: '/archives/month/:year-:month/'
-  tag: '/archives/tag/:name/`
+  tag: '/archives/tag/:name/'
 ```
 
 #### Types

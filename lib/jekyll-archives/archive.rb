@@ -91,11 +91,11 @@ module Jekyll
       #
       # Returns the String url.
       def url
-        @url ||= URL.new({
+        @url ||= URL.new(
           :template     => template,
           :placeholders => url_placeholders,
-          :permalink    => nil,
-        }).to_s
+          :permalink    => nil
+        ).to_s
       rescue ArgumentError
         raise ArgumentError, "Template \"#{template}\" provided is invalid."
       end

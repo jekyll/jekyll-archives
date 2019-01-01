@@ -25,11 +25,13 @@
   * Update .travis.yml (#111)
   * Modernize tests &amp; linting (#114)
   * Test against Ruby 2.5 (#118)
+  * Lint with rubocop-jekyll (#128)
 
 ### Documentation
 
   * docs/configuration: GitHub table display was messed up (#96)
   * Update Readme Installation Guide (#116)
+  * Small updates for consistency across document (#130)
 
 ## 2.1.0
 
