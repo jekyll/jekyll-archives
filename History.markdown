@@ -1,9 +1,5 @@
 ## HEAD
 
-### Major Enhancements
-
-  * Support for multiple archives of the same type(#94)
-
 ### Minor Enhancements
 
   * Make Archive subclass of Page (#67)
