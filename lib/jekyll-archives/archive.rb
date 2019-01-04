@@ -22,16 +22,16 @@ module Jekyll
       # site  - The Site object.
       # title - The name of the tag/category or a Hash of the year/month/day in case of date.
       #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
-      # id  - The id of archive. `site.config["jekyll-archives"]["types"]`,
+      # key   - The id of archive. `site.config["jekyll-archives"]["types"]`,
       #           with the corresponding value being one of "year", "month", "day", "category", or "tag".
       # posts - The array of posts that belong in this archive.
-      def initialize(site, title, id, posts)
+      def initialize(site, title, key, posts)
         @site   = site
         @posts  = posts
-        @id     = id
+        @key    = key
         @title  = title
         @config = site.config["jekyll-archives"]
-        @type = @config["types"][id]
+        @type   = @config["types"][key]
 
         # Generate slug if tag or category
         # (taken from jekyll/jekyll/features/support/env.rb)
@@ -52,16 +52,16 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config["permalinks"][@id] || (
+        @config["permalinks"][@key] || (
           case type
           when "tag", "category"
-            "#{@id}/:name/"
+            "#{@key}/:name/"
           when "year"
-            "#{@id}/:year/"
+            "#{@key}/:year/"
           when "month"
-            "#{@id}/:year/:month/"
+            "#{@key}/:year/:month/"
           when "day"
-            "#{@id}/:year/:month/:day/"
+            "#{@key}/:year/:month/:day/"
           end
         )
       end
@@ -70,8 +70,8 @@ module Jekyll
       #
       # Returns the layout as a String
       def layout
-        if @config["layouts"] && @config["layouts"][@id]
-          @config["layouts"][@id]
+        if @config["layouts"] && @config["layouts"][@key]
+          @config["layouts"][@key]
         else
           @config["layout"]
         end
