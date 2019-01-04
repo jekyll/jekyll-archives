@@ -22,13 +22,13 @@ module Jekyll
       # site  - The Site object.
       # title - The name of the tag/category or a Hash of the year/month/day in case of date.
       #           e.g. { :year => 2014, :month => 08 } or "my-category" or "my-tag".
-      # id  - The id of archive. Must be a key of @config["types"],
+      # id  - The id of archive. `site.config["jekyll-archives"]["types"]`,
       #           with the corresponding value being one of "year", "month", "day", "category", or "tag".
       # posts - The array of posts that belong in this archive.
       def initialize(site, title, id, posts)
         @site   = site
         @posts  = posts
-        @id = id
+        @id     = id
         @title  = title
         @config = site.config["jekyll-archives"]
         @type = @config["types"][id]
@@ -53,15 +53,15 @@ module Jekyll
       # Returns the template String.
       def template
         @config["permalinks"][@id] || (
-          case @type
+          case type
           when "tag", "category"
-            then "#{@id}/:name/"
+            "#{@id}/:name/"
           when "year"
-            then "#{@id}/:year/"
+            "#{@id}/:year/"
           when "month"
-            then "#{@id}/:year/:month/"
+            "#{@id}/:year/:month/"
           when "day"
-            then "#{@id}/:year/:month/:day/"
+            "#{@id}/:year/:month/:day/"
           end
         )
       end

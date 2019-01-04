@@ -55,23 +55,23 @@ module Jekyll
       end
 
       def read_tags
-        @config["types"].select { |id, type| type == "tag" && (enabled?("tags") || enabled?(id)) }.each_key { |id| tags.each { |title, posts| @archives << Archive.new(@site, title, id, posts) } }
+        advanced_helper_method("tag", "tags", tags)
       end
 
       def read_categories
-        @config["types"].select { |id, type| type == "category" && (enabled?("categories") || enabled?(id)) }.each_key { |id| categories.each { |title, posts| @archives << Archive.new(@site, title, id, posts) } }
+        advanced_helper_method("category", "categories", categories)
       end
 
       def enabled_years
-        @config["types"].select { |id, type| type == "year" && (enabled?("years") || enabled?(id)) }.keys
+        basic_helper_method("year", "years").keys
       end
 
       def enabled_months
-        @config["types"].select { |id, type| type == "month" && (enabled?("months") || enabled?(id)) }.keys
+        basic_helper_method("month", "months").keys
       end
 
       def enabled_days
-        @config["types"].select { |id, type| type == "day" && (enabled?("days") || enabled?(id)) }.keys
+        basic_helper_method("day", "days").keys
       end
 
       def read_dates
@@ -131,6 +131,23 @@ module Jekyll
         hash.each_value { |posts| posts.sort!.reverse! }
         hash
       end
+
+      private
+
+      def basic_helper_method(singular, plural)
+        @config["types"].select do |id, type|
+          type == singular && (enabled?(plural) || enabled?(id))
+        end
+      end
+
+      def advanced_helper_method(singular, plural, bucket)
+        basic_helper_method(singular, plural).each_key do |id|
+          bucket.each do |title, posts|
+            @archives << Archive.new(@site, title, id, posts)
+          end
+        end
+      end
+
     end
   end
 end
