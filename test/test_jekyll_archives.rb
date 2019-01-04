@@ -2,7 +2,7 @@
 
 require "helper"
 
-class TestJekyllArchives < Minitest::Test
+class TestJekyllArchivesBasics < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -47,7 +47,9 @@ class TestJekyllArchives < Minitest::Test
       assert_equal "Test", read_file("tag/test-tag/index.html")
     end
   end
+end
 
+class TestJekyllArchivesCustomLayout < Minitest::Test
   context "the jekyll-archives plugin with custom layout path" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -82,7 +84,9 @@ class TestJekyllArchives < Minitest::Test
       assert_equal "Test", read_file("/tag/test-tag/index.html")
     end
   end
+end
 
+class TestJekyllArchivesPermalink < Minitest::Test
   context "the jekyll-archives plugin with custom permalinks" do
     setup do
       @site = fixture_site(
@@ -106,7 +110,9 @@ class TestJekyllArchives < Minitest::Test
       assert archive_exists? @site, "category-plugins.html"
     end
   end
+end
 
+class TestJekyllArchivesLiquid < Minitest::Test
   context "the archives" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -119,7 +125,9 @@ class TestJekyllArchives < Minitest::Test
       assert_equal 12, read_file("length.html").to_i
     end
   end
+end
 
+class TestJekyllArchivesDefault < Minitest::Test
   context "the jekyll-archives plugin with default config" do
     setup do
       @site = fixture_site
@@ -130,29 +138,9 @@ class TestJekyllArchives < Minitest::Test
       assert_equal 0, read_file("length.html").to_i
     end
   end
+end
 
-  context "the jekyll-archives plugin with enabled array" do
-    setup do
-      @site = fixture_site("jekyll-archives" => {
-        "enabled" => ["tags"],
-      })
-      @site.process
-    end
-
-    should "generate the enabled archives" do
-      assert archive_exists? @site, "tag/test-tag/index.html"
-      assert archive_exists? @site, "tag/tagged/index.html"
-      assert archive_exists? @site, "tag/new/index.html"
-    end
-
-    should "not generate the disabled archives" do
-      assert !archive_exists?(@site, "2014/index.html")
-      assert !archive_exists?(@site, "2014/08/index.html")
-      assert !archive_exists?(@site, "2013/08/16/index.html")
-      assert !archive_exists?(@site, "category/plugins/index.html")
-    end
-  end
-
+class TestJekyllArchivesFileds < Minitest::Test
   context "the jekyll-archives plugin" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -189,7 +177,33 @@ class TestJekyllArchives < Minitest::Test
       assert @day_archive.date.is_a? Date
     end
   end
+end
 
+class TestJekyllArchivesEnabling < Minitest::Test
+  context "the jekyll-archives plugin with enabled array" do
+    setup do
+      @site = fixture_site("jekyll-archives" => {
+        "enabled" => ["tags"],
+      })
+      @site.process
+    end
+
+    should "generate the enabled archives" do
+      assert archive_exists? @site, "tag/test-tag/index.html"
+      assert archive_exists? @site, "tag/tagged/index.html"
+      assert archive_exists? @site, "tag/new/index.html"
+    end
+
+    should "not generate the disabled archives" do
+      assert !archive_exists?(@site, "2014/index.html")
+      assert !archive_exists?(@site, "2014/08/index.html")
+      assert !archive_exists?(@site, "2013/08/16/index.html")
+      assert !archive_exists?(@site, "category/plugins/index.html")
+    end
+  end
+end
+
+class TestJekyllArchivesTags < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default tag archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -243,7 +257,9 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "category/plugins/index.html")
     end
   end
+end
 
+class TestJekyllArchivesCategories < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default category archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -293,7 +309,9 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "tag/new/index.html")
     end
   end
+end
 
+class TestJekyllArchivesYears < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default year archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -343,7 +361,9 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "tag/new/index.html")
     end
   end
+end
 
+class TestJekyllArchivesMonths < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default month archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -393,7 +413,9 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "tag/new/index.html")
     end
   end
+end
 
+class TestJekyllArchivesDays < Minitest::Test
   context "the jekyll-archives plugin with an enabled non-default day archive" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -443,7 +465,9 @@ class TestJekyllArchives < Minitest::Test
       assert !archive_exists?(@site, "tag/new/index.html")
     end
   end
+end
 
+class TestJekyllArchivesNonDefault < Minitest::Test
   context "the jekyll-archives plugin with non-default archives defined and only default archives enabled" do
     setup do
       @site = fixture_site("jekyll-archives" => {
