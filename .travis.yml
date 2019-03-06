@@ -1,20 +1,20 @@
 language: ruby
-script : script/cibuild
 cache: bundler
-sudo: false
-
-before_install:
-  - gem update --system
-  - bundle update
 rvm:
   - 2.4
   - 2.6
-env:
-  - ""
-  - JEKYLL_VERSION=3.7.4
 
 matrix:
   include:
     - # GitHub Pages
       rvm: 2.5.3
       env: GH_PAGES=true
+
+before_install:
+  - gem update --system
+  - bundle update
+script : script/cibuild
+
+env:
+  - JEKYLL_VERSION=3.7.4
+
