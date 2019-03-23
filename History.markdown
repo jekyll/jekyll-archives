@@ -22,6 +22,7 @@
   * Modernize tests &amp; linting (#114)
   * Test against Ruby 2.5 (#118)
   * Lint with rubocop-jekyll (#128)
+  * Allow testing and using with Jekyll 4.x (#133)
 
 ### Documentation
 
