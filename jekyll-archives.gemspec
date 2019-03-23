@@ -20,11 +20,11 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.3.0"
 
   s.add_dependency "jekyll", ">= 3.6", "< 5.0"
-  
+
   s.add_development_dependency "bundler"
   s.add_development_dependency "minitest"
   s.add_development_dependency "rake"
   s.add_development_dependency "rdoc"
-  s.add_development_dependency "rubocop-jekyll", "~> 0.2.0"
+  s.add_development_dependency "rubocop-jekyll", "~> 0.9"
   s.add_development_dependency "shoulda"
 end
