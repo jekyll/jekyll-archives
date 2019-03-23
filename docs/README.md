@@ -17,8 +17,6 @@ plugins:
   - jekyll-archives
 ```
 
-⚠️ If you are using Jekyll < 3.5.0, use the `gems` key instead of `plugins`.
-
 ### Configuration
 
 Archives can be configured by using the `jekyll-archives` key in the Jekyll configuration (`_config.yml`) file. See the [Configuration](configuration.md) page for a full list of configuration options.
