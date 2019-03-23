@@ -1,4 +1,4 @@
-## HEAD
+## 2.2.1 - 2019-03-23
 
 ### Minor Enhancements
 
@@ -9,6 +9,8 @@
 
 ### Development Fixes
 
+  * Target Ruby 2.3
+  * Allow testing and using with Jekyll 4.x (#133)
   * Update Travis config and Gemfile for Ruby < 2.2.2 support (#68)
   * Consolidate History file to work with jekyllbot (#80)
   * Remove Travis test for Ruby 1.9 (#87)
@@ -22,12 +24,11 @@
   * Modernize tests &amp; linting (#114)
   * Test against Ruby 2.5 (#118)
   * Lint with rubocop-jekyll (#128)
-  * Allow testing and using with Jekyll 4.x (#133)
 
 ### Documentation
 
+  * Update Installation Guide (#116)
   * docs/configuration: GitHub table display was messed up (#96)
-  * Update Readme Installation Guide (#116)
   * Small updates for consistency across document (#130)
 
 ## 2.1.0

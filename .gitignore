@@ -1,7 +1,8 @@
+_site/
+.bundle
+.jekyll-metadata
 *.gem
 Gemfile.lock
-test/destination
-.bundle
 pkg/
-.jekyll-metadata
-_site/
+test/destination
+test/source/.jekyll-cache
