@@ -1,4 +1,10 @@
-## 2.2.1 - 2019-03-23
+## HEAD
+
+### Development Fixes
+
+  * Initialize Archives generator with a hash (#135)
+
+## 2.2.1
 
 ### Minor Enhancements
 
