@@ -23,7 +23,7 @@ module Jekyll
         },
       }.freeze
 
-      def initialize(config = nil)
+      def initialize(config = {})
         @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
       end
 
