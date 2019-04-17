@@ -83,11 +83,11 @@ module Jekyll
       end
 
       def tags
-        @site.post_attr_hash("tags")
+        @site.tags
       end
 
       def categories
-        @site.post_attr_hash("categories")
+        @site.categories
       end
 
       # Custom `post_attr_hash` method for years
