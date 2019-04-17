@@ -3,6 +3,7 @@
 ### Development Fixes
 
   * Initialize Archives generator with a hash (#135)
+  * Remove support for legacy Jekyll versions (#136)
 
 ## 2.2.1
 
