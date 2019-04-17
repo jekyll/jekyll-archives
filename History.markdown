@@ -4,6 +4,7 @@
 
   * Initialize Archives generator with a hash (#135)
   * Remove support for legacy Jekyll versions (#136)
+  * Read-in site&#39;s tags and categories attributes (#137)
 
 ## 2.2.1
 
