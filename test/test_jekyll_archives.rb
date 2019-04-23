@@ -189,4 +189,43 @@ class TestJekyllArchives < Minitest::Test
       assert @day_archive.date.is_a? Date
     end
   end
+
+  context "the jekyll-archives plugin with a non-hash config" do
+    should "output a warning" do
+      output = capture_output do
+        site = fixture_site("jekyll-archives" => %w(apples oranges))
+        site.read
+        site.generate
+      end
+      assert_includes output, "Archives: Expected a hash but got [\"apples\", \"oranges\"]"
+      assert_includes output, "Archives will not be generated for this site."
+
+      output = capture_output do
+        site = fixture_site("jekyll-archives" => nil)
+        site.read
+        site.generate
+      end
+      assert_includes output, "Archives: Expected a hash but got nil"
+      assert_includes output, "Archives will not be generated for this site."
+    end
+
+    should "not generate archive pages" do
+      capture_output do
+        site = fixture_site("jekyll-archives" => nil)
+        site.read
+        site.generate
+        assert_nil(site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
+      end
+    end
+
+    should "be fine with a basic config" do
+      output = capture_output do
+        @site = fixture_site("title" => "Hello World")
+        @site.read
+        @site.generate
+      end
+      refute_includes output, "Archives: Expected a hash but got nil"
+      assert_nil(@site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
+    end
+  end
 end

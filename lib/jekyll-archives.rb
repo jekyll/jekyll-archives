@@ -24,10 +24,19 @@ module Jekyll
       }.freeze
 
       def initialize(config = {})
-        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
+        archives_config = config.fetch("jekyll-archives", {})
+        if archives_config.is_a?(Hash)
+          @config = Utils.deep_merge_hashes(DEFAULTS, archives_config)
+        else
+          @config = nil
+          Jekyll.logger.warn "Archives:", "Expected a hash but got #{archives_config.inspect}"
+          Jekyll.logger.warn "", "Archives will not be generated for this site."
+        end
       end
 
       def generate(site)
+        return if @config.nil?
+
         @site = site
         @posts = site.posts
         @archives = []
