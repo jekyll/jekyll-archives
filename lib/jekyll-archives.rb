@@ -28,16 +28,18 @@ module Jekyll
       end
 
       def generate(site)
-        @site = site
-        @posts = site.posts
-        @archives = []
+        unless site.incremental?
+          @site = site
+          @posts = site.posts
+          @archives = []
 
-        @site.config["jekyll-archives"] = @config
+          @site.config["jekyll-archives"] = @config
 
-        read
-        @site.pages.concat(@archives)
+          read
+          @site.pages.concat(@archives)
 
-        @site.config["archives"] = @archives
+          @site.config["archives"] = @archives
+        end
       end
 
       # Read archive data from posts
