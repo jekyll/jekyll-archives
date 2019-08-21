@@ -6,6 +6,10 @@
   * Remove support for legacy Jekyll versions (#136)
   * Read-in site&#39;s tags and categories attributes (#137)
 
+### Bug Fixes
+
+  * Return unless &#39;jekyll-archives&#39; config is a Hash (#139)
+
 ## 2.2.1
 
 ### Minor Enhancements
