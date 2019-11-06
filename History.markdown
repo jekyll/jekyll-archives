@@ -10,6 +10,10 @@
 
   * Return unless &#39;jekyll-archives&#39; config is a Hash (#139)
 
+### Documentation
+
+  * s/gems/plugins/ (#143)
+
 ## 2.2.1
 
 ### Minor Enhancements
