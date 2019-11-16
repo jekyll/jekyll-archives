@@ -59,6 +59,7 @@ module Jekyll
       def read_tags
         if enabled? "tags"
           tags.each do |title, posts|
+            Jekyll.logger.debug "Archives:" "Processing #{posts} with tag: #{title}"
             @archives << Archive.new(@site, title, "tag", posts)
           end
         end
@@ -67,6 +68,7 @@ module Jekyll
       def read_categories
         if enabled? "categories"
           categories.each do |title, posts|
+            Jekyll.logger.debug "Archives:" "Processing #{posts} with tag: #{title}"
             @archives << Archive.new(@site, title, "category", posts)
           end
         end
@@ -74,10 +76,13 @@ module Jekyll
 
       def read_dates
         years.each do |year, posts|
+          Jekyll.logger.debug "Archives:" "Processing #{posts} in #{year}"
           @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
           months(posts).each do |month, posts|
+            Jekyll.logger.debug "Archives:" "Proccessing #{posts} in #{year}-#{month}"
             @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
             days(posts).each do |day, posts|
+              Jekyll.logger.debug "Archives:" "Proccessing #{posts} on #{year}-#{month}-#{day}"
               @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
             end
           end
