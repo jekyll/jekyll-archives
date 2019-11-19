@@ -68,7 +68,7 @@ module Jekyll
       def read_categories
         if enabled? "categories"
           categories.each do |title, posts|
-            Jekyll.logger.debug "Archives:" "Processing #{posts} with tag: #{title}"
+            Jekyll.logger.debug "Archives:" "Processing #{posts} with category: #{title}"
             @archives << Archive.new(@site, title, "category", posts)
           end
         end
