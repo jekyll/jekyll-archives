@@ -7,6 +7,7 @@
   * Read-in site&#39;s tags and categories attributes (#137)
   * Simplify checking if an archive type is enabled (#149)
   * Use private helper to append enabled archive type (#150)
+  * Access nested Hash values with `Hash#dig` (#151)
 
 ### Bug Fixes
 
