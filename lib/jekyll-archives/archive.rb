@@ -50,18 +50,14 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config["permalinks"][type]
+        @config.dig("permalinks", type)
       end
 
       # The layout to use for rendering
       #
       # Returns the layout as a String
       def layout
-        if @config["layouts"] && @config["layouts"][type]
-          @config["layouts"][type]
-        else
-          @config["layout"]
-        end
+        @config.dig("layouts", type) || @config["layout"]
       end
 
       # Returns a hash of URL placeholder names (as symbols) mapping to the
