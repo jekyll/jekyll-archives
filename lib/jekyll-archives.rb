@@ -32,7 +32,7 @@ module Jekyll
           Jekyll.logger.warn "Archives:", "Expected a hash but got #{archives_config.inspect}"
           Jekyll.logger.warn "", "Archives will not be generated for this site."
         end
-        @enabled = @config["enabled"]
+        @enabled = @config && @config["enabled"]
       end
 
       def generate(site)
