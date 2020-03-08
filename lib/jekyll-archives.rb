@@ -32,6 +32,7 @@ module Jekyll
           Jekyll.logger.warn "Archives:", "Expected a hash but got #{archives_config.inspect}"
           Jekyll.logger.warn "", "Archives will not be generated for this site."
         end
+        @enabled = @config["enabled"]
       end
 
       def generate(site)
@@ -86,9 +87,7 @@ module Jekyll
 
       # Checks if archive type is enabled in config
       def enabled?(archive)
-        @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
-                                                                       @config["enabled"].include? archive
-                                                                     end
+        @enabled == true || @enabled == "all" || (@enabled.is_a?(Array) && @enabled.include?(archive))
       end
 
       def tags
