@@ -74,12 +74,12 @@ module Jekyll
       end
 
       def read_dates
-        years.each do |year, posts|
-          @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
-          months(posts).each do |month, posts|
-            @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
-            days(posts).each do |day, posts|
-              @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
+        years.each do |year, y_posts|
+          append_enabled_date_type({ :year => year }, "year", y_posts)
+          months(y_posts).each do |month, m_posts|
+            append_enabled_date_type({ :year => year, :month => month }, "month", m_posts)
+            days(m_posts).each do |day, d_posts|
+              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", d_posts)
             end
           end
         end
@@ -118,6 +118,18 @@ module Jekyll
         month_posts.each { |p| hash[p.date.strftime("%d")] << p }
         hash.each_value { |posts| posts.sort!.reverse! }
         hash
+      end
+
+      private
+
+      # Initialize a new Archive page and append to base array if the associated date `type`
+      # has been enabled by configuration.
+      #
+      # meta  - A Hash of the year / month / day as applicable for date.
+      # type  - The type of date archive.
+      # posts - The array of posts that belong in the date archive.
+      def append_enabled_date_type(meta, type, posts)
+        @archives << Archive.new(@site, meta, type, posts) if enabled?(type)
       end
     end
   end
