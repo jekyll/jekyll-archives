@@ -100,24 +100,17 @@ module Jekyll
 
       # Custom `post_attr_hash` method for years
       def years
-        hash = Hash.new { |h, key| h[key] = [] }
-        @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash(@posts.docs, "%Y")
       end
 
+      # Custom `post_attr_hash` method for months
       def months(year_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        year_posts.each { |p| hash[p.date.strftime("%m")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash(year_posts, "%m")
       end
 
+      # Custom `post_attr_hash` method for days
       def days(month_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        month_posts.each { |p| hash[p.date.strftime("%d")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash(month_posts, "%d")
       end
 
       private
@@ -130,6 +123,17 @@ module Jekyll
       # posts - The array of posts that belong in the date archive.
       def append_enabled_date_type(meta, type, posts)
         @archives << Archive.new(@site, meta, type, posts) if enabled?(type)
+      end
+
+      # Custom `post_attr_hash` for date type archives.
+      #
+      # posts - Array of posts to be considered for archiving.
+      # id    - String used to format post date via `Time.strptime` e.g. %Y, %m, etc.
+      def date_attr_hash(posts, id)
+        hash = Hash.new { |hsh, key| hsh[key] = [] }
+        posts.each { |post| hash[post.date.strftime(id)] << post }
+        hash.each_value { |posts| posts.sort!.reverse! }
+        hash
       end
     end
   end
