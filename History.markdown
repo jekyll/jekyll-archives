@@ -8,6 +8,7 @@
   * Simplify checking if an archive type is enabled (#149)
   * Use private helper to append enabled archive type (#150)
   * Access nested Hash values with `Hash#dig` (#151)
+  * Generate custom post_attr_hash with private helper (#152)
 
 ### Bug Fixes
 
