@@ -18,6 +18,10 @@
 
   * s/gems/plugins/ (#143)
 
+### Minor Enhancements
+
+  * Memoize relative_path attribute of archive pages (#153)
+
 ## 2.2.1
 
 ### Minor Enhancements
