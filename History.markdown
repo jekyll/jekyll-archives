@@ -21,6 +21,7 @@
 ### Minor Enhancements
 
   * Memoize relative_path attribute of archive pages (#153)
+  * Memoize date attribute of date-type archive pages (#154)
 
 ## 2.2.1
 
