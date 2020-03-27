@@ -25,7 +25,7 @@ jekyll-archives:
 #### Optional settings
 - [Default layout (`layout`)](#default-layout)
 - [Permalinks (`permalinks`)](#permalinks)
-
+- [Collections (`collections`)](#collections)
 ---
 
 #### Enabled archives
@@ -120,4 +120,25 @@ permalinks:
   year: '/archives/year/:year/'
   month: '/archives/month/:year-:month/'
   tag: '/archives/tag/:name/'
+```
+
+---
+
+#### Collections
+
+| Key          | Value type                | Values |
+|--------------|---------------------------|--------|
+| `collections.merge_tags` | Bool | Whether to retrieve tags also from custom collections. (default: `false`) |
+
+##### Description
+The `collections` map contains settings affecting the custom collections support.
+
+##### merge_tags
+Whether to add tags from pages inside custom collections into the global tags pool.
+
+##### Sample values
+
+```yml
+collections:
+  merge_tags: true
 ```

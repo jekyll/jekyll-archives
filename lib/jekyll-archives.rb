@@ -59,6 +59,16 @@ module Jekyll
 
       def read_tags
         if enabled? "tags"
+          if @config["collections"]&.fetch("merge_tags", false)
+            @site.collections.each do |_, col|
+              col.docs.each do |post|
+                post.data["tags"].each do |tag|
+                  tags[tag].nil? ? tags[tag] = [ post ] : tags[tag].push(post)
+                end
+              end
+            end
+          end
+
           tags.each do |title, posts|
             @archives << Archive.new(@site, title, "tag", posts)
           end

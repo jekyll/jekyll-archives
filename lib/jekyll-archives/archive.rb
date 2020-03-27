@@ -3,11 +3,12 @@
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
-      attr_accessor :posts, :type, :slug
+      attr_accessor :posts, :type, :slug, :collections
 
       # Attributes for Liquid templates
       ATTRIBUTES_FOR_LIQUID = %w(
         posts
+        collections
         type
         title
         date
@@ -30,6 +31,16 @@ module Jekyll
         @type   = type
         @title  = title
         @config = site.config["jekyll-archives"]
+
+        @collections = {}
+        posts.each do |post|
+          l = post.collection.label
+          if @collections.has_key?(l)
+            @collections[l] << post
+          else
+            @collections[l] = [ post ]
+          end
+        end
 
         # Generate slug if tag or category
         # (taken from jekyll/jekyll/features/support/env.rb)

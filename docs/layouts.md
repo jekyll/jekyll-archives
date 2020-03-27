@@ -1,6 +1,6 @@
 # Layouts
 
-Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [type-specific layouts](./configuration.md#type-specific-layouts). 
+Archives layouts are special layouts that specify how an archive page is displayed. Special attributes are available to these layouts to represent information about the specific layout being generated. These layouts are otherwise identical to regular Jekyll layouts. To handle the variety of cases presented through the attributes, we recommend that you use [type-specific layouts](./configuration.md#type-specific-layouts).
 
 ### Layout attributes
 #### Title (`page.title`)
@@ -11,6 +11,10 @@ In the case of a date archive, this attribute contains a Date object that can be
 
 #### Posts (`page.posts`)
 The `page.posts` attribute contains an array of Post objects matching the archive criteria. You can iterate over this array just like any other Post array in Jekyll.
+
+#### Collections (`page.collections`)
+This attribute is a hash of `collection label -> []Post` pairs, splitting the posts in this archive by the collection they are in.
+See [Jekyll documentation](https://jekyllrb.com/docs/collections/) for more information about collections.
 
 #### Type (`page.type`)
 This attribute contains a simple string indicating the type of the layout being generated. Its value can be one of `tag`, `category`, `year`, `month`, or `day`.

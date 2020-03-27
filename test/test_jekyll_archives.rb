@@ -228,4 +228,24 @@ class TestJekyllArchives < Minitest::Test
       assert_nil(@site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
     end
   end
+
+  context "the jekyll-archives plugin with tags from collections" do
+    setup do
+      @site = fixture_site("jekyll-archives" => {
+        "layout"  => "archive-too",
+        "enabled" => true,
+        "collections" => {
+          "merge_tags" => true,
+        }
+      }, "collections" => {
+        "foo" => { }
+      })
+      @site.process
+    end
+
+    should "generate tags for collections" do
+      @site.process
+      assert archive_exists? @site, "tag/collection/index.html"
+    end
+  end
 end
