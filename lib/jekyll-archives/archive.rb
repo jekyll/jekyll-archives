@@ -122,7 +122,7 @@ module Jekyll
       #
       # Returns a symbol or nil.
       def slug_mode
-        @config["slug_mode"].to_sym if @config["slug_mode"]
+        @config["slug_mode"]
       end
 
       # Returns the object as a debug String.
