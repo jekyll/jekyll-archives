@@ -1,5 +1,30 @@
 ## HEAD
 
+### Development Fixes
+
+  * Initialize Archives generator with a hash (#135)
+  * Remove support for legacy Jekyll versions (#136)
+  * Read-in site&#39;s tags and categories attributes (#137)
+  * Simplify checking if an archive type is enabled (#149)
+  * Use private helper to append enabled archive type (#150)
+  * Access nested Hash values with `Hash#dig` (#151)
+  * Generate custom post_attr_hash with private helper (#152)
+
+### Bug Fixes
+
+  * Return unless &#39;jekyll-archives&#39; config is a Hash (#139)
+
+### Documentation
+
+  * s/gems/plugins/ (#143)
+
+### Minor Enhancements
+
+  * Memoize relative_path attribute of archive pages (#153)
+  * Memoize date attribute of date-type archive pages (#154)
+
+## 2.2.1
+
 ### Minor Enhancements
 
   * Make Archive subclass of Page (#67)
@@ -9,6 +34,8 @@
 
 ### Development Fixes
 
+  * Target Ruby 2.3
+  * Allow testing and using with Jekyll 4.x (#133)
   * Update Travis config and Gemfile for Ruby < 2.2.2 support (#68)
   * Consolidate History file to work with jekyllbot (#80)
   * Remove Travis test for Ruby 1.9 (#87)
@@ -25,8 +52,9 @@
 
 ### Documentation
 
+  * Update Installation Guide (#116)
   * docs/configuration: GitHub table display was messed up (#96)
-  * Update Readme Installation Guide (#116)
+  * Small updates for consistency across document (#130)
 
 ## 2.1.0
 

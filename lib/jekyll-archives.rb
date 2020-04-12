@@ -23,11 +23,21 @@ module Jekyll
         },
       }.freeze
 
-      def initialize(config = nil)
-        @config = Utils.deep_merge_hashes(DEFAULTS, config.fetch("jekyll-archives", {}))
+      def initialize(config = {})
+        archives_config = config.fetch("jekyll-archives", {})
+        if archives_config.is_a?(Hash)
+          @config = Utils.deep_merge_hashes(DEFAULTS, archives_config)
+        else
+          @config = nil
+          Jekyll.logger.warn "Archives:", "Expected a hash but got #{archives_config.inspect}"
+          Jekyll.logger.warn "", "Archives will not be generated for this site."
+        end
+        @enabled = @config && @config["enabled"]
       end
 
       def generate(site)
+        return if @config.nil?
+
         @site = site
         @posts = site.posts
         @archives = []
@@ -64,12 +74,12 @@ module Jekyll
       end
 
       def read_dates
-        years.each do |year, posts|
-          @archives << Archive.new(@site, { :year => year }, "year", posts) if enabled? "year"
-          months(posts).each do |month, posts|
-            @archives << Archive.new(@site, { :year => year, :month => month }, "month", posts) if enabled? "month"
-            days(posts).each do |day, posts|
-              @archives << Archive.new(@site, { :year => year, :month => month, :day => day }, "day", posts) if enabled? "day"
+        years.each do |year, y_posts|
+          append_enabled_date_type({ :year => year }, "year", y_posts)
+          months(y_posts).each do |month, m_posts|
+            append_enabled_date_type({ :year => year, :month => month }, "month", m_posts)
+            days(m_posts).each do |day, d_posts|
+              append_enabled_date_type({ :year => year, :month => month, :day => day }, "day", d_posts)
             end
           end
         end
@@ -77,43 +87,51 @@ module Jekyll
 
       # Checks if archive type is enabled in config
       def enabled?(archive)
-        @config["enabled"] == true || @config["enabled"] == "all" || if @config["enabled"].is_a? Array
-                                                                       @config["enabled"].include? archive
-                                                                     end
+        @enabled == true || @enabled == "all" || (@enabled.is_a?(Array) && @enabled.include?(archive))
       end
 
       def tags
-        @site.post_attr_hash("tags")
+        @site.tags
       end
 
       def categories
-        @site.post_attr_hash("categories")
+        @site.categories
       end
 
       # Custom `post_attr_hash` method for years
       def years
-        hash = Hash.new { |h, key| h[key] = [] }
-
-        # In Jekyll 3, Collection#each should be called on the #docs array directly.
-        if Jekyll::VERSION >= "3.0.0"
-          @posts.docs.each { |p| hash[p.date.strftime("%Y")] << p }
-        else
-          @posts.each { |p| hash[p.date.strftime("%Y")] << p }
-        end
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash(@posts.docs, "%Y")
       end
 
+      # Custom `post_attr_hash` method for months
       def months(year_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        year_posts.each { |p| hash[p.date.strftime("%m")] << p }
-        hash.each_value { |posts| posts.sort!.reverse! }
-        hash
+        date_attr_hash(year_posts, "%m")
       end
 
+      # Custom `post_attr_hash` method for days
       def days(month_posts)
-        hash = Hash.new { |h, key| h[key] = [] }
-        month_posts.each { |p| hash[p.date.strftime("%d")] << p }
+        date_attr_hash(month_posts, "%d")
+      end
+
+      private
+
+      # Initialize a new Archive page and append to base array if the associated date `type`
+      # has been enabled by configuration.
+      #
+      # meta  - A Hash of the year / month / day as applicable for date.
+      # type  - The type of date archive.
+      # posts - The array of posts that belong in the date archive.
+      def append_enabled_date_type(meta, type, posts)
+        @archives << Archive.new(@site, meta, type, posts) if enabled?(type)
+      end
+
+      # Custom `post_attr_hash` for date type archives.
+      #
+      # posts - Array of posts to be considered for archiving.
+      # id    - String used to format post date via `Time.strptime` e.g. %Y, %m, etc.
+      def date_attr_hash(posts, id)
+        hash = Hash.new { |hsh, key| hsh[key] = [] }
+        posts.each { |post| hash[post.date.strftime(id)] << post }
         hash.each_value { |posts| posts.sort!.reverse! }
         hash
       end

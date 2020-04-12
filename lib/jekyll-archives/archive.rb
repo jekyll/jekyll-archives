@@ -50,18 +50,14 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config["permalinks"][type]
+        @config.dig("permalinks", type)
       end
 
       # The layout to use for rendering
       #
       # Returns the layout as a String
       def layout
-        if @config["layouts"] && @config["layouts"][type]
-          @config["layouts"][type]
-        else
-          @config["layout"]
-        end
+        @config.dig("layouts", type) || @config["layout"]
       end
 
       # Returns a hash of URL placeholder names (as symbols) mapping to the
@@ -88,7 +84,7 @@ module Jekyll
       end
 
       def permalink
-        data && data.is_a?(Hash) && data["permalink"]
+        data&.is_a?(Hash) && data["permalink"]
       end
 
       # Produce a title object suitable for Liquid based on type of archive.
@@ -103,7 +99,9 @@ module Jekyll
       #
       # Returns a Date.
       def date
-        if @title.is_a? Hash
+        return unless @title.is_a?(Hash)
+
+        @date ||= begin
           args = @title.values.map(&:to_i)
           Date.new(*args)
         end
@@ -113,9 +111,11 @@ module Jekyll
       #
       # Returns the destination relative path String.
       def relative_path
-        path = URL.unescape_path(url).gsub(%r!^\/!, "")
-        path = File.join(path, "index.html") if url =~ %r!\/$!
-        path
+        @relative_path ||= begin
+          path = URL.unescape_path(url).gsub(%r!^/!, "")
+          path = File.join(path, "index.html") if url.end_with?("/")
+          path
+        end
       end
 
       # Return the mode to use for generating slugs.

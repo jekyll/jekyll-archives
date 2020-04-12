@@ -17,6 +17,8 @@ This attribute contains a simple string indicating the type of the layout being 
 
 ### Sample layouts
 #### Tag and category layout
+
+<!-- {% raw %} -->
 ```html
 <h1>Archive of posts with {{ page.type }} '{{ page.title }}'</h1>
 <ul class="posts">
@@ -70,3 +72,4 @@ This attribute contains a simple string indicating the type of the layout being 
 {% endfor %}
 </ul>
 ```
+<!-- {% endraw %} -->
