@@ -51,7 +51,7 @@ class TestJekyllArchives < Minitest::Test
   context "the jekyll-archives plugin with a custom slug mode" do
     setup do
       @site = fixture_site("jekyll-archives" => {
-        "slug_mode" => "pretty",
+        "slug_mode" => "raw",
         "enabled"   => true,
       })
       @site.read
