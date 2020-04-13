@@ -48,6 +48,24 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
+  context "the jekyll-archives plugin with a custom slug mode" do
+    setup do
+      # slug mode other than those expected by Jekyll returns the given string after
+      # downcasing it.
+      @site = fixture_site("jekyll-archives" => {
+        "slug_mode" => "raw",
+        "enabled"   => true,
+      })
+      @site.read
+      @archives = Jekyll::Archives::Archives.new(@site.config)
+    end
+
+    should "generate slugs using the mode specified" do
+      @archives.generate(@site)
+      assert archive_exists? @site, "category/💎/index.html"
+    end
+  end
+
   context "the jekyll-archives plugin with custom layout path" do
     setup do
       @site = fixture_site("jekyll-archives" => {
@@ -116,7 +134,7 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the {{ site.archives }} tag in Liquid" do
-      assert_equal 12, read_file("length.html").to_i
+      assert_equal 16, read_file("length.html").to_i
     end
   end
 

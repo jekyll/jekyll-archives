@@ -30,10 +30,7 @@ module Jekyll
         @type   = type
         @title  = title
         @config = site.config["jekyll-archives"]
-
-        # Generate slug if tag or category
-        # (taken from jekyll/jekyll/features/support/env.rb)
-        @slug = Utils.slugify(title) if title.is_a? String
+        @slug   = slugify_string_title
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -121,6 +118,18 @@ module Jekyll
       # Returns the object as a debug String.
       def inspect
         "#<Jekyll:Archive @type=#{@type} @title=#{@title} @data=#{@data.inspect}>"
+      end
+
+      private
+
+      # Generate slug if @title attribute is a string.
+      #
+      # Note: mode other than those expected by Jekyll returns the given string after
+      # downcasing it.
+      def slugify_string_title
+        return unless title.is_a?(String)
+
+        Utils.slugify(title, :mode => @config["slug_mode"])
       end
     end
   end
