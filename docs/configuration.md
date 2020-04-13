@@ -25,7 +25,7 @@ jekyll-archives:
 #### Optional settings
 - [Default layout (`layout`)](#default-layout)
 - [Permalinks (`permalinks`)](#permalinks)
-- [Slug configuration](#slug-configuration)
+- [Slug configuration (`slug_mode`)](#slug-configuration)
 
 ---
 
@@ -132,6 +132,5 @@ You can configure the result of this process by setting the `slug_mode` key to a
 ##### Sample values
 
 ```yml
-jekyll-archives:
-  slug_mode: latin
+slug_mode: latin
 ```
