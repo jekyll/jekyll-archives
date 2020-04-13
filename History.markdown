@@ -22,6 +22,7 @@
 
   * Memoize relative_path attribute of archive pages (#153)
   * Memoize date attribute of date-type archive pages (#154)
+  * Allow creating slugs for emoji characters. (#129)
 
 ## 2.2.1
 
