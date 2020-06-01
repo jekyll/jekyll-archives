@@ -25,7 +25,7 @@ This attribute contains a simple string indicating the type of the layout being 
   {% for post in page.posts %}
     <li>
       <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-      <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+      <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
     </li>
   {% endfor %}
 </ul>
@@ -39,7 +39,7 @@ This attribute contains a simple string indicating the type of the layout being 
 {% for post in page.posts %}
   <li>
     <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 </ul>
@@ -53,7 +53,7 @@ This attribute contains a simple string indicating the type of the layout being 
 {% for post in page.posts %}
   <li>
     <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 </ul>
@@ -67,7 +67,7 @@ This attribute contains a simple string indicating the type of the layout being 
 {% for post in page.posts %}
   <li>
     <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
-    <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+    <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
   </li>
 {% endfor %}
 </ul>
