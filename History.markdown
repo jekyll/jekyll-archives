@@ -5,6 +5,10 @@
   * Initialize Archives generator with a hash (#135)
   * Remove support for legacy Jekyll versions (#136)
   * Read-in site&#39;s tags and categories attributes (#137)
+  * Simplify checking if an archive type is enabled (#149)
+  * Use private helper to append enabled archive type (#150)
+  * Access nested Hash values with `Hash#dig` (#151)
+  * Generate custom post_attr_hash with private helper (#152)
 
 ### Bug Fixes
 
@@ -13,6 +17,12 @@
 ### Documentation
 
   * s/gems/plugins/ (#143)
+
+### Minor Enhancements
+
+  * Memoize relative_path attribute of archive pages (#153)
+  * Memoize date attribute of date-type archive pages (#154)
+  * Allow creating slugs for emoji characters. (#129)
 
 ## 2.2.1
 

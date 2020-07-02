@@ -30,10 +30,7 @@ module Jekyll
         @type   = type
         @title  = title
         @config = site.config["jekyll-archives"]
-
-        # Generate slug if tag or category
-        # (taken from jekyll/jekyll/features/support/env.rb)
-        @slug = Utils.slugify(title) if title.is_a? String
+        @slug   = slugify_string_title
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -50,18 +47,14 @@ module Jekyll
       #
       # Returns the template String.
       def template
-        @config["permalinks"][type]
+        @config.dig("permalinks", type)
       end
 
       # The layout to use for rendering
       #
       # Returns the layout as a String
       def layout
-        if @config["layouts"] && @config["layouts"][type]
-          @config["layouts"][type]
-        else
-          @config["layout"]
-        end
+        @config.dig("layouts", type) || @config["layout"]
       end
 
       # Returns a hash of URL placeholder names (as symbols) mapping to the
@@ -103,7 +96,9 @@ module Jekyll
       #
       # Returns a Date.
       def date
-        if @title.is_a? Hash
+        return unless @title.is_a?(Hash)
+
+        @date ||= begin
           args = @title.values.map(&:to_i)
           Date.new(*args)
         end
@@ -113,14 +108,28 @@ module Jekyll
       #
       # Returns the destination relative path String.
       def relative_path
-        path = URL.unescape_path(url).gsub(%r!^\/!, "")
-        path = File.join(path, "index.html") if url =~ %r!\/$!
-        path
+        @relative_path ||= begin
+          path = URL.unescape_path(url).gsub(%r!^/!, "")
+          path = File.join(path, "index.html") if url.end_with?("/")
+          path
+        end
       end
 
       # Returns the object as a debug String.
       def inspect
         "#<Jekyll:Archive @type=#{@type} @title=#{@title} @data=#{@data.inspect}>"
+      end
+
+      private
+
+      # Generate slug if @title attribute is a string.
+      #
+      # Note: mode other than those expected by Jekyll returns the given string after
+      # downcasing it.
+      def slugify_string_title
+        return unless title.is_a?(String)
+
+        Utils.slugify(title, :mode => @config["slug_mode"])
       end
     end
   end
