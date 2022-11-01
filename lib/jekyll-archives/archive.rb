@@ -41,6 +41,18 @@ module Jekyll
           "layout" => layout,
         }
         @content = ""
+
+        if type == "category"
+          if @config["categories_data_file"] && @site.data[@config["categories_data_file"]] && @site.data[@config["categories_data_file"]][title]
+            @categoryData = @site.data[@config["categories_data_file"]][title]
+            if !@categoryData["archive_title"].nil?
+              @title = @categoryData["archive_title"]
+            elsif !@categoryData["name"].nil?
+              @title = @categoryData["name"]
+            end
+          end
+        end
+
       end
 
       # The template of the permalink.
