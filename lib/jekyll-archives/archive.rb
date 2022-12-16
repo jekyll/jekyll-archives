@@ -120,6 +120,11 @@ module Jekyll
         "#<Jekyll:Archive @type=#{@type} @title=#{@title} @data=#{@data.inspect}>"
       end
 
+      # The Liquid representation of this page.
+      def to_liquid
+        @to_liquid ||= Jekyll::Archives::PageDrop.new(self)
+      end
+
       private
 
       # Generate slug if @title attribute is a string.
