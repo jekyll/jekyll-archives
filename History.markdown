@@ -10,6 +10,7 @@
   * Access nested Hash values with `Hash#dig` (#151)
   * Generate custom post_attr_hash with private helper (#152)
   * Migrate CI to GitHub Actions (#177)
+  * Add `style_check` job to CI workflow (#178)
 
 ### Bug Fixes
 
