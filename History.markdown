@@ -9,6 +9,7 @@
   * Use private helper to append enabled archive type (#150)
   * Access nested Hash values with `Hash#dig` (#151)
   * Generate custom post_attr_hash with private helper (#152)
+  * Migrate CI to GitHub Actions (#177)
 
 ### Bug Fixes
 
