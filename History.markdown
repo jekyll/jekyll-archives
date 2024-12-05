@@ -11,6 +11,7 @@
   * Generate custom post_attr_hash with private helper (#152)
   * Migrate CI to GitHub Actions (#177)
   * Add `style_check` job to CI workflow (#178)
+  * Add workflow to release gem via GitHub Actions (#179)
 
 ### Bug Fixes
 
