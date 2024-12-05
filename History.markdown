@@ -1,32 +1,35 @@
 ## HEAD
 
-### Development Fixes
-
-  * Initialize Archives generator with a hash (#135)
-  * Remove support for legacy Jekyll versions (#136)
-  * Read-in site&#39;s tags and categories attributes (#137)
-  * Simplify checking if an archive type is enabled (#149)
-  * Use private helper to append enabled archive type (#150)
-  * Access nested Hash values with `Hash#dig` (#151)
-  * Generate custom post_attr_hash with private helper (#152)
-  * Migrate CI to GitHub Actions (#177)
-  * Add `style_check` job to CI workflow (#178)
-  * Add workflow to release gem via GitHub Actions (#179)
-
-### Bug Fixes
-
-  * Return unless &#39;jekyll-archives&#39; config is a Hash (#139)
-
-### Documentation
-
-  * s/gems/plugins/ (#143)
-
 ### Minor Enhancements
 
+  * Simplify checking if an archive type is enabled (#149)
   * Memoize relative_path attribute of archive pages (#153)
   * Memoize date attribute of date-type archive pages (#154)
   * Allow creating slugs for emoji characters. (#129)
   * Use Liquid drop to expose attributes to templates (#158)
+
+### Bug Fixes
+
+  * Return unless 'jekyll-archives' config is a Hash (#139)
+
+### Internal Refactors
+
+  * Initialize Archives generator with a hash (#135)
+  * Remove support for legacy Jekyll versions (#136)
+  * Read-in site's tags and categories attributes (#137)
+  * Use private helper to append enabled archive type (#150)
+  * Access nested Hash values with `Hash#dig` (#151)
+  * Generate custom post_attr_hash with private helper (#152)
+
+### Development Fixes
+
+  * Migrate CI to GitHub Actions (#177)
+  * Add `style_check` job to CI workflow (#178)
+  * Add workflow to release gem via GitHub Actions (#179)
+
+### Documentation Fixes
+
+  * Substitute 'gems' with 'plugins' (#143)
 
 ## 2.2.1
 
