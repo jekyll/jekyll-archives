@@ -39,8 +39,6 @@ jobs:
       fail-fast: false
       matrix:
         ruby_version:
-          - "2.7"
-          - "3.2"
           - "3.3"
     steps:
       - uses: actions/checkout@v4
