@@ -5,16 +5,12 @@
 
 require "rubygems"
 require "minitest/autorun"
-require "shoulda"
+require "shoulda/context"
 
-$LOAD_PATH.unshift(File.join(__dir__, "..", "lib"))
-$LOAD_PATH.unshift(__dir__)
+require_relative "../lib/jekyll-archives"
 
-require "jekyll-archives"
-
-TEST_DIR     = __dir__
-SOURCE_DIR   = File.expand_path("source", TEST_DIR)
-DEST_DIR     = File.expand_path("destination", TEST_DIR)
+SOURCE_DIR = File.expand_path("source", __dir__)
+DEST_DIR   = File.expand_path("destination", __dir__)
 
 module Minitest
   class Test

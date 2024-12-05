@@ -1,28 +1,27 @@
-require: rubocop-jekyll
+require:
+  - rubocop-jekyll
+  - rubocop-minitest
 
 inherit_gem:
   rubocop-jekyll: .rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.7
+  SuggestExtensions: false
   Exclude:
     - vendor/**/*
 
-Lint/ShadowingOuterLocalVariable:
+Layout/LineLength:
   Exclude:
     - lib/jekyll-archives.rb
-
-# Remove once Jekyll core has dropped explicit support for Ruby 2.2
-Lint/SafeNavigationConsistency:
-  Exclude:
     - lib/jekyll-archives/archive.rb
+    - test/**/*.rb
 
 Metrics/BlockLength:
   Exclude:
     - test/**/*.rb
 
-Metrics/LineLength:
-  Exclude:
-    - lib/jekyll-archives.rb
-    - lib/jekyll-archives/archive.rb
-    - test/**/*.rb
+Minitest/AssertKindOf:
+  Enabled: true
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: true

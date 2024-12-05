@@ -77,11 +77,11 @@ module Jekyll
           :permalink    => nil
         ).to_s
       rescue ArgumentError
-        raise ArgumentError, "Template \"#{template}\" provided is invalid."
+        raise ArgumentError, "Template #{template.inspect} provided is invalid."
       end
 
       def permalink
-        data&.is_a?(Hash) && data["permalink"]
+        data.is_a?(Hash) && data["permalink"]
       end
 
       # Produce a title object suitable for Liquid based on type of archive.
@@ -89,7 +89,7 @@ module Jekyll
       # Returns a String (for tag and category archives) and nil for
       # date-based archives.
       def title
-        @title if @title.is_a? String
+        @title if @title.is_a?(String)
       end
 
       # Produce a date object if a date-based archive

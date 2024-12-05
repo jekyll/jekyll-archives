@@ -133,7 +133,7 @@ module Jekyll
       def date_attr_hash(posts, id)
         hash = Hash.new { |hsh, key| hsh[key] = [] }
         posts.each { |post| hash[post.date.strftime(id)] << post }
-        hash.each_value { |posts| posts.sort!.reverse! }
+        hash.each_value { |posts_in_hsh| posts_in_hsh.sort!.reverse! }
         hash
       end
     end
