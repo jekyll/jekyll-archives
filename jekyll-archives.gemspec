@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.licenses    = ["MIT"]
 
   all_files     = `git ls-files -z`.split("\x0")
-  s.files       = all_files.grep(%r!^(lib)/!)
+  s.files       = all_files.grep(%r!^(lib)/!).push("LICENSE")
 
   s.required_ruby_version = ">= 2.7.0"
 
