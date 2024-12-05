@@ -8,6 +8,8 @@ inherit_gem:
 AllCops:
   TargetRubyVersion: 2.7
   SuggestExtensions: false
+  Exclude:
+    - vendor/**/*
 
 Layout/LineLength:
   Exclude:
