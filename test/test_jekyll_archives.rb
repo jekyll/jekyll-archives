@@ -14,24 +14,28 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages by year" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "2014/index.html"
       assert archive_exists? @site, "2013/index.html"
     end
 
     should "generate archive pages by month" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "2014/08/index.html"
       assert archive_exists? @site, "2014/03/index.html"
     end
 
     should "generate archive pages by day" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "2014/08/17/index.html"
       assert archive_exists? @site, "2013/08/16/index.html"
     end
 
     should "generate archive pages by tag" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "tag/test-tag/index.html"
       assert archive_exists? @site, "tag/tagged/index.html"
       assert archive_exists? @site, "tag/new/index.html"
@@ -39,11 +43,13 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate archive pages by category" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "category/plugins/index.html"
     end
 
     should "generate archive pages with a layout" do
       @site.process
+
       assert_equal "Test", read_file("tag/test-tag/index.html")
     end
   end
@@ -62,6 +68,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "generate slugs using the mode specified" do
       @archives.generate(@site)
+
       assert archive_exists? @site, "category/💎/index.html"
     end
   end
@@ -77,6 +84,7 @@ class TestJekyllArchives < Minitest::Test
 
     should "use custom layout" do
       @site.process
+
       assert_equal "Test too", read_file("tag/test-tag/index.html")
     end
   end
@@ -164,10 +172,10 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "not generate the disabled archives" do
-      assert !archive_exists?(@site, "2014/index.html")
-      assert !archive_exists?(@site, "2014/08/index.html")
-      assert !archive_exists?(@site, "2013/08/16/index.html")
-      assert !archive_exists?(@site, "category/plugins/index.html")
+      refute archive_exists?(@site, "2014/index.html")
+      refute archive_exists?(@site, "2014/08/index.html")
+      refute archive_exists?(@site, "2013/08/16/index.html")
+      refute archive_exists?(@site, "category/plugins/index.html")
     end
   end
 
@@ -186,25 +194,25 @@ class TestJekyllArchives < Minitest::Test
     end
 
     should "populate the title field in case of category or tag" do
-      assert @tag_archive.title.is_a? String
-      assert @category_archive.title.is_a? String
+      assert_kind_of String, @tag_archive.title
+      assert_kind_of String, @category_archive.title
     end
 
     should "use nil for the title field in case of dates" do
-      assert @year_archive.title.nil?
-      assert @month_archive.title.nil?
-      assert @day_archive.title.nil?
+      assert_nil @year_archive.title
+      assert_nil @month_archive.title
+      assert_nil @day_archive.title
     end
 
     should "use nil for the date field in case of category or tag" do
-      assert @tag_archive.date.nil?
-      assert @category_archive.date.nil?
+      assert_nil @tag_archive.date
+      assert_nil @category_archive.date
     end
 
     should "populate the date field with a Date in case of dates" do
-      assert @year_archive.date.is_a? Date
-      assert @month_archive.date.is_a? Date
-      assert @day_archive.date.is_a? Date
+      assert_kind_of Date, @year_archive.date
+      assert_kind_of Date, @month_archive.date
+      assert_kind_of Date, @day_archive.date
     end
   end
 
@@ -215,6 +223,7 @@ class TestJekyllArchives < Minitest::Test
         site.read
         site.generate
       end
+
       assert_includes output, "Archives: Expected a hash but got [\"apples\", \"oranges\"]"
       assert_includes output, "Archives will not be generated for this site."
 
@@ -223,6 +232,7 @@ class TestJekyllArchives < Minitest::Test
         site.read
         site.generate
       end
+
       assert_includes output, "Archives: Expected a hash but got nil"
       assert_includes output, "Archives will not be generated for this site."
     end
@@ -232,6 +242,7 @@ class TestJekyllArchives < Minitest::Test
         site = fixture_site("jekyll-archives" => nil)
         site.read
         site.generate
+
         assert_nil(site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
       end
     end
@@ -242,6 +253,7 @@ class TestJekyllArchives < Minitest::Test
         @site.read
         @site.generate
       end
+
       refute_includes output, "Archives: Expected a hash but got nil"
       assert_nil(@site.pages.find { |p| p.is_a?(Jekyll::Archives::Archive) })
     end

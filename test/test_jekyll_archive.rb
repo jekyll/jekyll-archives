@@ -27,6 +27,7 @@ class TestJekyllArchive < Minitest::Test
         "url"       => "/tag/test-tag/",
         "permalink" => nil,
       }
+
       assert_equal expected, archive.to_liquid.to_h
 
       archive = @archives.find { |a| a.type == "category" }
@@ -42,6 +43,7 @@ class TestJekyllArchive < Minitest::Test
         "url"       => "/category/plugins/",
         "permalink" => nil,
       }
+
       assert_equal expected, archive.to_liquid.to_h
 
       archive = @archives.find { |a| a.type == "year" }
@@ -57,6 +59,7 @@ class TestJekyllArchive < Minitest::Test
         "url"       => "/2013/",
         "permalink" => nil,
       }
+
       assert_equal expected, archive.to_liquid.to_h
 
       archive = @archives.find { |a| a.type == "month" }
@@ -72,6 +75,7 @@ class TestJekyllArchive < Minitest::Test
         "url"       => "/2013/08/",
         "permalink" => nil,
       }
+
       assert_equal expected, archive.to_liquid.to_h
 
       archive = @archives.find { |a| a.type == "day" }
@@ -87,6 +91,7 @@ class TestJekyllArchive < Minitest::Test
         "url"       => "/2013/08/16/",
         "permalink" => nil,
       }
+
       assert_equal expected, archive.to_liquid.to_h
     end
   end

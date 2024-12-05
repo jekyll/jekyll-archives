@@ -1,10 +1,13 @@
-require: rubocop-jekyll
+require:
+  - rubocop-jekyll
+  - rubocop-minitest
 
 inherit_gem:
   rubocop-jekyll: .rubocop.yml
 
 AllCops:
   TargetRubyVersion: 2.7
+  SuggestExtensions: false
 
 Lint/ShadowingOuterLocalVariable:
   Exclude:
@@ -24,3 +27,8 @@ Metrics/LineLength:
     - lib/jekyll-archives.rb
     - lib/jekyll-archives/archive.rb
     - test/**/*.rb
+
+Minitest/AssertKindOf:
+  Enabled: true
+Minitest/EmptyLineBeforeAssertionMethods:
+  Enabled: true
