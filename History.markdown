@@ -11,6 +11,7 @@
 ### Bug Fixes
 
   * Return unless 'jekyll-archives' config is a Hash (#139)
+  * Include LICENSE in built gem (#180)
 
 ### Internal Refactors
 
