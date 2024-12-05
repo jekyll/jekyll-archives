@@ -5,7 +5,7 @@
 
 require "rubygems"
 require "minitest/autorun"
-require "shoulda"
+require "shoulda/context"
 
 $LOAD_PATH.unshift(File.join(__dir__, "..", "lib"))
 $LOAD_PATH.unshift(__dir__)
