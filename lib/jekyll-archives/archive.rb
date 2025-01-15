@@ -3,7 +3,7 @@
 module Jekyll
   module Archives
     class Archive < Jekyll::Page
-      attr_accessor :posts, :type, :slug
+      attr_accessor :posts, :type, :slug, :show_date, :show_author
 
       # Attributes for Liquid templates
       ATTRIBUTES_FOR_LIQUID = %w(
@@ -15,6 +15,8 @@ module Jekyll
         path
         url
         permalink
+        show_date
+        show_author
       ).freeze
 
       # Initialize a new Archive page
@@ -31,6 +33,8 @@ module Jekyll
         @title  = title
         @config = site.config["jekyll-archives"]
         @slug   = slugify_string_title
+        @show_author = true
+        @show_date = true
 
         # Use ".html" for file extension and url for path
         @ext  = File.extname(relative_path)
@@ -41,6 +45,22 @@ module Jekyll
           "layout" => layout,
         }
         @content = ""
+
+        if type == "category"
+          if @config["categories_data_file"] && @site.data[@config["categories_data_file"]] && @site.data[@config["categories_data_file"]][title]
+            @categoryData = @site.data[@config["categories_data_file"]][title]
+            if !@categoryData["archive_title"].nil?
+              @title = @categoryData["archive_title"]
+            elsif !@categoryData["name"].nil?
+              @title = @categoryData["name"]
+            end
+
+            @show_author = @categoryData["show_author"] unless @categoryData["show_author"].nil?
+            @show_date = @categoryData["show_date"] unless @categoryData["show_date"].nil?
+
+          end
+        end
+
       end
 
       # The template of the permalink.
