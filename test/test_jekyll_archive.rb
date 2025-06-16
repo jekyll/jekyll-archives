@@ -95,4 +95,75 @@ class TestJekyllArchive < Minitest::Test
       assert_equal expected, archive.to_liquid.to_h
     end
   end
+
+  context "the generated archive page preconfigured with front matter defaults" do
+    setup do
+      site = fixture_site(
+        "jekyll-archives" => {
+          "enabled" => true,
+        },
+        "defaults"        => [
+          {
+            "scope"  => {
+              "type" => "category",
+            },
+            "values" => {
+              "author_profile" => true,
+              "sidebar"        => false,
+            },
+          },
+          {
+            "scope"  => {
+              "type" => "day",
+            },
+            "values" => {
+              "author_profile" => false,
+              "sidebar"        => true,
+            },
+          },
+        ]
+      )
+      site.read
+      Jekyll::Archives::Archives.new(site.config).generate(site)
+      @archives = site.config["archives"]
+    end
+
+    should "expose all attributes to Liquid templates" do
+      archive = @archives.find { |a| a.type == "category" }
+      archive.posts = []
+      expected = {
+        "author_profile" => true,
+        "sidebar"        => false,
+        "layout"         => "archive",
+        "posts"          => [],
+        "type"           => "category",
+        "title"          => "plugins",
+        "date"           => nil,
+        "name"           => "index",
+        "path"           => "category/plugins/index.html",
+        "url"            => "/category/plugins/",
+        "permalink"      => nil,
+      }
+
+      assert_equal expected, archive.to_liquid.to_h
+
+      archive = @archives.find { |a| a.type == "day" }
+      archive.posts = []
+      expected = {
+        "author_profile" => false,
+        "sidebar"        => true,
+        "layout"         => "archive",
+        "posts"          => [],
+        "type"           => "day",
+        "title"          => nil,
+        "date"           => archive.date,
+        "name"           => "index",
+        "path"           => "2013/08/16/index.html",
+        "url"            => "/2013/08/16/",
+        "permalink"      => nil,
+      }
+
+      assert_equal expected, archive.to_liquid.to_h
+    end
+  end
 end
