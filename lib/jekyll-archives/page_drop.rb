@@ -7,8 +7,8 @@ module Jekyll
 
       mutable false
 
-      def_delegators :@obj, :posts, :type, :title, :date, :name, :path, :url, :permalink
-      def_delegators :@obj, :site, :relative_path, :data
+      def_delegators :@obj, :posts, :type, :title, :date, :name, :path, :url, :permalink,
+                     :site, :relative_path, :data
 
       def fallback_data
         Jekyll::Utils.deep_merge_hashes(
