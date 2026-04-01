@@ -133,6 +133,25 @@ class TestJekyllArchives < Minitest::Test
     end
   end
 
+
+  context "the jekyll-archives plugin with malformed layouts config" do
+    setup do
+      @site = fixture_site(
+        "jekyll-archives" => {
+          "enabled" => true,
+          "layouts" => "archive-too",
+        }
+      )
+    end
+
+    should "fall back to the default layout instead of crashing" do
+      @site.process
+
+      assert_equal "Test", read_file("/2014/index.html")
+      assert_equal "Test", read_file("/tag/test-tag/index.html")
+    end
+  end
+
   context "the archives" do
     setup do
       @site = fixture_site("jekyll-archives" => {
